@@ -1,0 +1,8 @@
+item,qty,spec,supplier,unit_cost_usd,make_buy,notes
+"PEM electrolyzer stack, under 100 W",,,,,,
+Low-pressure metal hydride or gasbag storage,,,,,,
+"PEM fuel cell, under 50 W",,,,,,
+Power meters on each stage,,,,,,
+Water deionizer cartridge,,,,,,
+H2Guard detector and interlock,,,,,,
+Bench frame and shield,,,,,,
