@@ -3,7 +3,7 @@ doc_id: HBN-PRB-001
 title: H2Bench problem statement
 project: H2Bench
 doc_type: Problem statement
-version: "0.2"
+version: "0.3"
 status: Draft
 date: '2026-09-25'
 author: Amish Chadha
@@ -17,6 +17,10 @@ revisions:
   date: '2026-09-25'
   author: Amish Chadha
   change: Populate to TRL 2 (users, context, constraints, out of scope, prior work with sources)
+- version: "0.3"
+  date: '2026-09-25'
+  author: Amish Chadha
+  change: TRL 3 update; record the first-user and storage choices adopted for TRL 3 (HBN-DDR-001), cost and inventory figures from HBN-CAL-001, MSE listing checked
 ---
 
 # H2Bench problem statement
@@ -39,6 +43,7 @@ H2Bench is an open teaching bench at a scale large enough to measure (tens of wa
 
 | User | Need | Context |
 | --- | --- | --- |
+| Vocational hydrogen technician trainees (first users, adopted for TRL 3 under Amish's 2026-09-25 instruction, open for his review; HBN-DDR-001) | Safe-handling practice on real hardware and measured efficiencies | Supervised courses with trained instructors |
 | Secondary and vocational students (about 15 to 19 years) | See and measure each energy conversion; calculate efficiencies from their own data | 60 to 90 min practical sessions, groups of 3 to 5, supervised |
 | University engineering students | Polarization curves, Faraday efficiency, gas law measurements, uncertainty analysis | Teaching lab, longer sessions, spreadsheet or notebook analysis |
 | Technical and vocational trainers | A rig that trains safe habits: purge, leak check, interlock test, lockout | Hydrogen technician courses in countries building hydrogen industries |
@@ -50,12 +55,12 @@ H2Bench is an open teaching bench at a scale large enough to measure (tens of wa
 - **Room:** a school or college lab of about 30 to 150 m³ with mechanical or window ventilation, mains power and an existing bench about 750 mm high.
 - **Ambient:** 15 to 30 °C, indoor humidity; the fuel cell class chosen is specified for 5 to 30 °C ambient ([Fuel Cell Store](https://www.fuelcellstore.com/horizon-12-watt-pem-fuel-cell)).
 - **Water:** deionized or distilled water is needed; PEM stacks are damaged by other water ([MSE Supplies](https://www.msesupplies.com/products/mse-pro-ma-300-pem-water-electrolyzer-stack-max-flow-rate-300-ml-min)).
-- **Use pattern:** one fill and one discharge per lesson, a few lessons a week, tank vented down to about 20 kPa gauge (never to atmospheric, so no air enters) at the end of each day.
+- **Use pattern:** one fill and one discharge per lesson, a few lessons a week, tank vented down to about 20 kPa gauge (never to atmospheric, so no air enters) at the end of each day, through a needle valve over 3 min or more (HBN-CAL-001).
 
 ## Constraints
 
-- Garage-buildable prototype, about $450 USD in `project.yaml`. The first-pass BOM is well above this (see HBN-PRC-001 and `docs/REVIEW.md`).
-- Hydrogen inventory under 10 L at 20 °C and 101.3 kPa, stored at 300 kPa gauge or less. No compression beyond what the electrolyzer does itself.
+- Garage-buildable prototype, $450 USD in `project.yaml`. The priced BOM is $865 in full, or $800 without the bench power supply (HBN-CAL-001). A budget of about $850 was recommended at TRL 2 and is still awaiting Amish (HBN-DDR-001 item 9).
+- Hydrogen inventory under 10 L at 20 °C and 101.3 kPa, stored at 300 kPa gauge or less in a rigid tank (adopted for TRL 3, HBN-DDR-001). No compression beyond what the electrolyzer does itself.
 - Electrolyzer under 100 W and fuel cell under 50 W, as the pitch states.
 - Operates only when the H2Guard detector, extraction fan and interlock are active.
 - Off-the-shelf gas components; no welding or pressure-vessel fabrication.
@@ -73,7 +78,7 @@ H2Bench is an open teaching bench at a scale large enough to measure (tens of wa
 ## Prior work
 
 - **Educational fuel cell kits.** Horizon Educational and similar suppliers sell kits from sub-watt reversible cells to 12 to 30 W stacks ([Horizon Educational](https://www.horizoneducational.com/8-types-of-fuel-cell-by-price-point/t1418?currency=usd)). They prove the components work in schools; the larger stacks set the cost floor.
-- **Laboratory PEM electrolyzers.** Gas chromatography hydrogen generators and stacks from suppliers such as MSE deliver 300 to 500 mL/min at up to about 0.4 MPa, showing that a small stack can fill a low-pressure tank directly ([MSE Supplies](https://www.msesupplies.com/products/mse-pro-ma-300-pem-water-electrolyzer-stack-max-flow-rate-300-ml-min)).
+- **Laboratory PEM electrolyzers.** Small stacks such as MSE's 300 mL/min single-cell unit (56 cm², 45 A at about 2.3 V, 2.5 kg, $1,396.95) show the output class needed ([MSE Supplies](https://www.msesupplies.com/products/mse-pro-ma-300-pem-water-electrolyzer-stack-max-flow-rate-300-ml-min), checked 2026-09-25). That listing does not state an output pressure, so whether a stack can fill a low-pressure tank directly must be confirmed per stack (HBN-REQ-001 R10).
 - **Hydrogen education programs.** The US DOE Hydrogen Program names teachers and students among its target audiences and notes "a general lack of awareness of hydrogen as an energy alternative" ([US DOE Hydrogen Program](https://www.hydrogen.energy.gov/program-areas/education)). EPRI's H2EDGE program develops hydrogen training for the workforce ([EPRI](https://hydrogen.epri.com/en/h2edge.html)).
 - **Round-trip analysis.** Published studies of power-to-hydrogen-to-power give the efficiency range that students should be able to reproduce at small scale ([Oxford Institute for Energy Studies, 2025](https://www.oxfordenergy.org/wpcms/wp-content/uploads/2025/07/ET48-Power-to-Hydrogen-to-Power.pdf)).
 - **H2Guard (this portfolio).** The hydrogen leak detector and ventilation interlock that H2Bench depends on. H2Bench adds no detection of its own.
@@ -82,4 +87,4 @@ H2Bench is an open teaching bench at a scale large enough to measure (tens of wa
 
 - Which curricula to align with first (for example a national vocational hydrogen technician standard or an A-level or IB practical)?
 - Will school safety officers accept a 300 kPa gauge buffer tank, or is a near-atmospheric gasbag with a small pump easier to approve?
-- Is a class demonstration (teacher-run) or a group practical (student-run) the first use case?
+- Is a class demonstration (teacher-run) or a group practical (student-run) the first use case? (Proposed, awaiting Amish; no recommendation.)

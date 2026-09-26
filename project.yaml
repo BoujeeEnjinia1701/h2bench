@@ -2,12 +2,23 @@
 name: H2Bench
 slug: h2bench
 area: Hydrogen
-trl: 2                   # Technology Readiness Level, see .kit/STANDARDS.md section 9
+trl: 3                   # Technology Readiness Level, see .kit/STANDARDS.md section 9
 trl_target: 3
 trl_evidence:
   - docs/01-problem.md
   - docs/02-concept.md
   - docs/03-requirements.md
+  - docs/decisions/0001-trl2-review-decisions.md
+  - docs/04-calcs/01-sizing.md
+  - docs/04-calcs/sizing.py
+  - docs/04-calcs/results.csv
+  - cad/src/model.py
+  - cad/step/h2bench-assembly.step
+  - cad/stl/h2bench-assembly.stl
+  - cad/drawings/HBN-DWG-001.svg
+  - cad/drawings/HBN-DWG-001.pdf
+  - bom/bom.csv
+  - bom/bom-notes.md
 shortlisted: false
 pitch: >-
   A teaching bench that splits water with a small electrolyzer, stores a few liters of hydrogen at low pressure and runs a fuel cell, with meters so students can measure efficiency at each step. Protected by H2Guard.

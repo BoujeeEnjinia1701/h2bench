@@ -1,5 +1,75 @@
 # Review note: H2Bench
 
+## Session 2026-09-25: TRL 3
+
+### What was done
+
+- `docs/decisions/0001-trl2-review-decisions.md` (HBN-DDR-001 v0.1): the eight TRL 2 recommendations adopted for TRL 3 work under Amish's 2026-09-25 instruction, open for his review, and the items that stay open.
+- `docs/04-calcs/01-sizing.md` (HBN-CAL-001 v0.1) with `docs/04-calcs/sizing.py` and `docs/04-calcs/results.csv`: electrolyzer and fill, inventory and pressure, fuel cell, energy balance, measurement uncertainty, hood and venting, interlock, water and drier, envelope and mass, cost and logging, with a results table for R1 to R16. The script reads the tank and bench dimensions from the model and the prices from the BOM.
+- `cad/src/model.py`: parametric build123d model (frame, deck, back panel, canopy with duct, supply, reservoir, 4-cell electrolyzer with membranes and ports, separator and drier, arrestor, 2.000 L tank sized from its volume parameter with guard, manifold with relief and vent needle valve, regulator and solenoid, 75 x 47 x 70 mm fuel cell, load, meters, H2Guard stand-in, 6 mm gas lines). Exports `cad/step/` and `cad/stl/` (assembly, frame and hood, tank module, electrolyzer); clash check finds no overlaps.
+- `cad/src/sheets.py` and `cad/drawings/HBN-DWG-001.svg`, `.pdf`, `.png`: general arrangement at Rev P1, marked "CONCEPT, NOT FOR FABRICATION" and "PRELIMINARY, NOT FOR FABRICATION". HBN-DWG-001 was free because the concept blueprint uses HBN-DWG-010.
+- `bom/bom.csv` (18 lines, all priced with a supplier type) and `bom/bom-notes.md`. Line 18 (plug-in 30 mA RCD, $20) is new; lines 6, 10, 12 and 16 were updated.
+- `cad/src/concept_media.py` now builds from `model.py`; all media regenerated (hero, blueprint, cutaway, exploded, flow, `model.glb`, `viewer.html`), checked by eye, and the temporary `media/_views*` folders deleted. The kit's cutaway cuts at the mean Y of all parts, which missed the gas train, so the script renders its own cutaway on the gas train centreline.
+- `docs/01-problem.md`, `docs/02-concept.md` and `docs/03-requirements.md` moved to v0.3 with the adopted choices, HBN-CAL-001 numbers and a status column from the CAL.
+- `project.yaml`: trl 3, trl_target 3, trl_evidence updated; `budget_usd`, pitch and problem unchanged. `README.md`: TRL badge, links, Concept numbers and cost line.
+
+### Requirements (HBN-CAL-001)
+
+Nine met, two not met, four at risk, one not verifiable at TRL 3.
+
+| ID | Result | Status |
+| --- | --- | --- |
+| R9 | Oxygen crossover unknown, no deoxidizer; fuel cell listing asks for 99.995 % | **Not met** |
+| R14 | $865 full, $800 without the bench supply, $780 minimum; against $450 (and $850 proposed) | **Not met** |
+| R5 | 9.6 L at the relief setting, but 10.5 L at full relief lift on a 15 °C day | At risk |
+| R8 | 1.1 s trip to valve closed from H2Guard's TRL 2 figures; 24 V and 12 V valve mismatch | At risk |
+| R10 | Stack must hold 357 kPa over the O2 side at the relief setting; no rating in hand | At risk |
+| R13 | 900 x 450 x 755 mm, but 25.2 kg against 25 kg (22.2 kg without the supply) | At risk |
+| R16 | Vent 3.0 min; setup needs hardware | Not verifiable at TRL 3 |
+| R1, R2, R3, R4, R7 | ±1.8 % worst stage; 46.7 min cycle; 70.2 W; 10.8 W net; 0.8 % LFL in 30 m³ | Met |
+| R6, R11, R12, R15 | Pressure ratings, water quality, logging, guard | Met (design review) |
+
+Corrections to TRL 2 numbers: the 7.9 L "at the relief setting" was the tank alone at 300 kPa gauge; with the lines it is 9.6 L at the relief setting and 10.5 L at full lift. Mass rises from about 18 to 25.2 kg. Cost rises from $845 to $865 with the RCD line. The fuel cell's 146 mL/min was the reacted flow; it draws 154 mL/min. Bench height is 755 mm, not about 770 mm. R10's 300 kPa target does not cover a relief lift (357 kPa needed). R4 has only a 0.8 W margin.
+
+Key numbers: 70.2 W electrolyzer, 256 mL/min, 17.7 min fill of 0.189 mol (4.5 L); 10.8 W net fuel cell for 29.0 min, 5.2 Wh; round trip 25.1 % (HHV); 646 J stored pressure energy at 300 kPa gauge; hydrogen per fill measured to ±1.5 %; drier lasts about 110 fills.
+
+### Decisions recorded (HBN-DDR-001)
+
+Adopted as recommended for TRL 3 under Amish's 2026-09-25 instruction, open for his review: rigid 2 L tank at up to 300 kPa gauge (gasbag with pump as the fallback if R10 fails); PEM, not alkaline; generic 12 W class fuel cell with a polarization curve as a purchase condition; hydrogen measured by pressure, volume and temperature; bench supply in constant-current mode as the source; H2Guard costed in its own project and shipped with the bench (applied to the R14 scope); tank kept above 20 kPa gauge with pressure-cycle purging; vocational technician training as the first users. No pitch or problem rewording was recommended, so none was applied.
+
+### Still awaiting Amish
+
+- **Budget:** about $850 recommended at TRL 2; `budget_usd` stays $450. The full kit is $865, $15 over even the recommended figure; without the bench supply it is $800.
+- Whether the bench power supply is in the kit (BOM line 4).
+- Canopy hood with a single high point (not in the TRL 2 review list, so not adopted; kept as the working design).
+- Curriculum alignment, class demonstration or group practical first, and aluminium or stainless tank (no recommendation made).
+- Engineering proposals from this session: relief at 325 kPa gauge (329 kPa gauge or less keeps R5 at full lift); a 310 kPa gauge cut of the supply so the relief valve is a backup; vent needle valve set for 3 min or more; plug-in RCD line.
+- Mass (R13): accept 25.2 kg, carry the supply separately, or use a 10 mm deck (saves 0.77 kg).
+
+### Cross-repo notes (H2Guard, not edited)
+
+H2Guard is not one of the batch's shared components, but H2Bench depends on it, so its REVIEW.md and documents were read. Consistent: H2Guard's trip to valve closed within 2 s (HGD-REQ-001 R4) matches R8, and its inventory rule (300 L for 30 m³) is met thirtyfold. Conflicts to resolve with H2Guard: (1) its valve is a 24 V normally closed part, while H2Bench's tank solenoid is 12 V; (2) it is not stated which H2Guard output breaks H2Bench's 9 A DC supply line; (3) H2Guard models its fan as a 150 m³/h room exhaust, while H2Bench assumes 60 m³/h through its canopy duct; (4) H2Guard recommends a university teaching lab as first user, H2Bench vocational training.
+
+### Safety concerns
+
+- Hydrogen is flammable from 4 to 74 % with a 0.02 mJ ignition energy and a nearly invisible flame; the bench must never run without H2Guard detection, extraction and interlock.
+- Venting a full tank faster than about 90 s can raise the duct concentration past H2Guard's warning; the needle valve is set for 3 min or more.
+- At the relief setting the tank holds 776 J of pressure energy; only 1 MPa rated metal parts, guard in place.
+- The relief lift loads the electrolyzer membrane to 357 to 392 kPa; an unrated stack could fail and mix hydrogen into the oxygen side. The 310 kPa gauge supply cut is proposed.
+- Oxygen crossover also puts some oxygen into the stored hydrogen; far below a flammable mixture, but unquantified.
+- Mains supply near water: RCD (line 18) and earthed supply. Warm stacks: about 20 W of heat each. Users under 18 only under supervision.
+- Research and teaching prototype, not certified laboratory equipment.
+
+### Other notes
+
+- No TRL 4 material exists (`build-log/` holds only its README; `electronics/` and `firmware/` are empty). None was created.
+- Citations checked with WebFetch on 2026-09-25: the Fuel Cell Store 12 W listing (7.8 V at 1.5 A, 13 cells, 0.45 to 0.55 bar, 99.995 %, 0.18 L/min, 40 %, 55 °C, 5 to 30 °C, 275 g, $576) and the Ecofin Namibia report (130,000 workers by 2040, attributed to the NUST vice-chancellor; still a news report of a statement, not a study). The MSE listing confirms a single-cell 300 mL/min stack at $1,396.95 but states no output pressure, so the TRL 2 claim "up to about 0.4 MPa" was removed from HBN-PRB-001. Generic stack prices (BOM lines 6 and 12) remain unverified estimates.
+- The `model.py` assemblies copy each shape, because a build123d shape can have only one parent compound; without this the STEP export and drawing silently lost parts.
+
+### Recommended next step
+
+TRL 4 is on hold by Amish's instruction, so the next step is a review, not a build: Amish to decide the budget (and whether the supply is in the kit), confirm or reject the relief, supply-cut and RCD proposals, and settle the H2Guard interface points with that project. For the record only, TRL 4 would need a named electrolyzer with a back-pressure rating of at least 357 kPa and an oxygen-in-hydrogen figure, fuel cell supplier acceptance of the gas, an H2Guard design at TRL 3 with a defined interlock output, a lab test report (TST, environment: lab) and build log entries.
+
 ## Session 2026-09-25: /populate to a strong TRL 2
 
 ### What was done

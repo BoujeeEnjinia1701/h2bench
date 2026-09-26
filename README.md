@@ -1,14 +1,14 @@
 # H2Bench
 
-![TRL 2](https://img.shields.io/badge/TRL-2%20of%209-0F766E) ![Hardware: CERN-OHL-S-2.0](https://img.shields.io/badge/hardware-CERN--OHL--S--2.0-111827) ![Software: MIT](https://img.shields.io/badge/software-MIT-111827)
+![TRL 3](https://img.shields.io/badge/TRL-3%20of%209-0F766E) ![Hardware: CERN-OHL-S-2.0](https://img.shields.io/badge/hardware-CERN--OHL--S--2.0-111827) ![Software: MIT](https://img.shields.io/badge/software-MIT-111827)
 
-**Area:** Hydrogen · **TRL:** 2 of 9 (concept formulated) · **Prototype budget:** about $450 USD · **Difficulty:** 4 of 5
+**Area:** Hydrogen · **TRL:** 3 of 9 (proof of concept on paper) · **Prototype budget:** about $450 USD · **Difficulty:** 4 of 5
 
 A teaching bench that splits water with a small electrolyzer, stores a few liters of hydrogen at low pressure and runs a fuel cell, with meters so students can measure efficiency at each step. Protected by H2Guard.
 
 ![H2Bench concept](media/hero.png)
 
-[Interactive 3D model](media/viewer.html) · [Concept blueprint (PDF)](media/concept-blueprint.pdf) · [Review note](docs/REVIEW.md)
+[Interactive 3D model](media/viewer.html) · [Concept blueprint (PDF)](media/concept-blueprint.pdf) · [General arrangement HBN-DWG-001 (PDF)](cad/drawings/HBN-DWG-001.pdf) · [Sizing calculations](docs/04-calcs/01-sizing.md) · [Review note](docs/REVIEW.md)
 
 ## Concept rationale
 
@@ -58,7 +58,9 @@ Students hear about the hydrogen economy but rarely measure it. Teaching kits ar
 
 A teaching bench that splits water with a small electrolyzer, stores a few liters of hydrogen at low pressure and runs a fuel cell, with meters so students can measure efficiency at each step. Protected by H2Guard.
 
-In one lesson a 70 W PEM electrolyzer fills a 2 L tank from 70 to 300 kPa gauge in about 18 min; a 12 W class fuel cell then runs a lamp for about 29 min. Students log every stage at 1 Hz and find a round trip of about 25 % (estimate, HHV basis).
+In one lesson a 70 W PEM electrolyzer fills a 2 L tank from 70 to 300 kPa gauge in 17.7 min; a 12 W class fuel cell then runs a lamp at 10.8 W for 29.0 min. Students log every stage at 1 Hz and find a round trip of about 25 % (HHV basis), each stage measurable to within ±2 %. These are paper figures from the TRL 3 sizing note HBN-CAL-001, not measurements.
+
+At TRL 3 the design meets nine of its sixteen requirements on paper. Cost and hydrogen purity at the fuel cell are not met, and the inventory at full relief lift, the H2Guard interlock, electrolyzer back-pressure and mass are at risk; see [docs/REVIEW.md](docs/REVIEW.md).
 
 Full design precis: [docs/02-concept.md](docs/02-concept.md)
 
@@ -72,7 +74,7 @@ Full design precis: [docs/02-concept.md](docs/02-concept.md)
 - H2Guard detector and interlock, sensing at the high point of a canopy hood
 - Bench frame and canopy hood
 
-The working bill of materials is in [bom/bom.csv](bom/bom.csv). Parts cost about $845 (estimate), well above the $450 budget; see [docs/REVIEW.md](docs/REVIEW.md).
+The priced bill of materials is in [bom/bom.csv](bom/bom.csv). Parts cost $865 ($800 without the bench power supply, H2Guard excluded), well above the $450 budget; a budget of about $850 is proposed, awaiting Amish. See [docs/REVIEW.md](docs/REVIEW.md).
 
 ## Safety
 
