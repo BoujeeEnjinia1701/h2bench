@@ -3,9 +3,9 @@ doc_id: HBN-CAL-001
 title: H2Bench sizing calculations
 project: H2Bench
 doc_type: Calculation note
-version: "0.2"
+version: "0.3"
 status: Draft
-date: '2026-09-25'
+date: '2026-09-26'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -17,11 +17,15 @@ revisions:
   date: '2026-09-25'
   author: Amish Chadha
   change: Recommendations accepted by Amish (DDR-002)
+- version: "0.3"
+  date: '2026-09-26'
+  author: Amish Chadha
+  change: Budget approved by Amish ($885); R14 from not met to met
 ---
 
 # H2Bench sizing calculations
 
-On paper, H2Bench meets ten of its sixteen requirements. **Two are not met**: hydrogen purity at the fuel cell (R9), because electrolyzer oxygen crossover is unknown and there is no deoxidizer, and cost (R14), at $885 against the $850 now in `project.yaml`. **Three are at risk**: the H2Guard interlock (R8), electrolyzer back-pressure (R10, now 332 kPa) and mass (R13, 25.3 kg against 25 kg). Version 0.2 applies the decisions Amish accepted on 2026-09-25 (HBN-DDR-002): the relief valve moves from 350 to 325 kPa gauge, which brings R5 from at risk to met (full-lift inventory 10.5 L to 9.9 L); a pressure switch cuts the electrolyzer supply at 310 kPa gauge, so the relief valve is a backup only; and `budget_usd` rises from $450 to $850 with the bench supply in the kit. The switch and its relay add $20 and 0.15 kg. Setup time (R16) needs hardware to verify. The TRL 2 energy numbers hold: a 17.7 min fill and a 29.0 min discharge return 5.2 Wh of 20.8 Wh, a round trip of 25.1 % on the HHV basis, and students can measure each stage to within 1.8 %.
+On paper, H2Bench meets eleven of its sixteen requirements. **One is not met**: hydrogen purity at the fuel cell (R9), because electrolyzer oxygen crossover is unknown and there is no deoxidizer. Cost (R14) is met with no margin: the kit is $885, and on 2026-09-26 Amish approved a `budget_usd` of $885 to cover the priced BOM (HBN-DDR-002). **Three are at risk**: the H2Guard interlock (R8), electrolyzer back-pressure (R10, now 332 kPa) and mass (R13, 25.3 kg against 25 kg). Version 0.2 applies the decisions Amish accepted on 2026-09-25 (HBN-DDR-002): the relief valve moves from 350 to 325 kPa gauge, which brings R5 from at risk to met (full-lift inventory 10.5 L to 9.9 L); a pressure switch cuts the electrolyzer supply at 310 kPa gauge, so the relief valve is a backup only; and `budget_usd` rises from $450 to $850 with the bench supply in the kit. The switch and its relay add $20 and 0.15 kg. Setup time (R16) needs hardware to verify. The TRL 2 energy numbers hold: a 17.7 min fill and a 29.0 min discharge return 5.2 Wh of 20.8 Wh, a round trip of 25.1 % on the HHV basis, and students can measure each stage to within 1.8 %.
 
 Every number here is printed by `docs/04-calcs/sizing.py` (run from the repo root: `python docs/04-calcs/sizing.py`), which also writes `docs/04-calcs/results.csv`. The script reads the tank and bench dimensions from `cad/src/model.py` and the costs from `bom/bom.csv`. All values are first-principles estimates; nothing is measured.
 
@@ -43,7 +47,7 @@ Every number here is printed by `docs/04-calcs/sizing.py` (run from the repo roo
 | Room and hood | 30 m³ room; 60 m³/h through the canopy duct | Assumed hood share of H2Guard's 150 m³/h continuous exhaust (HGD-PRC-001) |
 | H2Guard | Warning 0.4 % vol (10 % LFL), trip 1.0 % vol (25 % LFL); trip to valve closed 1.1 s | HGD-REQ-001 R2 to R4, HGD-PRC-001 (TRL 2 estimates) |
 | Drier | 50 g silica gel, 10 % usable water uptake | Typical indicating gel at low humidity |
-| Budget | $850 in `project.yaml` (was $450), bench supply included, H2Guard excluded | HBN-DDR-002 |
+| Budget | $885 in `project.yaml` (was $450, then $850), bench supply included, H2Guard excluded | HBN-DDR-002; $885 approved by Amish on 2026-09-26 |
 
 ## 2. Electrolyzer and fill (R2, R3, R10)
 
@@ -145,7 +149,7 @@ The TRL 2 estimate of 18 kg was low; the HDPE deck and the electrolyzer dominate
 
 ## 10. Cost (R14)
 
-The 18-line BOM totals **$885** (H2Guard excluded). Without the bench supply it is $820, and without the supply and the plug-in RCD (where the socket is already protected) $800. `budget_usd` is now $850 with the bench supply included (HBN-DDR-002; it was $450, against which the kit is $435 over). The full kit is **$35 over**; the kit without the supply is $30 under. The two stacks are $400, 45 % of the total. **Not met.** The v0.1 total of $865 rises by $20 for the 310 kPa gauge pressure switch (line 10, $45 to $60) and its relay (line 14, $30 to $35).
+The 18-line BOM totals **$885** (H2Guard excluded). Without the bench supply it is $820, and without the supply and the plug-in RCD (where the socket is already protected) $800. `budget_usd` is now $885 with the bench supply included, approved by Amish on 2026-09-26 to cover the priced BOM (HBN-DDR-002; it was $850, and $450 before that, against which the kit is $435 over). The full kit has **no margin**; the kit without the supply is $65 under. The two stacks are $400, 45 % of the total. **Met**, with no margin. The v0.1 total of $865 rises by $20 for the 310 kPa gauge pressure switch (line 10, $45 to $60) and its relay (line 14, $30 to $35).
 
 ## 11. Logging (R12)
 
@@ -153,7 +157,7 @@ One cycle is 2,804 s, so a 1 Hz log with 10 channels is 2,804 rows, about 224 kB
 
 ## 12. Results
 
-*Table 6. Results against HBN-REQ-001 v0.4. Written to `docs/04-calcs/results.csv`.*
+*Table 6. Results against HBN-REQ-001 v0.5. Written to `docs/04-calcs/results.csv`.*
 
 | ID | Value | Target | Status |
 | --- | --- | --- | --- |
@@ -170,7 +174,7 @@ One cycle is 2,804 s, so a 1 Hz log with 10 channels is 2,804 rows, about 224 kB
 | R11 | Mixed-bed resin with conductivity check; 3.4 g water per fill | 1 µS/cm or less | Met |
 | R12 | 2,804 rows per cycle, about 224 kB | V, I, P, p and T at 1 Hz to CSV | Met |
 | R13 | 900 x 450 x 755 mm; 25.3 kg (22.3 kg without the supply) | 1,000 x 500 mm, 800 mm, 25 kg or less | **At risk** |
-| R14 | $885 full; $820 without the supply; $800 minimum (H2Guard excluded) | $850 or less, supply included | **Not met** |
+| R14 | $885 full; $820 without the supply; $800 minimum (H2Guard excluded) | $885 or less, supply included | Met (no margin) |
 | R15 | Guard clearance 18 mm; relief and vent piped to the canopy | Guard, piped relief, no tool-free fitting | Met |
 | R16 | Vent 3.0 min; setup needs a walk-through with hardware | Setup 15 min or less; safe in 5 min or less | Not verifiable at TRL 3 |
 

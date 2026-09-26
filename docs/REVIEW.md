@@ -35,7 +35,7 @@ Met 10 (was 9), not met 2, at risk 3 (was 4), not verifiable at TRL 3 1.
 - Class demonstration or group practical first.
 - Aluminium or stainless tank.
 - Mass (R13): accept 25.3 kg, carry the supply separately, or a 10 mm deck.
-- Cost (R14): where to find the $35 over the $850 budget.
+- Cost (R14): where to find the $35 over the $850 budget. **Decided by Amish, 2026-09-26: budget set to $885 to cover the priced BOM; see "Session 2026-09-26: budget approved".**
 
 ### Cross-repo actions
 
@@ -184,3 +184,22 @@ Requirements not met or at risk:
 ### Recommended next step
 
 Review this note and the media, then decide items 1, 2 and 9. If approved, run `/advance-trl3` to check the energy, gas law, uncertainty and release calculations in a CAL note, confirm electrolyzer back-pressure and purity with suppliers, and produce the parametric model and drawing sheet. The design is not ready for TRL 4.
+
+## Session 2026-09-26: sources strengthened
+
+README sources were checked with WebFetch and the weaker ones replaced or supported by primary or reputable secondary sources.
+
+- **What sparked the idea:** Encyclopedia.com entry on William Robert Grove replaced by Grove's own paper, "On a gaseous voltaic battery," *Philosophical Magazine* 21 (1842): 417 to 420 (doi:10.1080/14786444208621600, metadata confirmed through Crossref). The 1843 *Philosophical Transactions* link now uses its DOI resolver, and the abstract confirms hydrogen and oxygen on platinum in dilute sulfuric acid and the decomposition of water. The unsupported phrase "the forerunner of the hydrogen fuel cell" was removed.
+- **Namibia row:** Ecofin Agency replaced by *The Namibian* (21 September 2025), which quotes the NUST vice-chancellor on a talent gap of up to 130,000 workers by 2040, plus NUST's own IGNITE GH2 project page (685 graduates and 40 instructors).
+- **Concept rationale:** the $482 to $576 fuel cell price now carries links to the two listings (Fuel Cell Shop, Fuel Cell Store).
+- **Burning platform:** IEA skills survey wording corrected to match the source (some 700 energy companies, unions and training institutions).
+- All other links (IEA Global Hydrogen Review 2025, European Commission, US DOE, PIB, IEA policy database for Chile, Oxford Institute for Energy Studies) were re-fetched and support their claims. No budget change.
+
+## Session 2026-09-26: budget approved
+
+Amish wrote, in chat on 2026-09-26: "i approve all the budget items." The open cost item (O5) is decided: budget set to $885 to cover the priced BOM (HBN-DDR-002 v0.2).
+
+- `project.yaml` `budget_usd` $850 to $885; README budget and cost lines updated.
+- R14 target $850 to $885; status **not met to met**, with no margin ($885 with the bench supply; $820 without; H2Guard excluded).
+- Requirement counts (HBN-CAL-001 v0.3): 11 met, 1 not met (R9), 3 at risk, 1 not verifiable.
+- Documents: HBN-PRB-001 v0.5, HBN-PRC-001 v0.5, HBN-REQ-001 v0.5, HBN-CAL-001 v0.3 (`sizing.py` budget constant 850 to 885, script re-run, `results.csv` regenerated), HBN-DDR-002 v0.2; `bom/bom-notes.md`; PDFs rebuilt. No media shows the budget, so none was regenerated.

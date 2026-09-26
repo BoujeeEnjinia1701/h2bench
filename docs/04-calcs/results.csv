@@ -12,6 +12,6 @@ R10,"Stack H2 side must hold 307 kPa in filling, 317 kPa at the supply cut and 3
 R11,Mixed-bed resin with conductivity check to 1 uS/cm; water use 3.4 g per fill,1 uS/cm or less at the stack inlet,Met
 R12,"2804 rows per cycle, about 224 kB","V, I, P, p, T at 1 Hz to CSV",Met
 R13,"900 x 450 mm, 755 mm tall; 25.3 kg with the supply (22.3 kg without)","1000 x 500 mm, 800 mm, 25 kg or less",At risk
-R14,$885 full; $820 without supply; $800 minimum (H2Guard excluded),"$850 or less (budget_usd, supply included)",Not met
+R14,$885 full; $820 without supply; $800 minimum (H2Guard excluded),"$885 or less (budget_usd, supply included)",Met
 R15,Guard clearance 18 mm; relief and vent piped to the canopy in the model,"Guard, piped relief, no tool-free fitting",Met
 R16,Vent 3.0 min at the needle valve setting; setup time needs a walk-through with hardware,Setup 15 min or less; safe in 5 min or less,Not verifiable at TRL 3

@@ -3,9 +3,9 @@ doc_id: HBN-PRC-001
 title: H2Bench design precis
 project: H2Bench
 doc_type: Design precis
-version: "0.4"
+version: "0.5"
 status: Draft
-date: '2026-09-25'
+date: '2026-09-26'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -25,6 +25,10 @@ revisions:
   date: '2026-09-25'
   author: Amish Chadha
   change: Recommendations accepted by Amish (DDR-002)
+- version: "0.5"
+  date: '2026-09-26'
+  author: Amish Chadha
+  change: Budget approved by Amish ($885)
 ---
 
 # H2Bench design precis
@@ -109,9 +113,9 @@ Table 2. Energy and gas per lesson cycle (HBN-CAL-001).
 | Stored chemical energy | About 94 kJ (HHV), 80 kJ (LHV) | 0.33 mol |
 | Hydrogen measurement | ±1.5 % per fill; each stage efficiency within ±1.8 % | 0.25 % FS transducer on 600 kPa, ±1 K, tank volume calibrated by water fill to ±1 % |
 | Envelope and mass | 900 x 450 x 755 mm; 25.3 kg (22.3 kg without the supply) | `cad/src/model.py`; mass estimate in HBN-CAL-001 |
-| Parts cost | $885, or $820 without the bench supply | `bom/bom.csv`; H2Guard excluded; budget $850 with the supply |
+| Parts cost | $885, or $820 without the bench supply | `bom/bom.csv`; H2Guard excluded; budget $885 with the supply |
 
-The numbers show that one 90 min lesson holds a full cycle with 13 min to spare (R2), the round trip lands where published studies say it should, and students can measure each stage to better than ±2 %, so the bench teaches the right lesson. They also show two requirements not met, cost (R14, $885 against $850) and hydrogen purity at the fuel cell (R9), and three at risk: the H2Guard interlock (R8), electrolyzer back-pressure (R10) and mass (R13). The 325 kPa gauge relief brings the inventory (R5) to met.
+The numbers show that one 90 min lesson holds a full cycle with 13 min to spare (R2), the round trip lands where published studies say it should, and students can measure each stage to better than ±2 %, so the bench teaches the right lesson. They also show one requirement not met, hydrogen purity at the fuel cell (R9), and three at risk: the H2Guard interlock (R8), electrolyzer back-pressure (R10) and mass (R13). The 325 kPa gauge relief brings the inventory (R5) to met.
 
 ## Key design choices
 
@@ -125,7 +129,7 @@ Choices 1 to 10 are **decided by Amish, 2026-09-25: go with recommendation** (HB
 6. **H2Guard as a hard dependency, costed in its own project and shipped with the bench.** Decided (HBN-DDR-002 D6). The bench cannot run without it.
 7. **Tank kept above about 20 kPa gauge between lessons** so air cannot enter; a new or opened tank is purged with hydrogen by pressure cycling before first use (three fill and vent cycles to 300 kPa gauge reduce the air fraction to about 1.6 %). Decided (HBN-DDR-002 D7).
 8. **Canopy hood with a single high point** so the sensor sees any leak first and the fan extracts it. Decided (HBN-DDR-002 D8).
-9. **Budget of $850 with the bench power supply in the kit**, H2Guard costed in its own project. Decided (HBN-DDR-002 D9 and D10); `budget_usd` rose from $450 to $850. The parts cost is $885, so cost (R14) is still not met, by $35.
+9. **Budget of $885 with the bench power supply in the kit**, H2Guard costed in its own project. Decided (HBN-DDR-002 D9 and D10); `budget_usd` rose from $450 to $850, and to $885 on 2026-09-26 to cover the priced BOM (budget approved by Amish). The parts cost is $885, so cost (R14) is met with no margin.
 10. **Pressure protection and venting.** Relief valve at 325 kPa gauge (was 350) so the inventory stays under 10 L even at full lift; a pressure switch that cuts the supply at 310 kPa gauge so the relief valve is a backup only; vent needle valve set for 3 min or more; plug-in 30 mA RCD (BOM line 18). Decided (HBN-DDR-002 D11 to D14).
 
 Still open, awaiting Amish (no recommendation was made): the curriculum and age group for the first worksheets; class demonstration or group practical first; aluminium or stainless tank; and how to bring the mass under 25 kg (carry the supply separately or use a 10 mm deck).
@@ -154,7 +158,7 @@ Still open, awaiting Amish (no recommendation was made): the curriculum and age 
 - [ ] Tank: aluminium or stainless; which certified vessel type is easiest for schools to approve?
 - [ ] Is a 300 kPa gauge tank acceptable to school safety officers, or is option (c) (near-atmospheric storage with a pump) needed?
 - [ ] Which curriculum and age group to align the first worksheets with?
-- [ ] How to find the $35 that brings the kit to the $850 budget (R14).
+- [x] Budget for the $885 kit: set to $885 by Amish on 2026-09-26 (R14).
 - [ ] Which H2Guard output breaks the 9 A supply line, and at what voltage the tank solenoid runs (H2Guard uses a 24 V valve; R8).
 
 Concept media: [blueprint sheet](../media/concept-blueprint.pdf), [interactive 3D model](../media/viewer.html).

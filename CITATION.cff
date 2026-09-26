@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use or build on this design, please cite it as below."
+type: software
+title: "H2Bench"
+abstract: "A teaching bench that splits water with a small electrolyzer, stores a few liters of hydrogen at low pressure and runs a fuel cell, with meters so students can measure efficiency at each step. Protected by H2Guard."
+authors:
+  - given-names: Amish
+    family-names: Chadha
+    affiliation: Design Molecule
+repository-code: "https://github.com/BoujeeEnjinia1701/h2bench"
+url: "https://designmolecule.com"
+license:
+  - CERN-OHL-S-2.0
+  - MIT
+keywords:
+  - open-hardware
+  - hydrogen

@@ -3,9 +3,9 @@ doc_id: HBN-REQ-001
 title: H2Bench requirements
 project: H2Bench
 doc_type: Requirements
-version: "0.4"
+version: "0.5"
 status: Draft
-date: '2026-09-25'
+date: '2026-09-26'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -25,11 +25,15 @@ revisions:
   date: '2026-09-25'
   author: Amish Chadha
   change: Recommendations accepted by Amish (DDR-002)
+- version: "0.5"
+  date: '2026-09-26'
+  author: Amish Chadha
+  change: Budget approved by Amish
 ---
 
 # H2Bench requirements
 
-These requirements were checked by calculation at TRL 3 in HBN-CAL-001 v0.2 (`docs/04-calcs/01-sizing.md`). Version 0.4 applies the decisions Amish accepted on 2026-09-25 (HBN-DDR-002): R14's limit is now the $850 `budget_usd` (was $450), with the bench power supply in the kit and H2Guard costed in its own project; R6 records the 325 kPa gauge relief and the 310 kPa gauge supply cut; and R10's target is restated from 300 kPa to 332 kPa, the relief setting plus the check valve, because a 300 kPa rating did not cover a relief event. Ten requirements are met on paper, **two are not met (R9 and R14)**, three are at risk (R8, R10 and R13) and one (R16) cannot be verified until hardware exists. "Met" means met by calculation or design review, not by test.
+These requirements were checked by calculation at TRL 3 in HBN-CAL-001 v0.3 (`docs/04-calcs/01-sizing.md`). Version 0.4 applies the decisions Amish accepted on 2026-09-25 (HBN-DDR-002): R14's limit is now the $850 `budget_usd` (was $450), with the bench power supply in the kit and H2Guard costed in its own project; R6 records the 325 kPa gauge relief and the 310 kPa gauge supply cut; and R10's target is restated from 300 kPa to 332 kPa, the relief setting plus the check valve, because a 300 kPa rating did not cover a relief event. Version 0.5 raises R14's limit to $885, the budget Amish approved on 2026-09-26 to cover the priced BOM (HBN-DDR-002). Eleven requirements are met on paper, **one is not met (R9)**, three are at risk (R8, R10 and R13) and one (R16) cannot be verified until hardware exists. "Met" means met by calculation or design review, not by test.
 
 Table 1. Requirements and status at TRL 3.
 
@@ -48,7 +52,7 @@ Table 1. Requirements and status at TRL 3.
 | R11 | Water quality | Conductivity 1 µS/cm or less at the stack inlet, shown to students | Met by design (mixed-bed resin and conductivity check) | Datasheet |
 | R12 | Log data students can analyze | Voltage, current, power, tank pressure and temperature at 1 Hz, saved as CSV | Met by design: 2,804 rows, about 224 kB per cycle | Firmware sketch review |
 | R13 | Fit an existing lab bench | Footprint 1,000 x 500 mm or less; height 800 mm or less; mass 25 kg or less | **At risk:** 900 x 450 x 755 mm, but 25.3 kg (22.3 kg without the bench supply) | Parametric model and mass estimate |
-| R14 | Low cost and buildable | Parts cost $850 or less (`budget_usd`, was $450), including the bench power supply and excluding H2Guard, which is costed in its own project and shipped with the bench; hand tools only; no welding | **Not met:** $885, $35 over ($820 without the bench supply) | Priced BOM |
+| R14 | Low cost and buildable | Parts cost $885 or less (`budget_usd`, was $450, then $850), including the bench power supply and excluding H2Guard, which is costed in its own project and shipped with the bench; hand tools only; no welding | Met: $885, no margin ($820 without the bench supply) | Priced BOM |
 | R15 | Guard people from pressure parts | Tank inside a guard; relief and vent piped to the hood; no pressurized fitting that can be opened without a tool | Met by design: 18 mm guard clearance; lines to the canopy in the model | Design review |
 | R16 | Set up and shut down quickly | Setup 15 min or less; tank vented and bench safe in 5 min or less | Not verifiable at TRL 3: the vent takes 3.0 min at the needle valve setting; setup needs a walk-through with hardware | Walk-through when hardware exists |
 

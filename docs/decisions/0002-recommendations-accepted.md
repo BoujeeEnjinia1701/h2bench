@@ -3,9 +3,9 @@ doc_id: HBN-DDR-002
 title: H2Bench recommendations accepted
 project: H2Bench
 doc_type: Design decision record
-version: "0.1"
+version: "0.2"
 status: Draft
-date: '2026-09-25'
+date: '2026-09-26'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -13,6 +13,10 @@ revisions:
   date: '2026-09-25'
   author: Amish Chadha
   change: Record the recommendations accepted by Amish on 2026-09-25, what changed in the repo, and the items still open
+- version: "0.2"
+  date: '2026-09-26'
+  author: Amish Chadha
+  change: Budget approved by Amish ($885)
 ---
 
 # 0002: Recommendations accepted
@@ -62,7 +66,7 @@ No pitch or problem rewording was recommended, so the pitch and problem lines in
 | O2 | Class demonstration or group practical first. No recommendation was made | Proposed, awaiting Amish |
 | O3 | Aluminium or stainless tank. No recommendation was made | Proposed, awaiting Amish |
 | O4 | Mass (R13, 25.3 kg against 25 kg): accept, carry the supply separately, or use a 10 mm deck (saves 0.77 kg). No recommendation was made | Proposed, awaiting Amish |
-| O5 | Cost (R14, $885 against $850): where to find $35. No recommendation was made | Proposed, awaiting Amish |
+| O5 | Cost (R14, $885 against $850): where to find $35. No recommendation was made | Decided by Amish, 2026-09-26: budget set to $885 (see below) |
 
 ## Consequences
 
@@ -70,3 +74,11 @@ No pitch or problem rewording was recommended, so the pitch and problem lines in
 - Documents bumped: HBN-PRB-001 v0.4, HBN-PRC-001 v0.4, HBN-REQ-001 v0.4, HBN-CAL-001 v0.2, HBN-DDR-001 v0.2; drawing HBN-DWG-001 Rev P2.
 - Cross-repo action: settle the interlock interface with H2Guard (D15). Not edited here.
 - TRL 4 work (building the bench, supplier confirmation of back-pressure and purity, purchasing, lab tests, firmware beyond a sketch) remains on hold.
+
+## Budget approved, 2026-09-26
+
+On 2026-09-26 Amish wrote, in chat: "i approve all the budget items."
+
+- Budget set to $885 to cover the priced BOM: decided by Amish, 2026-09-26. This settles O5. The 18-line BOM is $885 with the bench supply (H2Guard excluded), so R14 moves from not met to met, with no margin.
+- Requirement status (HBN-CAL-001 v0.3): met 11, not met 1 (R9 purity), at risk 3 (R8, R10, R13), not verifiable at TRL 3 1 (R16).
+- Files changed: `project.yaml` (`budget_usd` 850 to 885); HBN-REQ-001 v0.5; HBN-CAL-001 v0.3, `docs/04-calcs/sizing.py` (hard-coded budget 850 to 885) and `results.csv`; HBN-PRB-001 v0.5 and HBN-PRC-001 v0.5 (budget figure); `README.md`; `bom/bom-notes.md`; `docs/REVIEW.md`.

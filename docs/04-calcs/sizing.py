@@ -89,7 +89,7 @@ MASS = [
 ]
 MASS_LIMIT = 25.0
 
-BUDGET = 850.0                   # budget_usd in project.yaml (raised from 450, HBN-DDR-002)
+BUDGET = 885.0                   # budget_usd in project.yaml (450 to 850, HBN-DDR-002; 885 approved by Amish 2026-09-26)
 BUDGET_OLD = 450.0
 
 rows = []
@@ -348,7 +348,7 @@ total = sum(cost.values())
 no_psu = total - cost["4"]
 minimum = no_psu - cost["18"]
 say(f"BOM lines {len(bom)}; total ${total:.0f}; without the bench supply ${no_psu:.0f}; without supply and RCD ${minimum:.0f}")
-say(f"against budget_usd ${BUDGET:.0f}: {'over' if total > BUDGET else 'under'} by ${abs(total - BUDGET):.0f}; without supply under by ${BUDGET - no_psu:.0f}; minimum kit under by ${BUDGET - minimum:.0f}")
+say(f"against budget_usd ${BUDGET:.0f}: {'no margin' if total == BUDGET else ('over' if total > BUDGET else 'under') + f' by ${abs(total - BUDGET):.0f}'}; without supply under by ${BUDGET - no_psu:.0f}; minimum kit under by ${BUDGET - minimum:.0f}")
 say(f"against the former ${BUDGET_OLD:.0f}: over by ${total - BUDGET_OLD:.0f}")
 say(f"two stacks ${cost['6'] + cost['12']:.0f} ({(cost['6'] + cost['12']) / total * 100:.0f} % of total)")
 res("R14", f"${total:.0f} full; ${no_psu:.0f} without supply; ${minimum:.0f} minimum (H2Guard excluded)",
