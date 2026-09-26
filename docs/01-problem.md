@@ -3,7 +3,7 @@ doc_id: HBN-PRB-001
 title: H2Bench problem statement
 project: H2Bench
 doc_type: Problem statement
-version: "0.3"
+version: "0.4"
 status: Draft
 date: '2026-09-25'
 author: Amish Chadha
@@ -21,6 +21,10 @@ revisions:
   date: '2026-09-25'
   author: Amish Chadha
   change: TRL 3 update; record the first-user and storage choices adopted for TRL 3 (HBN-DDR-001), cost and inventory figures from HBN-CAL-001, MSE listing checked
+- version: "0.4"
+  date: '2026-09-25'
+  author: Amish Chadha
+  change: Recommendations accepted by Amish (DDR-002)
 ---
 
 # H2Bench problem statement
@@ -43,7 +47,7 @@ H2Bench is an open teaching bench at a scale large enough to measure (tens of wa
 
 | User | Need | Context |
 | --- | --- | --- |
-| Vocational hydrogen technician trainees (first users, adopted for TRL 3 under Amish's 2026-09-25 instruction, open for his review; HBN-DDR-001) | Safe-handling practice on real hardware and measured efficiencies | Supervised courses with trained instructors |
+| Vocational hydrogen technician trainees (first users; decided by Amish, 2026-09-25, HBN-DDR-002) | Safe-handling practice on real hardware and measured efficiencies | Supervised courses with trained instructors |
 | Secondary and vocational students (about 15 to 19 years) | See and measure each energy conversion; calculate efficiencies from their own data | 60 to 90 min practical sessions, groups of 3 to 5, supervised |
 | University engineering students | Polarization curves, Faraday efficiency, gas law measurements, uncertainty analysis | Teaching lab, longer sessions, spreadsheet or notebook analysis |
 | Technical and vocational trainers | A rig that trains safe habits: purge, leak check, interlock test, lockout | Hydrogen technician courses in countries building hydrogen industries |
@@ -59,8 +63,8 @@ H2Bench is an open teaching bench at a scale large enough to measure (tens of wa
 
 ## Constraints
 
-- Garage-buildable prototype, $450 USD in `project.yaml`. The priced BOM is $865 in full, or $800 without the bench power supply (HBN-CAL-001). A budget of about $850 was recommended at TRL 2 and is still awaiting Amish (HBN-DDR-001 item 9).
-- Hydrogen inventory under 10 L at 20 °C and 101.3 kPa, stored at 300 kPa gauge or less in a rigid tank (adopted for TRL 3, HBN-DDR-001). No compression beyond what the electrolyzer does itself.
+- Garage-buildable prototype, $850 USD in `project.yaml` (raised from $450 by Amish's decision of 2026-09-25, HBN-DDR-002), with the bench power supply in the kit and H2Guard costed in its own project. The priced BOM is $885 in full, or $820 without the bench power supply (HBN-CAL-001 v0.2), so cost is still $35 over.
+- Hydrogen inventory under 10 L at 20 °C and 101.3 kPa, stored at 300 kPa gauge or less in a rigid tank, with a 310 kPa gauge supply cut and a 325 kPa gauge relief (decided, HBN-DDR-002). No compression beyond what the electrolyzer does itself.
 - Electrolyzer under 100 W and fuel cell under 50 W, as the pitch states.
 - Operates only when the H2Guard detector, extraction fan and interlock are active.
 - Off-the-shelf gas components; no welding or pressure-vessel fabrication.
@@ -85,6 +89,6 @@ H2Bench is an open teaching bench at a scale large enough to measure (tens of wa
 
 ## Open questions
 
-- Which curricula to align with first (for example a national vocational hydrogen technician standard or an A-level or IB practical)?
+- Which curricula to align with first (for example a national vocational hydrogen technician standard or an A-level or IB practical)? (Proposed, awaiting Amish; no recommendation.)
 - Will school safety officers accept a 300 kPa gauge buffer tank, or is a near-atmospheric gasbag with a small pump easier to approve?
 - Is a class demonstration (teacher-run) or a group practical (student-run) the first use case? (Proposed, awaiting Amish; no recommendation.)

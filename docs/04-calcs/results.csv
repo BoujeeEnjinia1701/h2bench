@@ -3,15 +3,15 @@ R1,"Worst stage 1.8 % (hydrogen per fill 1.5 %, power 1 %)",Each within 5 % rela
 R2,17.7 min fill + 29.0 min discharge = 46.7 min,60 min or less,Met
 R3,70.2 W (79 W with aged cells),100 W or less,Met
 R4,10.8 W net (11.7 W gross); 9.8 W if cells fall to 0.55 V,10 to 50 W,Met
-R5,8.5 L at 300 kPa g; 9.6 L at relief set; 10.5 L at full relief lift and 15 C,10 L or less,At risk
-R6,"300 kPa g working, relief 350 kPa g; hoop stress 18 MPa at 1 MPa",300 / 350 kPa g or less; vessel 1 MPa or more,Met
-R7,0.032 % vol (0.8 % LFL); 0.035 % worst case,Below 25 % LFL in 30 m3,Met
+R5,8.5 L at 300 kPa g; 9.0 L at relief set; 9.9 L at full relief lift and 15 C,10 L or less,Met
+R6,"300 kPa g working, relief 325 kPa g; hoop stress 18 MPa at 1 MPa",300 / 350 kPa g or less; vessel 1 MPa or more,Met
+R7,0.030 % vol (0.8 % LFL); 0.033 % worst case,Below 25 % LFL in 30 m3,Met
 R8,"1.1 s from trip to valve closed, from H2Guard TRL 2 figures; H2Guard valve is 24 V, H2Bench solenoid 12 V",Trip cuts supply and closes solenoid within 2 s; fan runs,At risk
 R9,Water removed by the drier; oxygen crossover in the stack not known; no deoxidizer,99.995 % or better (fuel cell listing),Not met
-R10,Stack H2 side must hold 307 kPa in normal filling and 357 kPa at relief set (392 kPa at full lift); no rating in hand,300 kPa gauge or more over the O2 side,At risk
+R10,"Stack H2 side must hold 307 kPa in filling, 317 kPa at the supply cut and 332 kPa at relief set; no rating in hand",332 kPa or more over the O2 side,At risk
 R11,Mixed-bed resin with conductivity check to 1 uS/cm; water use 3.4 g per fill,1 uS/cm or less at the stack inlet,Met
 R12,"2804 rows per cycle, about 224 kB","V, I, P, p, T at 1 Hz to CSV",Met
-R13,"900 x 450 mm, 755 mm tall; 25.2 kg with the supply (22.2 kg without)","1000 x 500 mm, 800 mm, 25 kg or less",At risk
-R14,$865 full; $800 without supply; $780 minimum (H2Guard excluded),"$450 or less (proposed $850, awaiting Amish)",Not met
+R13,"900 x 450 mm, 755 mm tall; 25.3 kg with the supply (22.3 kg without)","1000 x 500 mm, 800 mm, 25 kg or less",At risk
+R14,$885 full; $820 without supply; $800 minimum (H2Guard excluded),"$850 or less (budget_usd, supply included)",Not met
 R15,Guard clearance 18 mm; relief and vent piped to the canopy in the model,"Guard, piped relief, no tool-free fitting",Met
 R16,Vent 3.0 min at the needle valve setting; setup time needs a walk-through with hardware,Setup 15 min or less; safe in 5 min or less,Not verifiable at TRL 3

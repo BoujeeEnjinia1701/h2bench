@@ -1,4 +1,4 @@
-"""H2Bench parametric model (build123d), TRL 3.
+"""H2Bench parametric model (build123d), TRL 3 (HBN-DDR-002 decisions applied).
 
 Run from the repo root:  python cad/src/model.py
 Exports STEP and STL into cad/step and cad/stl and prints the main envelopes.
@@ -201,13 +201,16 @@ def build_parts(p=PARAMS):
                    - b(TX - go + 5, TX + go - 5, GY - go + 5, GY + go - 5, g_top - 9, g_top + 1))
     parts.append(("Hydrogen buffer tank, 2 L, with guard", tank, "#E5E7EB", 9, (0, -120, 60)))
 
-    # 10 Tank manifold on the top boss: transducer, thermistor, relief valve, gauge, vent needle valve
+    # 10 Tank manifold on the top boss: transducer, thermistor, relief valve (325 kPa g), gauge,
+    #    vent needle valve and the pressure switch that cuts the supply at 310 kPa g (HBN-DDR-002)
     mz = tank_top
     manifold = (vc(TX, GY, mz - 2, mz + 15, 10)
                 + b(TX - 30, TX + 30, GY - 20, GY + 20, mz + 15, mz + 45)
                 + vc(TX + 20, GY, mz + 45, mz + 80, 8)                      # relief valve
                 + Pos(TX - 5, GY - 27, mz + 65) * _ycyl(0, -7, 7, 0, 24)    # gauge
-                + vc(TX - 20, GY, mz + 45, mz + 70, 6))                     # vent needle valve
+                + vc(TX - 20, GY, mz + 45, mz + 70, 6)                      # vent needle valve
+                + _ycyl(TX, GY + 20, GY + 32, mz + 30, 6)                   # port to the cut switch
+                + b(TX - 14, TX + 14, GY + 32, GY + 56, mz + 16, mz + 44))  # 310 kPa g cut switch
     parts.append(("Tank manifold: sensors, relief, gauge", manifold, "#C2410C", 10, (0, -120, 250)))
 
     # 11 Normally closed solenoid valve and regulator

@@ -9,6 +9,7 @@ trl_evidence:
   - docs/02-concept.md
   - docs/03-requirements.md
   - docs/decisions/0001-trl2-review-decisions.md
+  - docs/decisions/0002-recommendations-accepted.md
   - docs/04-calcs/01-sizing.md
   - docs/04-calcs/sizing.py
   - docs/04-calcs/results.csv
@@ -24,7 +25,7 @@ pitch: >-
   A teaching bench that splits water with a small electrolyzer, stores a few liters of hydrogen at low pressure and runs a fuel cell, with meters so students can measure efficiency at each step. Protected by H2Guard.
 problem: >-
   Students hear about the hydrogen economy but rarely measure it. Teaching kits are either toys or costly lab systems, and neither shows round-trip losses clearly.
-budget_usd: 450
+budget_usd: 850
 difficulty: 4  # 1 easiest, 5 hardest
 hero_image: media/hero.png
 licenses:

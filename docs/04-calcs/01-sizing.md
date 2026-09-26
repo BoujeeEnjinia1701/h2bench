@@ -3,7 +3,7 @@ doc_id: HBN-CAL-001
 title: H2Bench sizing calculations
 project: H2Bench
 doc_type: Calculation note
-version: "0.1"
+version: "0.2"
 status: Draft
 date: '2026-09-25'
 author: Amish Chadha
@@ -13,11 +13,15 @@ revisions:
   date: '2026-09-25'
   author: Amish Chadha
   change: First TRL 3 sizing note (electrolyzer and fill, inventory and pressure, fuel cell, energy balance, measurement uncertainty, hood and venting, interlock, water and drier, envelope and mass, cost, logging)
+- version: "0.2"
+  date: '2026-09-25'
+  author: Amish Chadha
+  change: Recommendations accepted by Amish (DDR-002)
 ---
 
 # H2Bench sizing calculations
 
-On paper, H2Bench meets nine of its sixteen requirements. **Two are not met**: hydrogen purity at the fuel cell (R9), because electrolyzer oxygen crossover is unknown and there is no deoxidizer, and cost (R14), at $865 against the $450 in `project.yaml` and $15 over the $850 recommended at TRL 2. **Four are at risk**: inventory at full relief lift (R5, 10.5 L against 10 L), the H2Guard interlock (R8), electrolyzer back-pressure (R10) and mass (R13, 25.2 kg against 25 kg). Setup time (R16) needs hardware to verify. The TRL 2 energy numbers hold: a 17.7 min fill and a 29.0 min discharge return 5.2 Wh of 20.8 Wh, a round trip of 25.1 % on the HHV basis, and students can measure each stage to within 1.8 %.
+On paper, H2Bench meets ten of its sixteen requirements. **Two are not met**: hydrogen purity at the fuel cell (R9), because electrolyzer oxygen crossover is unknown and there is no deoxidizer, and cost (R14), at $885 against the $850 now in `project.yaml`. **Three are at risk**: the H2Guard interlock (R8), electrolyzer back-pressure (R10, now 332 kPa) and mass (R13, 25.3 kg against 25 kg). Version 0.2 applies the decisions Amish accepted on 2026-09-25 (HBN-DDR-002): the relief valve moves from 350 to 325 kPa gauge, which brings R5 from at risk to met (full-lift inventory 10.5 L to 9.9 L); a pressure switch cuts the electrolyzer supply at 310 kPa gauge, so the relief valve is a backup only; and `budget_usd` rises from $450 to $850 with the bench supply in the kit. The switch and its relay add $20 and 0.15 kg. Setup time (R16) needs hardware to verify. The TRL 2 energy numbers hold: a 17.7 min fill and a 29.0 min discharge return 5.2 Wh of 20.8 Wh, a round trip of 25.1 % on the HHV basis, and students can measure each stage to within 1.8 %.
 
 Every number here is printed by `docs/04-calcs/sizing.py` (run from the repo root: `python docs/04-calcs/sizing.py`), which also writes `docs/04-calcs/results.csv`. The script reads the tank and bench dimensions from `cad/src/model.py` and the costs from `bom/bom.csv`. All values are first-principles estimates; nothing is measured.
 
@@ -31,7 +35,7 @@ Every number here is printed by `docs/04-calcs/sizing.py` (run from the repo roo
 | Electrolyzer | 4 cells, 1.95 V per cell, 9 A, Faraday efficiency 95 %; 2.20 V per cell at end of life | HBN-PRC-001; generic 56 cm² class cells |
 | Tank | 2.000 L internal (inner radius 52 mm, 200.8 mm straight, hemispherical top), 3 mm aluminium wall | `cad/src/model.py` |
 | Gas volume outside the tank at tank pressure | 0.15 L (separator headspace, drier, lines) | Estimate |
-| Pressures | Fill 70 to 300 kPa gauge; relief 350 kPa gauge with 10 % overpressure at full lift; check valve 7 kPa; kept at 20 kPa gauge overnight | HBN-PRC-001, typical relief valve |
+| Pressures | Fill 70 to 300 kPa gauge; supply cut by a pressure switch at 310 kPa gauge; relief 325 kPa gauge with 10 % overpressure at full lift; check valve 7 kPa; kept at 20 kPa gauge overnight | HBN-PRC-001 v0.4, HBN-DDR-002, typical relief valve |
 | Temperatures | Lab 20 °C; coldest 15 °C; separator gas 25 °C | HBN-PRB-001 |
 | Storage loss | 2 % of the hydrogen made per cycle | Estimate, to be measured |
 | Fuel cell | 13 cells, 0.60 V at 1.5 A (7.8 V, 11.7 W), fuel utilization 95 %, 0.9 W fan and controls; 0.18 L/min at full output; 45 to 55 kPa gauge supply; 99.995 % purity | Listing for the 12 W class ([Fuel Cell Store](https://www.fuelcellstore.com/horizon-12-watt-pem-fuel-cell), checked 2026-09-25) |
@@ -39,7 +43,7 @@ Every number here is printed by `docs/04-calcs/sizing.py` (run from the repo roo
 | Room and hood | 30 m³ room; 60 m³/h through the canopy duct | Assumed hood share of H2Guard's 150 m³/h continuous exhaust (HGD-PRC-001) |
 | H2Guard | Warning 0.4 % vol (10 % LFL), trip 1.0 % vol (25 % LFL); trip to valve closed 1.1 s | HGD-REQ-001 R2 to R4, HGD-PRC-001 (TRL 2 estimates) |
 | Drier | 50 g silica gel, 10 % usable water uptake | Typical indicating gel at low humidity |
-| Budget | $450 in `project.yaml`; $850 recommended at TRL 2, awaiting Amish | HBN-DDR-001 item 9 |
+| Budget | $850 in `project.yaml` (was $450), bench supply included, H2Guard excluded | HBN-DDR-002 |
 
 ## 2. Electrolyzer and fill (R2, R3, R10)
 
@@ -47,7 +51,7 @@ The stack draws 7.8 V x 9 A = **70.2 W** (79 W with aged cells at 2.20 V), insid
 
 The electrolyzer compresses its own hydrogen. The Nernst term at 300 kPa gauge is **17.4 mV per cell**, 0.89 % of the cell voltage, so no compressor is needed.
 
-**Back-pressure (R10).** The membrane must hold the tank pressure plus the check valve cracking pressure over the oxygen side: **307 kPa** in normal filling, **357 kPa** when the relief valve starts to lift and 392 kPa at full lift. R10's 300 kPa target is therefore too low to cover a relief event, and no generic stack rating is in hand. At risk. A 310 kPa gauge cut of the supply (HBN-DDR-001 item 13) would keep the relief valve as a backup only.
+**Back-pressure (R10).** The membrane must hold the tank pressure plus the check valve cracking pressure over the oxygen side: **307 kPa** in normal filling and **317 kPa** at the 310 kPa gauge supply cut. The supply cut stops the stack before the relief valve can lift, so the relief is a backup only; if the cut failed, the membrane would see **332 kPa** at the 325 kPa gauge relief setting and 365 kPa at full lift. R10 is restated as 332 kPa or more (HBN-REQ-001 v0.4, was 300 kPa). No generic stack rating is in hand. At risk.
 
 ## 3. Inventory and pressure (R5, R6, R7)
 
@@ -57,14 +61,14 @@ The electrolyzer compresses its own hydrogen. The Nernst term at 300 kPa gauge i
 | --- | --- |
 | Tank at 300 kPa gauge | 0.3293 mol, 7.92 L, 0.664 g |
 | Tank and lines at 300 kPa gauge | 8.52 L |
-| Tank and lines at relief set, 350 kPa gauge | 9.58 L (9.74 L at 15 °C) |
-| Tank and lines at full relief lift (385 kPa gauge) and 15 °C | **10.50 L** |
+| Tank and lines at relief set, 325 kPa gauge | 9.05 L (9.20 L at 15 °C) |
+| Tank and lines at full relief lift (358 kPa gauge) and 15 °C | **9.90 L** |
 
-The TRL 2 note gave 7.9 L "at the relief setting"; that is the tank alone at the working pressure. At the relief set point the inventory is 9.6 L, which still meets R5, but at full relief lift on a cold day it is 10.5 L. **R5 is at risk.** A relief set at 329 kPa gauge or less keeps even the full-lift case under 10 L; 325 kPa gauge is proposed (HBN-DDR-001 item 13).
+The TRL 2 note gave 7.9 L "at the relief setting"; that is the tank alone at the working pressure. With the relief at 350 kPa gauge (v0.1) the full-lift case on a cold day was 10.5 L. A relief set at 329 kPa gauge or less keeps even that case under 10 L, and 325 kPa gauge is now decided (HBN-DDR-002): 9.0 L at the relief set point and **9.9 L** at full lift and 15 °C. **R5 is met**, with a 0.1 L margin in the worst case.
 
-**Pressure parts (R6).** Working 300 kPa gauge, relief 350 kPa gauge. The modeled vessel (110 mm outside diameter, 3 mm aluminium wall) has a hoop stress of 17.8 MPa at its 1 MPa rating and 71.3 MPa at four times that, against a 6061-T6 yield of 276 MPa. Stored pressure energy is **646 J** at 300 kPa gauge (776 J at 350 kPa gauge), by isentropic expansion to atmosphere. Stored chemical energy is 94 kJ (HHV), 80 kJ (LHV). Met.
+**Pressure parts (R6).** Working 300 kPa gauge, supply cut 310 kPa gauge, relief 325 kPa gauge. The modeled vessel (110 mm outside diameter, 3 mm aluminium wall) has a hoop stress of 17.8 MPa at its 1 MPa rating and 71.3 MPa at four times that, against a 6061-T6 yield of 276 MPa. Stored pressure energy is **646 J** at 300 kPa gauge (710 J at the 325 kPa gauge relief setting), by isentropic expansion to atmosphere. Stored chemical energy is 94 kJ (HHV), 80 kJ (LHV). Met.
 
-**Room release (R7).** The relief-set inventory mixed into a 30 m³ room gives **0.032 % by volume, 0.80 % of the lower flammable limit**; the worst case is 0.035 %. Met by a wide margin. H2Guard's proposed inventory rule (1 % of room volume, 300 L for 30 m³, HGD-REQ-001 R9) is met thirtyfold.
+**Room release (R7).** The relief-set inventory mixed into a 30 m³ room gives **0.030 % by volume, 0.75 % of the lower flammable limit**; the worst case is 0.033 %. Met by a wide margin. H2Guard's proposed inventory rule (1 % of room volume, 300 L for 30 m³, HGD-REQ-001 R9) is met thirtyfold.
 
 ## 4. Fuel cell and discharge (R2, R4)
 
@@ -130,18 +134,18 @@ The model's envelope above the lab table is **900 x 450 x 755 mm**, inside 1,000
 | 6 Electrolyzer stack | 3.00 |
 | 7 and 8 Separator, drier, check valve and arrestor | 0.70 |
 | 9 Tank shell (from the model) and guard | 0.80 + 1.40 |
-| 10 and 11 Manifold, regulator and solenoid | 1.20 |
+| 10 and 11 Manifold with cut switch, regulator and solenoid | 1.30 |
 | 12 Fuel cell (275 g listed) with stand and controller | 0.50 |
-| 13 and 14 Load, lamp, meters and display | 0.70 |
+| 13 and 14 Load, lamp, meters, display and cut relay | 0.75 |
 | 15 H2Guard parts on the bench | 1.50 |
 | 16 and 17 Tubing, wiring and hardware | 1.30 |
-| Total | **25.2** (22.2 without the supply) |
+| Total | **25.3** (22.3 without the supply) |
 
-The TRL 2 estimate of 18 kg was low; the HDPE deck and the electrolyzer dominate. At 25.2 kg against 25 kg, **R13 is at risk**. It is met if the bench supply is carried separately, or with a 10 mm deck (saving about 0.8 kg).
+The TRL 2 estimate of 18 kg was low; the HDPE deck and the electrolyzer dominate. At 25.3 kg against 25 kg (25.2 kg in v0.1; the cut switch and relay add 0.15 kg), **R13 is at risk**. It is met if the bench supply is carried separately, or with a 10 mm deck (saving about 0.8 kg); no option has been chosen (HBN-DDR-002, open).
 
 ## 10. Cost (R14)
 
-The 18-line BOM totals **$865** (H2Guard excluded). Without the bench supply it is $800, and without the supply and the plug-in RCD (where the socket is already protected) $780. Against the $450 in `project.yaml` the full kit is $415 over; against the $850 recommended at TRL 2 (awaiting Amish) it is $15 over, while the kit without the supply is $50 under. The two stacks are $400, 46 % of the total. **Not met.** The TRL 2 total of $845 rises by $20 for the RCD line.
+The 18-line BOM totals **$885** (H2Guard excluded). Without the bench supply it is $820, and without the supply and the plug-in RCD (where the socket is already protected) $800. `budget_usd` is now $850 with the bench supply included (HBN-DDR-002; it was $450, against which the kit is $435 over). The full kit is **$35 over**; the kit without the supply is $30 under. The two stacks are $400, 45 % of the total. **Not met.** The v0.1 total of $865 rises by $20 for the 310 kPa gauge pressure switch (line 10, $45 to $60) and its relay (line 14, $30 to $35).
 
 ## 11. Logging (R12)
 
@@ -149,7 +153,7 @@ One cycle is 2,804 s, so a 1 Hz log with 10 channels is 2,804 rows, about 224 kB
 
 ## 12. Results
 
-*Table 6. Results against HBN-REQ-001 v0.3. Written to `docs/04-calcs/results.csv`.*
+*Table 6. Results against HBN-REQ-001 v0.4. Written to `docs/04-calcs/results.csv`.*
 
 | ID | Value | Target | Status |
 | --- | --- | --- | --- |
@@ -157,23 +161,23 @@ One cycle is 2,804 s, so a 1 Hz log with 10 channels is 2,804 rows, about 224 kB
 | R2 | 17.7 min fill + 29.0 min discharge = 46.7 min | 60 min or less | Met |
 | R3 | 70.2 W (79 W with aged cells) | 100 W or less | Met |
 | R4 | 10.8 W net (11.7 W gross); 9.8 W if cells fall to 0.55 V | 10 to 50 W | Met |
-| R5 | 8.5 L at 300 kPa gauge; 9.6 L at relief set; 10.5 L at full relief lift and 15 °C | 10 L or less | **At risk** |
-| R6 | 300 kPa gauge working, relief 350 kPa gauge; hoop stress 18 MPa at 1 MPa | 300 and 350 kPa gauge or less; vessel 1 MPa or more | Met |
-| R7 | 0.032 % by volume (0.8 % LFL); 0.035 % worst case | Below 25 % LFL in 30 m³ | Met |
+| R5 | 8.5 L at 300 kPa gauge; 9.0 L at relief set; 9.9 L at full relief lift and 15 °C | 10 L or less | Met |
+| R6 | 300 kPa gauge working, relief 325 kPa gauge; hoop stress 18 MPa at 1 MPa | 300 and 350 kPa gauge or less; vessel 1 MPa or more | Met |
+| R7 | 0.030 % by volume (0.8 % LFL); 0.033 % worst case | Below 25 % LFL in 30 m³ | Met |
 | R8 | 1.1 s trip to valve closed, from H2Guard TRL 2 figures; 24 V and 12 V valve mismatch | Supply cut and solenoid closed within 2 s; fan runs | **At risk** |
 | R9 | Water removed; oxygen crossover unknown; no deoxidizer | 99.995 % or better | **Not met** |
-| R10 | Needs 307 kPa in filling, 357 kPa at relief set, 392 kPa at full lift; no rating in hand | 300 kPa or more over the O2 side | **At risk** |
+| R10 | Needs 307 kPa in filling, 317 kPa at the supply cut, 332 kPa at relief set; no rating in hand | 332 kPa or more over the O2 side | **At risk** |
 | R11 | Mixed-bed resin with conductivity check; 3.4 g water per fill | 1 µS/cm or less | Met |
 | R12 | 2,804 rows per cycle, about 224 kB | V, I, P, p and T at 1 Hz to CSV | Met |
-| R13 | 900 x 450 x 755 mm; 25.2 kg (22.2 kg without the supply) | 1,000 x 500 mm, 800 mm, 25 kg or less | **At risk** |
-| R14 | $865 full; $800 without the supply; $780 minimum (H2Guard excluded) | $450 or less (proposed $850, awaiting Amish) | **Not met** |
+| R13 | 900 x 450 x 755 mm; 25.3 kg (22.3 kg without the supply) | 1,000 x 500 mm, 800 mm, 25 kg or less | **At risk** |
+| R14 | $885 full; $820 without the supply; $800 minimum (H2Guard excluded) | $850 or less, supply included | **Not met** |
 | R15 | Guard clearance 18 mm; relief and vent piped to the canopy | Guard, piped relief, no tool-free fitting | Met |
 | R16 | Vent 3.0 min; setup needs a walk-through with hardware | Setup 15 min or less; safe in 5 min or less | Not verifiable at TRL 3 |
 
 ## 13. Safety
 
-> **Safety:** Hydrogen is flammable from about 4 to 74 % in air and ignites with about 0.02 mJ. These calculations bound the inventory (10.5 L worst case) and the concentration at the duct, but they do not replace H2Guard's detection and interlock, supervision, or a site risk assessment. H2Bench is a research and teaching prototype, not certified laboratory equipment.
+> **Safety:** Hydrogen is flammable from about 4 to 74 % in air and ignites with about 0.02 mJ. These calculations bound the inventory (9.9 L worst case) and the concentration at the duct, but they do not replace H2Guard's detection and interlock, supervision, or a site risk assessment. H2Bench is a research and teaching prototype, not certified laboratory equipment.
 
-> **Safety:** The tank and lines hold up to 776 J of pressure energy at the relief setting. Use only vessels and fittings rated 1 MPa or more for hydrogen, keep the guard in place and never open a pressurized fitting.
+> **Safety:** The tank and lines hold up to 710 J of pressure energy at the relief setting. The 310 kPa gauge supply cut keeps the relief valve as a backup; test the cut before each lesson series. Use only vessels and fittings rated 1 MPa or more for hydrogen, keep the guard in place and never open a pressurized fitting.
 
 > **Safety:** Vent slowly. Venting a full tank in under about 90 s can raise the concentration at the duct past H2Guard's warning level; the needle valve is set for 3 min or more.

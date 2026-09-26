@@ -1,4 +1,4 @@
-"""H2Bench sizing calculations, HBN-CAL-001 v0.1 (TRL 3).
+"""H2Bench sizing calculations, HBN-CAL-001 v0.2 (TRL 3, recommendations accepted by Amish, HBN-DDR-002).
 
 Run from the repo root:  python docs/04-calcs/sizing.py
 Prints every number quoted in docs/04-calcs/01-sizing.md and writes docs/04-calcs/results.csv.
@@ -35,7 +35,8 @@ V_TN = 1.481                     # V, thermoneutral voltage (HHV)
 # Tank and pressures (kPa gauge unless noted)
 V_TANK = tank_internal_volume_l()          # L, from the model (2.000)
 V_LINES = 0.15                   # L, separator headspace, drier and lines at tank pressure
-P_LOW, P_HIGH, P_RELIEF, P_KEEP = 70.0, 300.0, 350.0, 20.0
+P_LOW, P_HIGH, P_RELIEF, P_KEEP = 70.0, 300.0, 325.0, 20.0
+P_CUT = 310.0                    # kPa gauge, pressure switch cuts the electrolyzer supply (HBN-DDR-002)
 RELIEF_ACCUM = 0.10              # relief valve overpressure at full lift, fraction of set
 CRACK = 7.0                      # check valve cracking pressure
 T_COLD = 288.15                  # K, 15 degC lab (coldest in HBN-PRB-001)
@@ -78,18 +79,18 @@ MASS = [
     ("8 Check valve and flame arrestor", 0.3),
     ("9 Tank shell (aluminium, from the model) ", None),   # filled below
     ("9 Cradle and steel rod guard", 1.4),
-    ("10 Manifold", 0.6),
+    ("10 Manifold with high-pressure cut switch", 0.7),
     ("11 Regulator and solenoid", 0.6),
     ("12 Fuel cell (275 g listed) with stand and controller", 0.5),
     ("13 Load and lamp", 0.4),
-    ("14 Meters, logger and display", 0.3),
+    ("14 Meters, logger, display and cut relay", 0.35),
     ("15 H2Guard parts on the bench (sensor, fan, controller)", 1.5),
     ("16 and 17 Tubing, wiring, hardware", 1.3),
 ]
 MASS_LIMIT = 25.0
 
-BUDGET = 450.0                   # budget_usd in project.yaml
-BUDGET_PROPOSED = 850.0          # REVIEW.md 2026-09-25 recommendation, awaiting Amish
+BUDGET = 850.0                   # budget_usd in project.yaml (raised from 450, HBN-DDR-002)
+BUDGET_OLD = 450.0
 
 rows = []
 
@@ -136,12 +137,12 @@ say(f"energy in {e_in:.2f} Wh, H2 (HHV) {e_h2:.2f} Wh, electrolyzer efficiency {
 say(f"compression term {comp_mv:.1f} mV per cell at {P_HIGH:.0f} kPa g ({comp_mv / 1000 / V_CELL_ELY * 100:.2f} % of cell voltage)")
 dp_membrane = P_RELIEF * (1 + RELIEF_ACCUM) + CRACK
 dp_membrane_set = P_RELIEF + CRACK
-say(f"membrane differential: normal {P_HIGH + CRACK:.0f}, relief set {dp_membrane_set:.0f}, relief full lift {dp_membrane:.0f} kPa")
+say(f"membrane differential: normal {P_HIGH + CRACK:.0f}, supply cut {P_CUT + CRACK:.0f}, relief set {dp_membrane_set:.0f}, relief full lift {dp_membrane:.0f} kPa")
 heat_ely = (e_in - e_h2) / (t_fill / 3600)
 say(f"electrolyzer heat {heat_ely:.1f} W")
 res("R3", f"{p_ely:.1f} W ({v_aged * I_ELY:.0f} W with aged cells)", "100 W or less", "Met")
-res("R10", f"Stack H2 side must hold {P_HIGH + CRACK:.0f} kPa in normal filling and {dp_membrane_set:.0f} kPa at relief set ({dp_membrane:.0f} kPa at full lift); no rating in hand",
-    "300 kPa gauge or more over the O2 side", "At risk")
+res("R10", f"Stack H2 side must hold {P_HIGH + CRACK:.0f} kPa in filling, {P_CUT + CRACK:.0f} kPa at the supply cut and {dp_membrane_set:.0f} kPa at relief set; no rating in hand",
+    f"{dp_membrane_set:.0f} kPa or more over the O2 side", "At risk")
 
 # ---------------------------------------------------------------- 3. Inventory and pressure
 say("\n== 3. Inventory and pressure ==")
@@ -182,7 +183,7 @@ p_lift_max = n_max * R * T_COLD / ((V_TANK + V_LINES) / 1000) / 1000 - P_ATM
 say(f"relief set for 10 L at full lift and 15 C: {p_lift_max / (1 + RELIEF_ACCUM):.0f} kPa g or less (full lift {p_lift_max:.0f} kPa g)")
 say(f"H2Guard inventory rule (1 % of room at 1 atm): {ROOM_M3 * 10:.0f} L; H2Bench {vstd(n_lift_cold):.1f} L")
 res("R5", f"{vstd(n_work_all):.1f} L at {P_HIGH:.0f} kPa g; {vstd(n_relief):.1f} L at relief set; {vstd(n_lift_cold):.1f} L at full relief lift and 15 C",
-    "10 L or less", "At risk")
+    "10 L or less", "Met" if vstd(n_lift_cold) <= 10.0 else "At risk")
 res("R6", f"{P_HIGH:.0f} kPa g working, relief {P_RELIEF:.0f} kPa g; hoop stress {1.0 * (P['tank_od'] / 2 - t_w / 2) / t_w:.0f} MPa at 1 MPa",
     "300 / 350 kPa g or less; vessel 1 MPa or more", "Met")
 res("R7", f"{conc_room:.3f} % vol ({conc_room / LFL * 100:.1f} % LFL); {conc_room_lift:.3f} % worst case", "Below 25 % LFL in 30 m3", "Met")
@@ -347,11 +348,11 @@ total = sum(cost.values())
 no_psu = total - cost["4"]
 minimum = no_psu - cost["18"]
 say(f"BOM lines {len(bom)}; total ${total:.0f}; without the bench supply ${no_psu:.0f}; without supply and RCD ${minimum:.0f}")
-say(f"against budget_usd ${BUDGET:.0f}: over by ${total - BUDGET:.0f} (minimum kit over by ${minimum - BUDGET:.0f})")
-say(f"against the proposed ${BUDGET_PROPOSED:.0f}: {'over' if total > BUDGET_PROPOSED else 'under'} by ${abs(total - BUDGET_PROPOSED):.0f}; without supply under by ${BUDGET_PROPOSED - no_psu:.0f}; minimum kit under by ${BUDGET_PROPOSED - minimum:.0f}")
+say(f"against budget_usd ${BUDGET:.0f}: {'over' if total > BUDGET else 'under'} by ${abs(total - BUDGET):.0f}; without supply under by ${BUDGET - no_psu:.0f}; minimum kit under by ${BUDGET - minimum:.0f}")
+say(f"against the former ${BUDGET_OLD:.0f}: over by ${total - BUDGET_OLD:.0f}")
 say(f"two stacks ${cost['6'] + cost['12']:.0f} ({(cost['6'] + cost['12']) / total * 100:.0f} % of total)")
 res("R14", f"${total:.0f} full; ${no_psu:.0f} without supply; ${minimum:.0f} minimum (H2Guard excluded)",
-    f"${BUDGET:.0f} or less (proposed ${BUDGET_PROPOSED:.0f}, awaiting Amish)", "Not met")
+    f"${BUDGET:.0f} or less (budget_usd, supply included)", "Not met" if total > BUDGET else "Met")
 
 # ---------------------------------------------------------------- 11. Logging
 say("\n== 11. Logging ==")

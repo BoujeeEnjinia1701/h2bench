@@ -2,7 +2,7 @@
 
 ![TRL 3](https://img.shields.io/badge/TRL-3%20of%209-0F766E) ![Hardware: CERN-OHL-S-2.0](https://img.shields.io/badge/hardware-CERN--OHL--S--2.0-111827) ![Software: MIT](https://img.shields.io/badge/software-MIT-111827)
 
-**Area:** Hydrogen · **TRL:** 3 of 9 (proof of concept on paper) · **Prototype budget:** about $450 USD · **Difficulty:** 4 of 5
+**Area:** Hydrogen · **TRL:** 3 of 9 (proof of concept on paper) · **Prototype budget:** about $850 USD · **Difficulty:** 4 of 5
 
 A teaching bench that splits water with a small electrolyzer, stores a few liters of hydrogen at low pressure and runs a fuel cell, with meters so students can measure efficiency at each step. Protected by H2Guard.
 
@@ -14,7 +14,7 @@ A teaching bench that splits water with a small electrolyzer, stores a few liter
 
 Measuring electricity in, hydrogen made and electricity out gives students an honest sense of where hydrogen fits and where it does not. H2Bench works at tens of watts, large enough that meter and wiring errors do not swamp the result and small enough that the whole hydrogen inventory (about 7.9 L at up to 300 kPa gauge) could be released into a classroom without approaching a flammable mixture. A rigid buffer tank lets students count the hydrogen with the gas law, and the same pressure feeds the fuel cell without a compressor.
 
-It is open and garage-buildable because the barrier for schools is cost and trust. A branded 12 W fuel cell stack alone costs more than the whole $450 bench budget, and a sealed kit cannot be inspected by a safety officer. Every part of H2Bench is off the shelf, the design files are under CERN-OHL-S-2.0, and its safety chain is the portfolio's own open H2Guard detector and interlock.
+It is open and garage-buildable because the barrier for schools is cost and trust. A branded 12 W fuel cell stack alone lists at $482 to $576, well over half the whole $850 bench budget, and a sealed kit cannot be inspected by a safety officer. Every part of H2Bench is off the shelf, the design files are under CERN-OHL-S-2.0, and its safety chain is the portfolio's own open H2Guard detector and interlock.
 
 ## Burning platform
 
@@ -48,7 +48,7 @@ The workforce to build this is short: more than half of 700 energy companies sur
 
 ## What sparked the idea
 
-It came out of a September 2026 review of Design Molecule's applied research areas against the open projects already in the lab. A teaching rig is the second hydrogen project, built on H2Guard. The trigger in the wider world was the gap between announced hydrogen targets and the workforce behind them: the IEA's 2025 employment review found that energy companies face critical hiring bottlenecks and that newly qualified entrants would need to rise by 40 % by 2030 to close the skills gap ([IEA, 2025](https://www.iea.org/news/energy-employment-has-surged-but-growing-skills-shortages-threaten-future-momentum)).
+The idea traces back to William Grove's gas voltaic battery of 1842, the forerunner of the hydrogen fuel cell. Grove recombined hydrogen and oxygen on platinum to make a current, and he used that current to electrolyze water, running the cycle in both directions on one bench ([Encyclopedia.com, "Grove, William Robert"](https://www.encyclopedia.com/science/dictionaries-thesauruses-pictures-and-press-releases/grove-william-robert)). His 1843 paper to the Royal Society set out to establish "the rationale of its action" by experiment ([Grove, *Philosophical Transactions* 133, 1843](https://royalsocietypublishing.org/doi/10.1098/rstl.1843.0009)). H2Bench takes the same loop, electricity to hydrogen and back, and adds what a classroom needs that Grove's apparatus lacked: a meter at every stage, a counted quantity of gas and a hardwired safety chain.
 
 ## Problem
 
@@ -60,21 +60,21 @@ A teaching bench that splits water with a small electrolyzer, stores a few liter
 
 In one lesson a 70 W PEM electrolyzer fills a 2 L tank from 70 to 300 kPa gauge in 17.7 min; a 12 W class fuel cell then runs a lamp at 10.8 W for 29.0 min. Students log every stage at 1 Hz and find a round trip of about 25 % (HHV basis), each stage measurable to within ±2 %. These are paper figures from the TRL 3 sizing note HBN-CAL-001, not measurements.
 
-At TRL 3 the design meets nine of its sixteen requirements on paper. Cost and hydrogen purity at the fuel cell are not met, and the inventory at full relief lift, the H2Guard interlock, electrolyzer back-pressure and mass are at risk; see [docs/REVIEW.md](docs/REVIEW.md).
+At TRL 3 the design meets ten of its sixteen requirements on paper. Cost ($885 against $850) and hydrogen purity at the fuel cell are not met, and the H2Guard interlock, electrolyzer back-pressure and mass are at risk; see [docs/REVIEW.md](docs/REVIEW.md).
 
 Full design precis: [docs/02-concept.md](docs/02-concept.md)
 
 ## Key components
 
 - PEM electrolyzer stack, about 70 W (under 100 W)
-- 2 L buffer tank at up to 300 kPa gauge, with relief valve, pressure and temperature sensing (metal hydride and gasbag kept as options)
+- 2 L buffer tank at up to 300 kPa gauge, with a 310 kPa gauge supply cut, a 325 kPa gauge relief valve, pressure and temperature sensing (metal hydride and gasbag kept as options)
 - PEM fuel cell, 12 W class (under 50 W), with regulator and solenoid valve
 - Power meters on each stage, with a logger and display
 - Water deionizer cartridge and reservoir
 - H2Guard detector and interlock, sensing at the high point of a canopy hood
 - Bench frame and canopy hood
 
-The priced bill of materials is in [bom/bom.csv](bom/bom.csv). Parts cost $865 ($800 without the bench power supply, H2Guard excluded), well above the $450 budget; a budget of about $850 is proposed, awaiting Amish. See [docs/REVIEW.md](docs/REVIEW.md).
+The priced bill of materials is in [bom/bom.csv](bom/bom.csv). Parts cost $885 ($820 without the bench power supply, H2Guard excluded), $35 over the $850 budget, which includes the bench supply. See [docs/REVIEW.md](docs/REVIEW.md).
 
 ## Safety
 

@@ -1,5 +1,50 @@
 # Review note: H2Bench
 
+## Session 2026-09-25: recommendations accepted
+
+On 2026-09-25 Amish wrote: "i accept all your recommendations, go with them across all repos." Every item with a recommendation is now "Decided by Amish, 2026-09-25: go with recommendation", recorded in `docs/decisions/0002-recommendations-accepted.md` (HBN-DDR-002 v0.1). HBN-DDR-001 moved to v0.2 with the same wording.
+
+### Decisions applied and what changed
+
+- **D1 to D8 (wording only):** rigid 2 L tank, PEM, generic 12 W fuel cell, gas-law measurement, bench supply as the source, H2Guard costed separately and shipped with the bench, tank kept above 20 kPa gauge with purging, vocational training first, canopy hood with a single high point.
+- **D9 and D10, budget:** `budget_usd` $450 to $850 in `project.yaml`, with the bench power supply in the kit (BOM line 4). R14 restated as $850 including the supply. README cost lines updated.
+- **D11, relief:** 350 to 325 kPa gauge. Inventory at full lift and 15 °C 10.5 to 9.9 L (R5 at risk to met); at the relief setting 9.6 to 9.0 L; stored pressure energy at the relief setting 776 to 710 J; room release 0.032 to 0.030 % by volume.
+- **D12, supply cut:** a pressure switch on the manifold opens at 310 kPa gauge and a relay (rated 10 A DC or more) breaks the electrolyzer supply, hardwired, independent of the logger firmware. Membrane load at the relief setting 357 to 332 kPa (317 kPa at the cut); R10's target restated from 300 to 332 kPa. BOM line 10 $45 to $60, line 14 $30 to $35: total $865 to $885 ($800 to $820 without the supply). Mass 25.2 to 25.3 kg.
+- **D13 and D14:** vent needle valve 3 min or more and the plug-in RCD (line 18) confirmed; already in the design.
+- **D15, H2Guard interface:** listed below as a cross-repo action.
+- Files: `cad/src/model.py` (cut switch on the manifold; STEP and STL re-exported, clash check 0), `cad/src/sheets.py` (HBN-DWG-001 Rev P1 to P2: relief, cut, mass notes), `cad/src/concept_media.py` (key figure), `docs/04-calcs/sizing.py` and HBN-CAL-001 v0.2 with `results.csv`, HBN-PRB-001 v0.4, HBN-PRC-001 v0.4, HBN-REQ-001 v0.4, `bom/bom.csv`, `bom/bom-notes.md`, `README.md`. All PDFs, drawings and media regenerated; hero, blueprint, exploded and drawing checked by eye; the footer now reads designmolecule.com.
+- README: "What sparked the idea" rewritten around William Grove's 1842 gas voltaic battery, whose current he used to electrolyze water; the earlier text about a portfolio review was removed. No pitch or problem rewording was recommended, so none was applied.
+
+### Requirement status (HBN-CAL-001 v0.2)
+
+Met 10 (was 9), not met 2, at risk 3 (was 4), not verifiable at TRL 3 1.
+
+| ID | Result | Status |
+| --- | --- | --- |
+| R9 | Oxygen crossover unknown, no deoxidizer; fuel cell listing asks for 99.995 % | **Not met** |
+| R14 | $885 full, $820 without the supply, $800 minimum; against $850 | **Not met** |
+| R8 | 1.1 s trip; H2Guard valve 24 V against the 12 V solenoid; supply-break output undefined | At risk |
+| R10 | Stack must hold 332 kPa over the O2 side; no rating in hand | At risk |
+| R13 | 25.3 kg against 25 kg (22.3 kg without the supply) | At risk |
+| R16 | Vent 3.0 min; setup needs hardware | Not verifiable at TRL 3 |
+| R1 to R7, R11, R12, R15 | R5 now 9.9 L worst case | Met |
+
+### Still awaiting Amish (no recommendation was made)
+
+- Curriculum and age group for the first worksheets.
+- Class demonstration or group practical first.
+- Aluminium or stainless tank.
+- Mass (R13): accept 25.3 kg, carry the supply separately, or a 10 mm deck.
+- Cost (R14): where to find the $35 over the $850 budget.
+
+### Cross-repo actions
+
+- **H2Guard** (not edited from this repo): settle (1) the valve voltage, 24 V in H2Guard against H2Bench's 12 V tank solenoid; (2) which H2Guard output breaks H2Bench's 9 A DC supply line (the new 310 kPa gauge cut relay could share that break point); (3) hood extraction, 60 m³/h through the H2Bench canopy against H2Guard's 150 m³/h room exhaust; (4) first user, university teaching lab in H2Guard against vocational training here.
+
+### TRL
+
+`trl: 3` and `trl_target: 3` are unchanged. TRL 4 remains on hold by Amish's instruction: no build, test, purchasing, supplier trials, PCB or firmware beyond a sketch was started.
+
 ## Session 2026-09-25: TRL 3
 
 ### What was done
@@ -35,16 +80,16 @@ Key numbers: 70.2 W electrolyzer, 256 mL/min, 17.7 min fill of 0.189 mol (4.5 L)
 
 ### Decisions recorded (HBN-DDR-001)
 
-Adopted as recommended for TRL 3 under Amish's 2026-09-25 instruction, open for his review: rigid 2 L tank at up to 300 kPa gauge (gasbag with pump as the fallback if R10 fails); PEM, not alkaline; generic 12 W class fuel cell with a polarization curve as a purchase condition; hydrogen measured by pressure, volume and temperature; bench supply in constant-current mode as the source; H2Guard costed in its own project and shipped with the bench (applied to the R14 scope); tank kept above 20 kPa gauge with pressure-cycle purging; vocational technician training as the first users. No pitch or problem rewording was recommended, so none was applied.
+Decided by Amish, 2026-09-25: go with recommendation (HBN-DDR-002; recorded in this session as adopted for TRL 3, open for his review): rigid 2 L tank at up to 300 kPa gauge (gasbag with pump as the fallback if R10 fails); PEM, not alkaline; generic 12 W class fuel cell with a polarization curve as a purchase condition; hydrogen measured by pressure, volume and temperature; bench supply in constant-current mode as the source; H2Guard costed in its own project and shipped with the bench (applied to the R14 scope); tank kept above 20 kPa gauge with pressure-cycle purging; vocational technician training as the first users. No pitch or problem rewording was recommended, so none was applied.
 
-### Still awaiting Amish
+### Still awaiting Amish (as of this session; see the recommendations-accepted session above for the current status)
 
-- **Budget:** about $850 recommended at TRL 2; `budget_usd` stays $450. The full kit is $865, $15 over even the recommended figure; without the bench supply it is $800.
-- Whether the bench power supply is in the kit (BOM line 4).
-- Canopy hood with a single high point (not in the TRL 2 review list, so not adopted; kept as the working design).
-- Curriculum alignment, class demonstration or group practical first, and aluminium or stainless tank (no recommendation made).
-- Engineering proposals from this session: relief at 325 kPa gauge (329 kPa gauge or less keeps R5 at full lift); a 310 kPa gauge cut of the supply so the relief valve is a backup; vent needle valve set for 3 min or more; plug-in RCD line.
-- Mass (R13): accept 25.2 kg, carry the supply separately, or use a 10 mm deck (saves 0.77 kg).
+- **Budget:** Decided by Amish, 2026-09-25: go with recommendation, `budget_usd` $850 (HBN-DDR-002 D9). At the time: about $850 recommended at TRL 2; `budget_usd` stayed $450. The full kit is $865, $15 over even the recommended figure; without the bench supply it is $800.
+- Whether the bench power supply is in the kit (BOM line 4). Now Decided by Amish, 2026-09-25: go with recommendation: in the kit (D10).
+- Canopy hood with a single high point (not in the TRL 2 review list, so not adopted; kept as the working design). Now Decided by Amish, 2026-09-25: go with recommendation (D8).
+- Curriculum alignment, class demonstration or group practical first, and aluminium or stainless tank (no recommendation made). Still proposed, awaiting Amish.
+- Engineering proposals from this session: relief at 325 kPa gauge (329 kPa gauge or less keeps R5 at full lift); a 310 kPa gauge cut of the supply so the relief valve is a backup; vent needle valve set for 3 min or more; plug-in RCD line. Now Decided by Amish, 2026-09-25: go with recommendation (D11 to D14).
+- Mass (R13): accept 25.2 kg, carry the supply separately, or use a 10 mm deck (saves 0.77 kg). No recommendation; still proposed, awaiting Amish.
 
 ### Cross-repo notes (H2Guard, not edited)
 
@@ -107,7 +152,7 @@ Requirements not met or at risk:
 - **R10 (electrolyzer back-pressure) at risk:** a generic stack must be confirmed to hold 300 kPa gauge on the hydrogen side.
 - **R8 (interlock) at risk:** depends on H2Guard, whose README is still at scaffold stage; set point and response time are not yet defined.
 
-### Proposed, awaiting Amish
+### Proposed, awaiting Amish (items 1 to 9 now Decided by Amish, 2026-09-25: go with recommendation, HBN-DDR-002)
 
 1. **Budget.** Options: (a) raise `budget_usd` to about $850 (bench power supply included, H2Guard costed separately); (b) keep $450 as the bench-only cost with both stacks bought separately by the school; (c) shrink to a 5 W class fuel cell and a smaller electrolyzer, which cuts cost but weakens the measurements. Recommendation: (a). `project.yaml` is unchanged.
 2. **Storage method.** Rigid 2 L tank at up to 300 kPa gauge (recommended), metal hydride canister, or near-atmospheric gasbag with a pump.
