@@ -203,3 +203,33 @@ Amish wrote, in chat on 2026-09-26: "i approve all the budget items." The open c
 - R14 target $850 to $885; status **not met to met**, with no margin ($885 with the bench supply; $820 without; H2Guard excluded).
 - Requirement counts (HBN-CAL-001 v0.3): 11 met, 1 not met (R9), 3 at risk, 1 not verifiable.
 - Documents: HBN-PRB-001 v0.5, HBN-PRC-001 v0.5, HBN-REQ-001 v0.5, HBN-CAL-001 v0.3 (`sizing.py` budget constant 850 to 885, script re-run, `results.csv` regenerated), HBN-DDR-002 v0.2; `bom/bom-notes.md`; PDFs rebuilt. No media shows the budget, so none was regenerated.
+
+## Session 2026-09-26: product appearance model and photoreal renders
+
+Amish chose this repo for the first batch of product renders on 2026-09-26. This session adds an appearance model for photoreal renders; the render images (`media/render-hero.png`, `media/render-exploded.png`) are produced separately by the portfolio render step.
+
+### What was done
+
+- `cad/src/product_model.py` (new): `product_parts()` returns 116 parts (106 shell, 9 internal and the lab table top as context), each with a colour, a render material, its BOM line, a group and an explode offset. It imports `PARAMS`, `levels()`, `tank_cyl_len()` and `build_parts()` from `model.py`; the gas lines and the electrolyzer membranes are taken from `build_parts()` unchanged. It also defines `TITLE` and `RENDER_VIEWS` (hero, exploded and a front view from the student side).
+- What it adds over the massing model:
+  - Bench: T-slot grooves on the aluminium frame, a filleted HDPE deck and drip lip with a teal edge stripe and a name plate.
+  - Back panel: the printed energy-chain schematic (flow line, seven stage nodes, captions), panel screws, a hydrogen warning sign, and lit logger and stage meter displays.
+  - Canopy: clear polycarbonate sheet, aluminium edge trim, slotted posts with foot brackets, and a duct collar with a flange.
+  - Components: a lab supply with lit voltage and current readouts, knurled knobs, binding posts and a switch; a HDPE reservoir with a teal cap and graduations; a clear deionizer cartridge showing its resin; teal electrolyzer end plates with tie rods, nuts, grooved titanium cells and brass ports; a clear separator (water visible) and a clear drier (indicator gel visible); a stainless arrestor with hex ends and a flow arrow; a brushed tank with a red shoulder band in a powder-coated guard; a brass manifold with a dial gauge, a red-capped relief valve, a needle valve knob and the cut switch; the regulator knob and solenoid coil; fuel cell plates, end plates, fan and finger guard; the electronic load with a lit readout and a lit lamp; and the H2Guard head, fan housing and controller with lit status lights.
+  - Safety labels: a flammable gas label (GHS diamond) on the tank (wrapped), electrolyzer, regulator, fuel cell and H2Guard fan housing, and a warning sign on the back panel (BOM line 17).
+- `README.md`: hero image now points to `media/render-hero.png`; an "Exploded render" link was added to the links line.
+- Self-check previews (not in the repo) were made with the kit renderer; clear parts are left out of those previews.
+
+### Differences from model.py (Proposed, awaiting Amish)
+
+All main dimensions, positions and interfaces are as `model.py`. The differences are appearance only:
+
+1. **Canopy edge trim and post foot brackets.** A 10 mm aluminium trim wraps the canopy edges and 6 mm foot brackets sit under the two posts; neither is in `model.py` or BOM line 3. Post extrusions stop 5 mm short of the canopy underside, inside the trim. Recommendation: adopt both in `model.py` at the next CAD update, since a bare 3 mm polycarbonate edge is hard to handle safely.
+2. **Red shoulder band on the tank.** It follows the common convention of a red shoulder for flammable gas cylinders. Recommendation: keep it for the render, and confirm the marking against the vessel supplier's standard before any purchase.
+3. **Product colours in place of the concept palette.** Examples: the load and lamp are light grey rather than yellow; the meters are black with lit readouts rather than green; H2Guard is white with a teal band rather than red. Recommendation: use the product palette for renders and keep the concept palette for the numbered concept media, where the colours help the callouts.
+4. **Detail inside the model.py envelopes.** The lamp is a holder with a bulb, and the fuel cell has end plates and a fan guard. The separator and drier are clear bodies with end caps, and the tank has a 5 mm base fillet sitting in a shallow recess in the cradle. All stay inside the model.py envelopes. Recommendation: accept as appearance only.
+5. **Context.** A 1,020 x 560 mm section of the existing lab table top replaces the full table and the 1.75 m person, so the bench fills the frame. Recommendation: accept for product renders; the concept hero keeps the person for scale.
+
+### Status
+
+This is an appearance model only: no tolerances, no fabrication detail, no PCB layouts. `trl` stays 3 and TRL 4 remains on hold. No change to `model.py`, the BOM, the budget or any requirement status. Safety concerns are unchanged from the sessions above.
