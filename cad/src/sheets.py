@@ -1,4 +1,4 @@
-"""H2Bench general arrangement drawing HBN-DWG-001 (Rev P2).
+"""H2Bench general arrangement drawing HBN-DWG-001 (Rev P3).
 
 Run from the repo root:  python cad/src/sheets.py
 Builds cad/drawings/HBN-DWG-001.svg, .pdf and .png from the parametric model.
@@ -22,10 +22,11 @@ l, d, h = envelope()
 deck_top, top = levels()
 
 s = Sheet(project="H2Bench", title="General arrangement, hydrogen teaching bench", dwg_no="HBN-DWG-001",
-          rev="P2", author="Amish Chadha", date="2026-09-25", concept=True,
-          material="Frame 20 x 20 Al extrusion; deck 12 HDPE; canopy 3 PC; tank Al, 1 MPa rated. See bom/bom.csv",
+          rev="P3", author="Amish Chadha", date="2026-10-01", concept=True,
+          material="Frame, posts, top frame 20 x 20 Al extrusion; deck 12 HDPE; canopy 3 PC; tank 1 MPa rated. See bom/bom.csv",
           revisions=[("P1", "Preliminary GA from the TRL 3 parametric model (HBN-CAL-001)", "2026-09-25", "AC"),
-                     ("P2", "Relief 325 kPa g; 310 kPa g supply cut switch added (HBN-DDR-002)", "2026-09-25", "AC")])
+                     ("P2", "Relief 325 kPa g; 310 kPa g supply cut switch added (HBN-DDR-002)", "2026-09-25", "AC"),
+                     ("P3", "Constructable design: posts, top frame, mounts, water lines (HBN-DDR-003)", "2026-10-01", "AC")])
 s.add_ortho(views, ["front", "top", "right"])
 s.add_svg(views["iso"], 276, 30, 140, 84, label="Isometric view", sublabel="Not to scale")
 s.add_notes("Key dimensions and interfaces (mm)", [
@@ -34,13 +35,14 @@ s.add_notes("Key dimensions and interfaces (mm)", [
     "Energy flows left to right: supply, water, stack,",
     "  separator and drier, arrestor, tank, regulator, fuel cell",
     f"Tank {tank_internal_volume_l():.2f} L internal, OD {P['tank_od']:.0f}, wall {P['tank_wall']:.0f},",
-    f"  straight {tank_cyl_len():.0f}; guard rods at {P['guard_offset']:.0f} from the axis",
+    f"  straight {tank_cyl_len():.0f}; four M10 guard rods on a {2 * P['guard_offset']:.0f} square",
     "Working 300 kPa g; supply cut 310 kPa g; relief 325 kPa g",
-    "Relief and vent lines 6 OD to the canopy high point",
+    "Relief and vent lines 6 OD to a hanger under the canopy",
     "Vent needle valve: 300 to 20 kPa g in 3 min or more",
     "H2Guard sensor at the canopy high point beside the duct",
     "Fuel cell supply about 50 kPa g; 12 W class, 75 x 47 x 70",
-    "Mass about 25.3 kg (HBN-CAL-001); H2Guard costed separately",
+    "Four posts and a top frame carry the canopy and panel",
+    "Mass about 28.0 kg (HBN-CAL-001); H2Guard costed separately",
     "PRELIMINARY, NOT FOR FABRICATION",
 ], x=276, y=128, width=140)
 s.save(ROOT / "cad/drawings/HBN-DWG-001")

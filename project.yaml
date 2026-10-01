@@ -5,12 +5,14 @@ repo: BoujeeEnjinia1701/h2bench         # GitHub repository, shown on every draw
 area: Hydrogen
 trl: 3                   # Technology Readiness Level, see .kit/STANDARDS.md section 9
 trl_target: 3
+design_state: constructable   # STANDARDS section 18; HBN-DDR-003
 trl_evidence:
   - docs/01-problem.md
   - docs/02-concept.md
   - docs/03-requirements.md
   - docs/decisions/0001-trl2-review-decisions.md
   - docs/decisions/0002-recommendations-accepted.md
+  - docs/decisions/0003-design-for-construction.md
   - docs/04-calcs/01-sizing.md
   - docs/04-calcs/sizing.py
   - docs/04-calcs/results.csv
@@ -21,6 +23,8 @@ trl_evidence:
   - cad/drawings/HBN-DWG-001.pdf
   - bom/bom.csv
   - bom/bom-notes.md
+  - docs/05-build-plan.md
+  - docs/06-design-decisions.md
 shortlisted: false
 pitch: >-
   A teaching bench that splits water with a small electrolyzer, stores a few liters of hydrogen at low pressure and runs a fuel cell, with meters so students can measure efficiency at each step. Protected by H2Guard.

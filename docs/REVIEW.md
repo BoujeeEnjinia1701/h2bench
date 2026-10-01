@@ -1,5 +1,55 @@
 # Review note: H2Bench
 
+## Session 2026-10-01: design for construction and prototype build plan (kit 1.7.0)
+
+Kit 1.7.0 installed (`.kit/`, `.claude/commands/`; `CLAUDE.md` replaced from `.kit/CLAUDE.md`). Following `.claude/commands/build-plan.md` and STANDARDS section 18, the design was checked for how each part is made and joined, made constructable under Amish's 2026-09-30 instruction ("If you are realising that the design cannot be built as per concept - fix the design assumptions to match and be physically feasible as you draw the illustrations."), and the illustrated build plan and design decisions register were written. All changes are open for Amish's review in HBN-DDR-003.
+
+### Design changes made for construction (HBN-DDR-003)
+
+- Frame: six cut lengths of 20-series extrusion (2 x 900, 4 x 410) with eight inside corner brackets, in place of one fused shape.
+- Drip lip: 10 x 10 x 1.5 mm aluminium angle screwed on silicone (was moulded into the HDPE deck, 8 mm); the panel closes the back.
+- Hood: four posts on the frame through deck notches with foot brackets, and a top frame (2 x 860, 2 x 305) carrying the canopy; was two front posts standing on the lip and a cantilevered canopy.
+- Instrument panel: screwed to the rear posts, standing on the deck on silicone; 550 mm tall (was 570, floating), with meter and display cut-outs.
+- Duct collar: a bought flanged spigot through a 106 mm hole (was fused into the canopy).
+- Relief and vent lines: both clipped to a new outlet hanger, ending 7 mm below the canopy; the vent line was missing and the relief line ended against the sheet.
+- Water side added: reservoir on a 60 mm folded stand, 150 mm deionizer cartridge, three water lines, water ports on the left end plate; oxygen vents through the reservoir lid.
+- Electrolyzer: tie rods moved clear of the cell plates (they cut 2 mm in); two 40 x 20 x 3 mm angle feet bolted to the end plates; base 20 mm above the deck (was 13).
+- Separator and drier: on a folded column bracket with pipe clips; gas loops over from the separator top to the drier top; drain valve on the separator (water returned by hand, proposed, A2).
+- Arrestor: lowered to 60 mm in an HDPE saddle, straight off the drier outlet; the line to the tank clears it by 9 mm.
+- Tank guard: M10 threaded rods in deck tee nuts and a bolted 4 mm top plate (was loose rods and a welded ring); tank in a 20 mm pocketed HDPE cradle, 8 mm lower.
+- Fuel cell: on a folded 2 mm bridge open front and back (was a solid block).
+- Water post (20 x 20 extrusion) with band clips for the reservoir and cartridge; every mount fixed with 5 mm self-tapping screws.
+- Calculation correction: guard clearance 50 mm, not 18 mm (the rods stand at the corners).
+
+`cad/src/model.py` now builds every part separately and runs 135 constructability checks (`--check`): no unintended overlaps, 70 contacts, 16 clearances, every part supported; all pass.
+
+### Results
+
+- Mass 28.0 kg with the bench supply (was 25.3), 25.0 kg without; R13 at risk by 3.0 kg (proposed A1).
+- Value-engineering target: USD 885. Estimated cost of the constructable design: USD 999 (USD 114 over the target); BOM lines 1, 3, 5, 6, 7, 8, 9, 12, 16 and 17 repriced.
+- Requirements: 10 met, R14 reported against the value-engineering target, 1 not met (R9 purity), 3 at risk (R8, R10, R13), 1 not verifiable (R16). No energy, gas, pressure or venting figure changed.
+
+### Files
+
+- New: `docs/decisions/0003-design-for-construction.md` (HBN-DDR-003 v0.1, Draft), `docs/05-build-plan.md` (HBN-BLD-001 v0.1), `docs/06-design-decisions.md` (HBN-DEC-001 v0.1), `cad/src/build_plan_media.py`, `docs/05-build-plan/` (overview, 9 joints, 14 steps, piping and wiring diagrams), `cad/drawings/HBN-DWG-101` to `114` (14 making sketches).
+- Updated: `cad/src/model.py`, `cad/src/sheets.py` (HBN-DWG-001 Rev P3), `cad/src/concept_media.py`, STEP and STL, all concept media (`media/hero.png`, `concept-blueprint`, `cutaway.png`, `exploded.png`, `flow.png`, `model.glb`, `viewer.html`), `docs/04-calcs/sizing.py` and `results.csv`, HBN-CAL-001 v0.4, HBN-REQ-001 v0.6, HBN-PRC-001 v0.6, HBN-PRB-001 v0.6, `bom/bom.csv`, `bom/bom-notes.md`, `project.yaml` (`design_state: constructable`, evidence), `README.md` (links, cost lines, "Building the prototype"), PDFs in `docs/pdf/`.
+
+### Proposed, awaiting Amish
+
+All open decisions are in the register (`docs/06-design-decisions.md`): accepting HBN-DDR-003; mass (A1: carry the supply separately and use a 10 mm deck, recommended); separator water returned by hand (A2); hydrogen purity (R9); the H2Guard interface; tank material; curriculum; demonstration or practical first.
+
+### Stale images (made on Amish's Mac)
+
+The design changed visibly (rear posts, top frame, tank 8 mm lower, new mounts and water lines), so `media/render-hero.png`, `media/render-exploded.png`, `media/render-front.png`, `media/card.png` and `media/social-preview.png` are stale, and `cad/src/product_model.py` still describes the concept. They were not regenerated here.
+
+### Safety
+
+Unchanged hazards (hydrogen, pressure, mains near water). The build plan keeps every hydrogen and pressure step behind safety stops: nitrogen leak test and cut-switch test before any hydrogen, H2Guard tested before the first fill, purge by three pressure cycles, attended first fill.
+
+### Recommended next step
+
+Amish to review HBN-DDR-003 and the register. TRL 4 remains on hold.
+
 ## Session 2026-09-25: recommendations accepted
 
 On 2026-09-25 Amish wrote: "i accept all your recommendations, go with them across all repos." Every item with a recommendation is now "Decided by Amish, 2026-09-25: go with recommendation", recorded in `docs/decisions/0002-recommendations-accepted.md` (HBN-DDR-002 v0.1). HBN-DDR-001 moved to v0.2 with the same wording.

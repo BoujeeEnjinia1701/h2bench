@@ -2,13 +2,13 @@
 
 ![TRL 3](https://img.shields.io/badge/TRL-3%20of%209-0F766E) ![Hardware: CERN-OHL-S-2.0](https://img.shields.io/badge/hardware-CERN--OHL--S--2.0-111827) ![Software: MIT](https://img.shields.io/badge/software-MIT-111827) [![DOI](https://zenodo.org/badge/1388476714.svg)](https://zenodo.org/badge/latestdoi/1388476714) [![REUSE compliant](https://github.com/BoujeeEnjinia1701/h2bench/actions/workflows/reuse.yml/badge.svg)](https://github.com/BoujeeEnjinia1701/h2bench/actions/workflows/reuse.yml) [![Archived in Software Heritage](https://archive.softwareheritage.org/badge/origin/https://github.com/BoujeeEnjinia1701/h2bench/)](https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/BoujeeEnjinia1701/h2bench)
 
-**Area:** Hydrogen · **TRL:** 3 of 9 (proof of concept on paper) · **Prototype budget:** about $885 USD · **Difficulty:** 4 of 5
+**Area:** Hydrogen · **TRL:** 3 of 9 (proof of concept on paper) · **Value-engineering target:** USD 885 (estimated cost USD 999) · **Difficulty:** 4 of 5
 
 A teaching bench that splits water with a small electrolyzer, stores a few liters of hydrogen at low pressure and runs a fuel cell, with meters so students can measure efficiency at each step. Protected by H2Guard.
 
 ![H2Bench: hydrogen teaching bench from water to electricity and back, product render](media/render-hero.png)
 
-[Exploded render](media/render-exploded.png) · [Front render](media/render-front.png) · [Interactive 3D model](media/viewer.html) · [Concept blueprint (PDF)](media/concept-blueprint.pdf) · [General arrangement HBN-DWG-001 (PDF)](cad/drawings/HBN-DWG-001.pdf) · [Sizing calculations](docs/04-calcs/01-sizing.md) · [Review note](docs/REVIEW.md)
+[Exploded render](media/render-exploded.png) · [Front render](media/render-front.png) · [Interactive 3D model](media/viewer.html) · [Concept blueprint (PDF)](media/concept-blueprint.pdf) · [General arrangement HBN-DWG-001 (PDF)](cad/drawings/HBN-DWG-001.pdf) · [Sizing calculations](docs/04-calcs/01-sizing.md) · [Prototype build plan](docs/05-build-plan.md) · [Design decisions](docs/06-design-decisions.md) · [Review note](docs/REVIEW.md)
 
 ## Concept rationale
 
@@ -60,7 +60,7 @@ A teaching bench that splits water with a small electrolyzer, stores a few liter
 
 In one lesson a 70 W PEM electrolyzer fills a 2 L tank from 70 to 300 kPa gauge in 17.7 min; a 12 W class fuel cell then runs a lamp at 10.8 W for 29.0 min. Students log every stage at 1 Hz and find a round trip of about 25 % (HHV basis), each stage measurable to within ±2 %. These are paper figures from the TRL 3 sizing note HBN-CAL-001, not measurements.
 
-At TRL 3 the design meets eleven of its sixteen requirements on paper, including cost ($885 against the $885 budget). Hydrogen purity at the fuel cell is not met, and the H2Guard interlock, electrolyzer back-pressure and mass are at risk; see [docs/REVIEW.md](docs/REVIEW.md).
+At TRL 3 the design meets ten of its sixteen requirements on paper. Value-engineering target: USD 885. Estimated cost of the constructable design: USD 999 (USD 114 over the target). Hydrogen purity at the fuel cell is not met, and the H2Guard interlock, electrolyzer back-pressure and mass are at risk; see [docs/REVIEW.md](docs/REVIEW.md).
 
 Full design precis: [docs/02-concept.md](docs/02-concept.md)
 
@@ -74,7 +74,13 @@ Full design precis: [docs/02-concept.md](docs/02-concept.md)
 - H2Guard detector and interlock, sensing at the high point of a canopy hood
 - Bench frame and canopy hood
 
-The priced bill of materials is in [bom/bom.csv](bom/bom.csv). Parts cost $885 ($820 without the bench power supply, H2Guard excluded), within the $885 budget, which includes the bench supply. See [docs/REVIEW.md](docs/REVIEW.md).
+The priced bill of materials is in [bom/bom.csv](bom/bom.csv). Value-engineering target: USD 885, with the bench supply in the kit. Estimated cost of the constructable design: USD 999 (USD 114 over the target); USD 934 without the bench power supply; H2Guard excluded. See [docs/REVIEW.md](docs/REVIEW.md).
+
+## Building the prototype
+
+The design is constructable: every part can be cut, folded, drilled or bought, and fastens to the parts next to it ([HBN-DDR-003](docs/decisions/0003-design-for-construction.md)). The bench is a slotted aluminium extrusion frame under a 12 mm HDPE deck, with four posts and a top frame carrying the polycarbonate canopy and the printed instrument panel; every component stands on a small folded or cut mount screwed to the deck. The [prototype build plan](docs/05-build-plan.md) shows each component's making sketch, every joint and all 14 assembly steps in pictures, with the leak, cut-switch and interlock checks that come before any hydrogen is made. Decisions still open are in the [design decisions register](docs/06-design-decisions.md).
+
+![H2Bench prototype: every component, pulled apart and numbered in build order](docs/05-build-plan/overview.png)
 
 ## Safety
 

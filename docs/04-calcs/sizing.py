@@ -1,9 +1,9 @@
-"""H2Bench sizing calculations, HBN-CAL-001 v0.2 (TRL 3, recommendations accepted by Amish, HBN-DDR-002).
+"""H2Bench sizing calculations, HBN-CAL-001 v0.4 (TRL 3, constructable design, HBN-DDR-003).
 
 Run from the repo root:  python docs/04-calcs/sizing.py
 Prints every number quoted in docs/04-calcs/01-sizing.md and writes docs/04-calcs/results.csv.
 First-principles paper estimates; nothing here is measured. The script reads the tank and
-bench dimensions from cad/src/model.py (parameters only) and the costs from bom/bom.csv.
+bench dimensions and the made parts' volumes from cad/src/model.py and the costs from bom/bom.csv.
 """
 import csv
 import math
@@ -12,7 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "cad/src"))
-from model import PARAMS as P, envelope, tank_cyl_len, tank_internal_volume_l  # noqa: E402
+from model import PARAMS as P, envelope, tank_cyl_len, tank_internal_volume_l, build_components  # noqa: E402
 
 # ---------------------------------------------------------------- 1. Assumptions
 F = 96485.0            # C/mol
@@ -66,31 +66,56 @@ T_SEP = 298.15                   # K, gas leaving the separator
 P_SAT_SEP = 3.17                 # kPa, water vapour pressure at 25 degC
 GEL_G, GEL_CAP = 50.0, 0.10      # g silica gel, usable water uptake fraction at low humidity
 
-# Mass estimates, kg (materials and typical parts; see Table 9 in the note)
+# Mass estimates, kg. Made parts are weighed from their model volumes (HBN-DDR-003); bought
+# parts use typical catalogue masses.
+COMP = build_components()
+RHO = {"al": 2.70e-6, "hdpe": 0.95e-6, "pc": 1.20e-6, "steel": 7.9e-6}   # kg/mm3
+EXTRUSION_KG_M = 0.5            # 20 x 20 mm aluminium extrusion, hollow profile
+BRACKET_KG = 0.02               # 20-series inside corner bracket with its screws and T-nuts
+
+
+def vol(*keys):
+    return sum(COMP[k].shape.volume for k in keys)
+
+
+def bar_len_m(key):
+    """Total length of 20 x 20 extrusion in a component, from its solid volume (mm3 / 400 mm2)."""
+    return COMP[key].shape.volume / 400.0 / 1000.0
+
+
+EXTRUSION_M = {"frame": sum(bar_len_m(k) for k in ("rail_front", "rail_back", "end_l", "end_r", "cross_l", "cross_r")),
+               "posts": bar_len_m("posts"), "top": bar_len_m("top_rails"), "water_post": bar_len_m("water_post")}
 MASS = [
-    ("1 Frame (3.6 m of 20 x 20 extrusion at 0.5 kg/m)", 1.8),
-    ("1 Deck, 12 mm HDPE, 900 x 450 mm at 950 kg/m3", 0.9 * 0.45 * 0.012 * 950),
-    ("2 Back panel, 3 mm ACM at 3.8 kg/m2", 0.9 * 0.57 * 3.8),
-    ("3 Canopy 3 mm PC, posts and duct collar", 0.9 * 0.345 * 0.003 * 1200 + 0.57 * 2 * 0.5 + 0.2),
+    ("1 Frame (%.2f m of 20 x 20 extrusion) and 8 brackets" % EXTRUSION_M["frame"], EXTRUSION_M["frame"] * EXTRUSION_KG_M + 8 * BRACKET_KG),
+    ("1 Deck, 12 mm HDPE, notched (model volume)", vol("deck") * RHO["hdpe"]),
+    ("1 Drip lip, 10 x 10 x 1.5 aluminium angle", vol("lip") * RHO["al"]),
+    ("2 Back panel, 3 mm ACM at 3.8 kg/m2", 0.9 * 0.55 * 3.8),
+    ("3 Posts and top frame (%.2f m of extrusion) and 14 brackets" % (EXTRUSION_M["posts"] + EXTRUSION_M["top"]),
+     (EXTRUSION_M["posts"] + EXTRUSION_M["top"]) * EXTRUSION_KG_M + 14 * BRACKET_KG),
+    ("3 Canopy 3 mm PC (model volume), duct collar and hanger", vol("canopy") * RHO["pc"] + 0.2 + vol("hanger") * RHO["al"]),
     ("4 Bench power supply (switch-mode, 300 W)", 3.0),
     ("5 Reservoir (filled) and deionizer", 0.8),
+    ("5 Reservoir stand, water post and band clips", vol("res_stand") * RHO["al"] + EXTRUSION_M["water_post"] * EXTRUSION_KG_M + 0.03),
     ("6 Electrolyzer stack, 4 cells, titanium plates", 3.0),
+    ("6 Electrolyzer feet", vol("ely_feet") * RHO["al"]),
     ("7 Separator and drier", 0.4),
-    ("8 Check valve and flame arrestor", 0.3),
+    ("7 Column bracket and pipe clips", vol("col_bracket") * RHO["al"] + 0.03),
+    ("8 Check valve and flame arrestor, saddle and clip", 0.3 + vol("arr_saddle") * RHO["hdpe"] + 0.01),
     ("9 Tank shell (aluminium, from the model) ", None),   # filled below
-    ("9 Cradle and steel rod guard", 1.4),
+    ("9 Cradle, guard rods, nuts and top plate", vol("cradle") * RHO["hdpe"] + vol("guard_rods") * RHO["steel"] * 0.85
+     + 16 * 0.011 + vol("guard_plate") * RHO["al"]),
     ("10 Manifold with high-pressure cut switch", 0.7),
     ("11 Regulator and solenoid", 0.6),
-    ("12 Fuel cell (275 g listed) with stand and controller", 0.5),
+    ("12 Fuel cell (275 g listed) with controller", 0.4),
+    ("12 Fuel cell bridge", vol("fc_bridge") * RHO["al"]),
     ("13 Load and lamp", 0.4),
     ("14 Meters, logger, display and cut relay", 0.35),
     ("15 H2Guard parts on the bench (sensor, fan, controller)", 1.5),
-    ("16 and 17 Tubing, wiring, hardware", 1.3),
+    ("16 and 17 Tubing (gas and water lines), wiring, fasteners, T-nuts", 1.5),
 ]
 MASS_LIMIT = 25.0
 
-BUDGET = 885.0                   # budget_usd in project.yaml (450 to 850, HBN-DDR-002; 885 approved by Amish 2026-09-26)
-BUDGET_OLD = 450.0
+BUDGET = 885.0                   # budget_usd in project.yaml: a value-engineering target, not a limit (Amish, 2026-10-01)
 
 rows = []
 
@@ -173,8 +198,8 @@ t_w = P["tank_wall"]
 for p_mpa in (1.0, 4.0):
     sigma = p_mpa * (P["tank_od"] / 2 - t_w / 2) / t_w
     say(f"hoop stress at {p_mpa:.0f} MPa, {t_w:.0f} mm wall: {sigma:.1f} MPa (6061-T6 yield 276 MPa)")
-guard_gap = P["guard_offset"] - P["guard_rod_d"] / 2 - P["tank_od"] / 2
-say(f"guard clearance rod to shell {guard_gap:.0f} mm")
+guard_gap = P["guard_offset"] * math.sqrt(2) - P["guard_rod_d"] / 2 - P["tank_od"] / 2   # rods stand at the corners
+say(f"guard clearance rod to shell {guard_gap:.0f} mm (rods at the corners of a {2 * P['guard_offset']:.0f} mm square)")
 conc_room = vstd(n_relief) / (ROOM_M3 * 1000) * 100
 conc_room_lift = vstd(n_lift_cold) / (ROOM_M3 * 1000) * 100
 say(f"total release into {ROOM_M3:.0f} m3: {conc_room:.3f} % vol = {conc_room / LFL * 100:.2f} % LFL (full lift, 15 C: {conc_room_lift:.3f} %)")
@@ -348,11 +373,17 @@ total = sum(cost.values())
 no_psu = total - cost["4"]
 minimum = no_psu - cost["18"]
 say(f"BOM lines {len(bom)}; total ${total:.0f}; without the bench supply ${no_psu:.0f}; without supply and RCD ${minimum:.0f}")
-say(f"against budget_usd ${BUDGET:.0f}: {'no margin' if total == BUDGET else ('over' if total > BUDGET else 'under') + f' by ${abs(total - BUDGET):.0f}'}; without supply under by ${BUDGET - no_psu:.0f}; minimum kit under by ${BUDGET - minimum:.0f}")
-say(f"against the former ${BUDGET_OLD:.0f}: over by ${total - BUDGET_OLD:.0f}")
+def vs_target(c):
+    return "on the target" if abs(c - BUDGET) < 0.5 else f"{'over' if c > BUDGET else 'under'} the target by ${abs(c - BUDGET):.0f}"
+
+
+say(f"value-engineering target ${BUDGET:.0f} (budget_usd); full kit {vs_target(total)}; without supply {vs_target(no_psu)}; minimum kit {vs_target(minimum)}")
+say(f"lines repriced for construction (HBN-DDR-003): 1, 3, 5, 6, 7, 8, 9, 12, 16, 17")
 say(f"two stacks ${cost['6'] + cost['12']:.0f} ({(cost['6'] + cost['12']) / total * 100:.0f} % of total)")
 res("R14", f"${total:.0f} full; ${no_psu:.0f} without supply; ${minimum:.0f} minimum (H2Guard excluded)",
-    f"${BUDGET:.0f} or less (budget_usd, supply included)", "Not met" if total > BUDGET else "Met")
+    f"${BUDGET:.0f} value-engineering target (budget_usd, supply included)",
+    "On the value-engineering target" if abs(total - BUDGET) < 0.5 else
+    f"{'Over' if total > BUDGET else 'Under'} the value-engineering target by ${abs(total - BUDGET):.0f}")
 
 # ---------------------------------------------------------------- 11. Logging
 say("\n== 11. Logging ==")

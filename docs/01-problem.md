@@ -3,9 +3,9 @@ doc_id: HBN-PRB-001
 title: H2Bench problem statement
 project: H2Bench
 doc_type: Problem statement
-version: "0.5"
+version: "0.6"
 status: Draft
-date: '2026-09-26'
+date: '2026-10-01'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -29,6 +29,10 @@ revisions:
   date: '2026-09-26'
   author: Amish Chadha
   change: Budget approved by Amish ($885)
+- version: "0.6"
+  date: '2026-10-01'
+  author: Amish Chadha
+  change: Budget restated as a value-engineering target; cost of the constructable design (HBN-DDR-003)
 ---
 
 # H2Bench problem statement
@@ -67,7 +71,7 @@ H2Bench is an open teaching bench at a scale large enough to measure (tens of wa
 
 ## Constraints
 
-- Garage-buildable prototype, $885 USD in `project.yaml` (raised from $450 to $850 by Amish's decision of 2026-09-25, and to $885 on 2026-09-26 to cover the priced BOM, HBN-DDR-002), with the bench power supply in the kit and H2Guard costed in its own project. The priced BOM is $885 in full, or $820 without the bench power supply (HBN-CAL-001 v0.3), so the budget is met with no margin.
+- Garage-buildable prototype: hand tools only, no welding. Value-engineering target: USD 885 (`budget_usd`; raised from $450 to $850 on 2026-09-25 and to $885 on 2026-09-26, HBN-DDR-002; a hypothetical control target, not a limit), with the bench power supply in the kit and H2Guard costed in its own project. Estimated cost of the constructable design: USD 999 (USD 114 over the target), or USD 934 without the bench supply (HBN-CAL-001 v0.4).
 - Hydrogen inventory under 10 L at 20 °C and 101.3 kPa, stored at 300 kPa gauge or less in a rigid tank, with a 310 kPa gauge supply cut and a 325 kPa gauge relief (decided, HBN-DDR-002). No compression beyond what the electrolyzer does itself.
 - Electrolyzer under 100 W and fuel cell under 50 W, as the pitch states.
 - Operates only when the H2Guard detector, extraction fan and interlock are active.

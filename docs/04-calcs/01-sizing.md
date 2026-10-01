@@ -3,9 +3,9 @@ doc_id: HBN-CAL-001
 title: H2Bench sizing calculations
 project: H2Bench
 doc_type: Calculation note
-version: "0.3"
+version: "0.4"
 status: Draft
-date: '2026-09-26'
+date: '2026-10-01'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -21,13 +21,17 @@ revisions:
   date: '2026-09-26'
   author: Amish Chadha
   change: Budget approved by Amish ($885); R14 from not met to met
+- version: "0.4"
+  date: '2026-10-01'
+  author: Amish Chadha
+  change: Constructable design (HBN-DDR-003); mass from the model's parts, cost against the value-engineering target, guard clearance corrected
 ---
 
 # H2Bench sizing calculations
 
-On paper, H2Bench meets eleven of its sixteen requirements. **One is not met**: hydrogen purity at the fuel cell (R9), because electrolyzer oxygen crossover is unknown and there is no deoxidizer. Cost (R14) is met with no margin: the kit is $885, and on 2026-09-26 Amish approved a `budget_usd` of $885 to cover the priced BOM (HBN-DDR-002). **Three are at risk**: the H2Guard interlock (R8), electrolyzer back-pressure (R10, now 332 kPa) and mass (R13, 25.3 kg against 25 kg). Version 0.2 applies the decisions Amish accepted on 2026-09-25 (HBN-DDR-002): the relief valve moves from 350 to 325 kPa gauge, which brings R5 from at risk to met (full-lift inventory 10.5 L to 9.9 L); a pressure switch cuts the electrolyzer supply at 310 kPa gauge, so the relief valve is a backup only; and `budget_usd` rises from $450 to $850 with the bench supply in the kit. The switch and its relay add $20 and 0.15 kg. Setup time (R16) needs hardware to verify. The TRL 2 energy numbers hold: a 17.7 min fill and a 29.0 min discharge return 5.2 Wh of 20.8 Wh, a round trip of 25.1 % on the HHV basis, and students can measure each stage to within 1.8 %.
+On paper, H2Bench meets ten of its sixteen requirements, and cost (R14) is reported against its value-engineering target. **One is not met**: hydrogen purity at the fuel cell (R9), because electrolyzer oxygen crossover is unknown and there is no deoxidizer. **Three are at risk**: the H2Guard interlock (R8), electrolyzer back-pressure (R10, 332 kPa) and mass (R13, 28.0 kg against 25 kg). Cost (R14) is reported against the value-engineering target: value-engineering target USD 885; estimated cost of the constructable design USD 999 (USD 114 over the target). Version 0.4 follows the constructable design of HBN-DDR-003: the four posts, top frame, mounts and water lines added for construction raise the mass from 25.3 to 28.0 kg and the cost from USD 885 to USD 999; the made parts are now weighed from their model volumes; and the guard clearance is corrected from 18 to 50 mm. No energy, gas, pressure or venting figure changes. In v0.3, R14 was counted as met against the USD 885 budget; it is now reported as over or under the value-engineering target. Version 0.2 applies the decisions Amish accepted on 2026-09-25 (HBN-DDR-002): the relief valve moves from 350 to 325 kPa gauge, which brings R5 from at risk to met (full-lift inventory 10.5 L to 9.9 L); a pressure switch cuts the electrolyzer supply at 310 kPa gauge, so the relief valve is a backup only; and `budget_usd` rises from $450 to $850 with the bench supply in the kit. The switch and its relay add $20 and 0.15 kg. Setup time (R16) needs hardware to verify. The TRL 2 energy numbers hold: a 17.7 min fill and a 29.0 min discharge return 5.2 Wh of 20.8 Wh, a round trip of 25.1 % on the HHV basis, and students can measure each stage to within 1.8 %.
 
-Every number here is printed by `docs/04-calcs/sizing.py` (run from the repo root: `python docs/04-calcs/sizing.py`), which also writes `docs/04-calcs/results.csv`. The script reads the tank and bench dimensions from `cad/src/model.py` and the costs from `bom/bom.csv`. All values are first-principles estimates; nothing is measured.
+Every number here is printed by `docs/04-calcs/sizing.py` (run from the repo root: `python docs/04-calcs/sizing.py`), which also writes `docs/04-calcs/results.csv`. The script reads the tank and bench dimensions and the made parts' volumes from `cad/src/model.py` and the costs from `bom/bom.csv`. All values are first-principles estimates; nothing is measured.
 
 ## 1. Assumptions
 
@@ -47,7 +51,7 @@ Every number here is printed by `docs/04-calcs/sizing.py` (run from the repo roo
 | Room and hood | 30 m³ room; 60 m³/h through the canopy duct | Assumed hood share of H2Guard's 150 m³/h continuous exhaust (HGD-PRC-001) |
 | H2Guard | Warning 0.4 % vol (10 % LFL), trip 1.0 % vol (25 % LFL); trip to valve closed 1.1 s | HGD-REQ-001 R2 to R4, HGD-PRC-001 (TRL 2 estimates) |
 | Drier | 50 g silica gel, 10 % usable water uptake | Typical indicating gel at low humidity |
-| Budget | $885 in `project.yaml` (was $450, then $850), bench supply included, H2Guard excluded | HBN-DDR-002; $885 approved by Amish on 2026-09-26 |
+| Value-engineering target | USD 885 (`budget_usd`), bench supply included, H2Guard excluded; a hypothetical control target, not a limit | HBN-DDR-002; Amish, 2026-10-01 |
 
 ## 2. Electrolyzer and fill (R2, R3, R10)
 
@@ -116,7 +120,7 @@ The thermistor is bonded to the tank wall, so the gas temperature matters. Durin
 
 **Interlock (R8).** From H2Guard's TRL 2 figures, the trip reaches a closed valve and a dead supply in about 1.1 s (comparator and relay 0.1 s, solenoid 1.0 s), inside 2 s; the electrolyzer makes only 4.7 mL of hydrogen in that time. But H2Guard is itself at TRL 2, its valve is a 24 V part while H2Bench's tank solenoid is 12 V, and whether its relay can break the 9 A DC supply line is not specified. **At risk.**
 
-**Guard (R15).** The rod guard clears the tank shell by 18 mm, and the relief and vent lines run to the canopy in the model. Met by design review.
+**Guard (R15).** The four guard rods stand at the corners of a 156 mm square, so each clears the tank shell by 50 mm (v0.3 gave 18 mm, measured as if the rods stood on the axes); the top plate stops the tank lifting and the cradle pocket stops it tipping. The relief and vent lines run to the outlet hanger under the canopy in the model. Met by design review.
 
 ## 8. Water, drier and purity (R9, R11)
 
@@ -126,30 +130,32 @@ Gas leaving the separator at 25 °C carries 0.79 to 1.85 % water vapour by mole,
 
 The model's envelope above the lab table is **900 x 450 x 755 mm**, inside 1,000 x 500 x 800 mm.
 
-*Table 5. Mass estimate.*
+*Table 5. Mass estimate. Made parts are weighed from their volumes in `cad/src/model.py` (aluminium 2,700 kg/m³, HDPE 950 kg/m³, polycarbonate 1,200 kg/m³, extrusion 0.5 kg/m); bought parts use typical catalogue masses.*
 
 | Item | Mass (kg) |
 | --- | --- |
-| 1 Frame (3.6 m of 20 x 20 mm extrusion) and 12 mm HDPE deck | 1.80 + 4.62 |
-| 2 Back panel, 3 mm aluminium composite | 1.95 |
-| 3 Canopy, posts and duct collar | 1.89 |
+| 1 Frame (3.44 m of extrusion, 8 brackets), deck (notched), drip lip | 1.88 + 4.57 + 0.12 |
+| 2 Back panel, 3 mm aluminium composite, 900 x 550 mm | 1.88 |
+| 3 Posts and top frame (4.66 m of extrusion, 14 brackets) | 2.61 |
+| 3 Canopy, duct collar and outlet hanger | 1.30 |
 | 4 Bench power supply | 3.00 |
-| 5 Reservoir (filled) and deionizer | 0.80 |
-| 6 Electrolyzer stack | 3.00 |
-| 7 and 8 Separator, drier, check valve and arrestor | 0.70 |
-| 9 Tank shell (from the model) and guard | 0.80 + 1.40 |
+| 5 Reservoir (filled), deionizer, stand, water post and clips | 0.80 + 0.29 |
+| 6 Electrolyzer stack and feet | 3.00 + 0.06 |
+| 7 Separator, drier, column bracket and clips | 0.40 + 0.17 |
+| 8 Check valve, arrestor, saddle and clip | 0.32 |
+| 9 Tank shell (from the model); cradle, guard rods, nuts and top plate | 0.80 + 1.32 |
 | 10 and 11 Manifold with cut switch, regulator and solenoid | 1.30 |
-| 12 Fuel cell (275 g listed) with stand and controller | 0.50 |
+| 12 Fuel cell (275 g listed) with controller, and its bridge | 0.40 + 0.06 |
 | 13 and 14 Load, lamp, meters, display and cut relay | 0.75 |
 | 15 H2Guard parts on the bench | 1.50 |
-| 16 and 17 Tubing, wiring and hardware | 1.30 |
-| Total | **25.3** (22.3 without the supply) |
+| 16 and 17 Tubing (gas and water lines), wiring, fasteners and T-nuts | 1.50 |
+| Total | **28.0** (25.0 without the supply) |
 
-The TRL 2 estimate of 18 kg was low; the HDPE deck and the electrolyzer dominate. At 25.3 kg against 25 kg (25.2 kg in v0.1; the cut switch and relay add 0.15 kg), **R13 is at risk**. It is met if the bench supply is carried separately, or with a 10 mm deck (saving about 0.8 kg); no option has been chosen (HBN-DDR-002, open).
+The envelope is unchanged by the construction changes; the mass rises from 25.3 kg (v0.3) to 28.0 kg, mainly for the two rear posts, the top frame and their brackets (about 2.4 kg together), which carry the canopy and the H2Guard fan. **R13 is at risk**, now by 3.0 kg. Carrying the bench supply separately brings it to 25.0 kg, on the limit; adding a 10 mm deck (saving 0.77 kg) brings it to 24.2 kg. The choice is open (HBN-DDR-003 A1, design decisions register).
 
 ## 10. Cost (R14)
 
-The 18-line BOM totals **$885** (H2Guard excluded). Without the bench supply it is $820, and without the supply and the plug-in RCD (where the socket is already protected) $800. `budget_usd` is now $885 with the bench supply included, approved by Amish on 2026-09-26 to cover the priced BOM (HBN-DDR-002; it was $850, and $450 before that, against which the kit is $435 over). The full kit has **no margin**; the kit without the supply is $65 under. The two stacks are $400, 45 % of the total. **Met**, with no margin. The v0.1 total of $865 rises by $20 for the 310 kPa gauge pressure switch (line 10, $45 to $60) and its relay (line 14, $30 to $35).
+Value-engineering target: USD 885 (`budget_usd`, a hypothetical control target, not a limit; Amish, 2026-10-01). Estimated cost of the constructable design: USD 999 (USD 114 over the target), H2Guard excluded. Without the bench supply it is USD 934 (USD 49 over), and without the supply and the plug-in RCD USD 914 (USD 29 over). The parts added for construction (HBN-DDR-003: rear posts, top frame and brackets, lip angle, duct collar, outlet hanger, mounts, guard rods and plate, water lines and fasteners) add USD 114 to the v0.3 total of USD 885, across BOM lines 1, 3, 5, 6, 7, 8, 9, 12, 16 and 17. The two stacks with their mounts are USD 408, 41 % of the total. The main cost drivers and the savings worth trying are in the design decisions register (HBN-DEC-001, Value engineering).
 
 ## 11. Logging (R12)
 
@@ -157,7 +163,7 @@ One cycle is 2,804 s, so a 1 Hz log with 10 channels is 2,804 rows, about 224 kB
 
 ## 12. Results
 
-*Table 6. Results against HBN-REQ-001 v0.5. Written to `docs/04-calcs/results.csv`.*
+*Table 6. Results against HBN-REQ-001 v0.6. Written to `docs/04-calcs/results.csv`.*
 
 | ID | Value | Target | Status |
 | --- | --- | --- | --- |
@@ -173,9 +179,9 @@ One cycle is 2,804 s, so a 1 Hz log with 10 channels is 2,804 rows, about 224 kB
 | R10 | Needs 307 kPa in filling, 317 kPa at the supply cut, 332 kPa at relief set; no rating in hand | 332 kPa or more over the O2 side | **At risk** |
 | R11 | Mixed-bed resin with conductivity check; 3.4 g water per fill | 1 µS/cm or less | Met |
 | R12 | 2,804 rows per cycle, about 224 kB | V, I, P, p and T at 1 Hz to CSV | Met |
-| R13 | 900 x 450 x 755 mm; 25.3 kg (22.3 kg without the supply) | 1,000 x 500 mm, 800 mm, 25 kg or less | **At risk** |
-| R14 | $885 full; $820 without the supply; $800 minimum (H2Guard excluded) | $885 or less, supply included | Met (no margin) |
-| R15 | Guard clearance 18 mm; relief and vent piped to the canopy | Guard, piped relief, no tool-free fitting | Met |
+| R13 | 900 x 450 x 755 mm; 28.0 kg (25.0 kg without the supply) | 1,000 x 500 mm, 800 mm, 25 kg or less | **At risk** |
+| R14 | USD 999 full; USD 934 without the supply; USD 914 minimum (H2Guard excluded) | USD 885 value-engineering target, supply included | USD 114 over the value-engineering target |
+| R15 | Guard clearance 50 mm; relief and vent piped to the outlet hanger under the canopy | Guard, piped relief, no tool-free fitting | Met |
 | R16 | Vent 3.0 min; setup needs a walk-through with hardware | Setup 15 min or less; safe in 5 min or less | Not verifiable at TRL 3 |
 
 ## 13. Safety

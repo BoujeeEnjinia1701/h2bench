@@ -11,7 +11,7 @@ R9,Water removed by the drier; oxygen crossover in the stack not known; no deoxi
 R10,"Stack H2 side must hold 307 kPa in filling, 317 kPa at the supply cut and 332 kPa at relief set; no rating in hand",332 kPa or more over the O2 side,At risk
 R11,Mixed-bed resin with conductivity check to 1 uS/cm; water use 3.4 g per fill,1 uS/cm or less at the stack inlet,Met
 R12,"2804 rows per cycle, about 224 kB","V, I, P, p, T at 1 Hz to CSV",Met
-R13,"900 x 450 mm, 755 mm tall; 25.3 kg with the supply (22.3 kg without)","1000 x 500 mm, 800 mm, 25 kg or less",At risk
-R14,$885 full; $820 without supply; $800 minimum (H2Guard excluded),"$885 or less (budget_usd, supply included)",Met
-R15,Guard clearance 18 mm; relief and vent piped to the canopy in the model,"Guard, piped relief, no tool-free fitting",Met
+R13,"900 x 450 mm, 755 mm tall; 28.0 kg with the supply (25.0 kg without)","1000 x 500 mm, 800 mm, 25 kg or less",At risk
+R14,$999 full; $934 without supply; $914 minimum (H2Guard excluded),"$885 value-engineering target (budget_usd, supply included)",Over the value-engineering target by $114
+R15,Guard clearance 50 mm; relief and vent piped to the canopy in the model,"Guard, piped relief, no tool-free fitting",Met
 R16,Vent 3.0 min at the needle valve setting; setup time needs a walk-through with hardware,Setup 15 min or less; safe in 5 min or less,Not verifiable at TRL 3
