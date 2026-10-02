@@ -3,9 +3,9 @@ doc_id: HBN-BLD-001
 title: H2Bench prototype build plan
 project: H2Bench
 doc_type: Build plan
-version: "0.1"
+version: "0.2"
 status: Draft
-date: '2026-10-01'
+date: '2026-10-02'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -13,6 +13,10 @@ revisions:
     date: '2026-10-01'
     author: Amish Chadha
     change: First build plan; design made constructable (HBN-DDR-003)
+  - version: "0.2"
+    date: '2026-10-02'
+    author: Amish Chadha
+    change: "HBN-DDR-003 accepted (2026-10-02); separator drain rule"
 ---
 
 # H2Bench prototype build plan
@@ -31,7 +35,7 @@ The prototype is one H2Bench: a 900 x 450 mm aluminium-framed deck that sits on 
 
 ## 2. What changed to make it buildable
 
-The concept showed what the bench does; some of its parts could not be made or fixed as drawn. Each change below keeps what the bench does, and all of them are recorded in decision record HBN-DDR-003, made under Amish's 2026-09-30 instruction to make the design physically buildable and open for his review.
+The concept showed what the bench does; some of its parts could not be made or fixed as drawn. Each change below keeps what the bench does, and all of them are recorded in decision record HBN-DDR-003, made under Amish's 2026-09-30 instruction to make the design physically buildable and accepted by him on 2026-10-02.
 
 *Table 1. Changes from the concept.*
 
@@ -371,7 +375,7 @@ Buy to specification, not brand. Line numbers are those of the bill of materials
 - **Bench power supply (line 4).** Lab supply 0 to 30 V, 0 to 10 A, constant-current mode, earthed, with a plug-in 30 mA RCD (line 18).
 - **Reservoir and deionizer (line 5).** 500 mL HDPE reservoir about 110 across and 170 tall with a low side outlet and a vented lid; mixed-bed resin cartridge with color change, about 50 across and 150 tall, with 6 mm fittings; conductivity check to 1 µS/cm.
 - **Electrolyzer (line 6).** 4-cell PEM stack, about 7.8 V at 9 A, end plates about 110 square, hydrogen side rated to 332 kPa or more over the oxygen side, two mounting holes in each end plate, water in and oxygen out on one end plate.
-- **Separator and drier (line 7).** Separator column about 60 across and 160 tall with a drain valve at its foot; 50 g indicating silica gel drier about 40 across and 130 tall; both rated 1 MPa or more.
+- **Separator and drier (line 7).** Separator column about 60 across and 160 tall with a drain valve at its foot, drained by hand only at the 20 kPa gauge holding pressure, under the hood, with H2Guard running; 50 g indicating silica gel drier about 40 across and 130 tall; both rated 1 MPa or more.
 - **Check valve and flame arrestor (line 8).** Stainless check valve, 7 kPa cracking, and a sintered flame arrestor rated for hydrogen, joined in line, about 28 across and 50 long.
 - **Tank (line 9).** 2 L aluminium or stainless vessel, 110 across or less, flat base, working pressure 1 MPa or more.
 - **Tank manifold (line 10).** Neck adapter carrying a 0 to 600 kPa absolute transducer, a 10 kΩ thermistor bonded to the shell, a relief valve set to 325 kPa gauge, a 0 to 600 kPa gauge, a needle valve set so venting 300 to 20 kPa gauge takes 3 min or more, and a pressure switch set to open at 310 kPa gauge.

@@ -3,9 +3,9 @@ doc_id: HBN-PRB-001
 title: H2Bench problem statement
 project: H2Bench
 doc_type: Problem statement
-version: "0.6"
+version: "0.7"
 status: Draft
-date: '2026-10-01'
+date: '2026-10-02'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -33,6 +33,10 @@ revisions:
   date: '2026-10-01'
   author: Amish Chadha
   change: Budget restated as a value-engineering target; cost of the constructable design (HBN-DDR-003)
+- version: "0.7"
+  date: '2026-10-02'
+  author: Amish Chadha
+  change: "Curriculum and first use decided (HBN-DEC-001, 2026-10-02)"
 ---
 
 # H2Bench problem statement
@@ -97,6 +101,6 @@ H2Bench is an open teaching bench at a scale large enough to measure (tens of wa
 
 ## Open questions
 
-- Which curricula to align with first (for example a national vocational hydrogen technician standard or an A-level or IB practical)? (Proposed, awaiting Amish; no recommendation.)
+- Which curricula to align with first? Decided by Amish, 2026-10-02 (HBN-DEC-001): post-16 vocational learners on hydrogen or renewable energy technician courses, aligned to the electrochemistry, gas safety and efficiency units of the first partner college's course.
 - Will school safety officers accept a 300 kPa gauge buffer tank, or is a near-atmospheric gasbag with a small pump easier to approve?
-- Is a class demonstration (teacher-run) or a group practical (student-run) the first use case? (Proposed, awaiting Amish; no recommendation.)
+- Is a class demonstration (teacher-run) or a group practical (student-run) the first use case? Decided by Amish, 2026-10-02 (HBN-DEC-001): an instructor-run class demonstration first; group practicals only after a recorded run of attended fills with H2Guard tested before each.

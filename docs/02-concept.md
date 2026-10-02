@@ -3,9 +3,9 @@ doc_id: HBN-PRC-001
 title: H2Bench design precis
 project: H2Bench
 doc_type: Design precis
-version: "0.6"
+version: "0.7"
 status: Draft
-date: '2026-10-01'
+date: '2026-10-02'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -33,6 +33,10 @@ revisions:
   date: '2026-10-01'
   author: Amish Chadha
   change: Constructable design (HBN-DDR-003) with posts and top frame, mounts, water lines; mass, cost against the value-engineering target, GA Rev P3; build plan and decisions register linked
+- version: "0.7"
+  date: '2026-10-02'
+  author: Amish Chadha
+  change: "Decisions of 2026-10-02: deoxidizer, tank material, worksheets and first use, H2Guard interface proposal; separator drain and demonstration-first safety rules"
 ---
 
 # H2Bench design precis
@@ -148,6 +152,10 @@ Open decisions, with options and recommendations, are kept in the design decisio
 
 > **Safety:** Keep air out of the tank. A hydrogen and air mixture inside a closed vessel can burn or detonate. Purge a new or opened tank with hydrogen by pressure cycling, and never vent it below about 20 kPa gauge.
 
+> **Safety:** Drain the separator by hand only at the 20 kPa gauge holding pressure, under the hood, with H2Guard running (decided 2026-10-02).
+
+> **Safety:** Run the bench first as an instructor-run class demonstration. Move to student group practicals only after a recorded run of attended fills, with H2Guard tested before each (decided 2026-10-02).
+
 > **Safety:** The oxygen outlet of the electrolyzer must vent to the hood, away from the hydrogen outlet, so oxygen and hydrogen can never mix in a line.
 
 > **Safety:** The bench power supply is mains powered. Use a supply with a protective earth, keep the mains lead off the wet deck, and fit a residual-current device (RCD or GFCI) on the bench socket. Water and electricity share the deck; keep the reservoir below and away from the supply.
@@ -157,12 +165,12 @@ Open decisions, with options and recommendations, are kept in the design decisio
 ## Open questions
 
 - [ ] Can a generic electrolyzer stack at this size hold 332 kPa on the hydrogen side over the oxygen side, the relief setting plus the check valve (R10, HBN-CAL-001)?
-- [ ] What hydrogen purity reaches the fuel cell after the separator and drier, and does the chosen fuel cell tolerate it (R9)?
+- [ ] What hydrogen purity reaches the fuel cell after the separator and drier, and does the chosen fuel cell tolerate it (R9)? Decided 2026-10-02: a catalytic deoxidizer is fitted between separator and drier, and removed only if the stack supplier's data show oxygen within the 99.995 % limit at the lowest operating current.
 - [ ] H2Guard alarm set point and response time; how the interlock reaches the power supply output and the solenoid (R8).
-- [ ] Tank: aluminium or stainless; which certified vessel type is easiest for schools to approve?
+- [x] Tank: decided 2026-10-02, a certified aluminium cylinder (6061-T6 class) of about 2 L with a stamped working pressure of 1 MPa or more and a threaded neck; stainless only if a rated cylinder of about 1.0 kg or less is found.
 - [ ] Is a 300 kPa gauge tank acceptable to school safety officers, or is option (c) (near-atmospheric storage with a pump) needed?
-- [ ] Which curriculum and age group to align the first worksheets with?
+- [x] Curriculum and age group: decided 2026-10-02, post-16 vocational learners on hydrogen or renewable energy technician courses, aligned to the electrochemistry, gas safety and efficiency units of the first partner college's course. The first use is an instructor-run class demonstration; group practicals follow a recorded run of attended fills with H2Guard tested before each.
 - [x] Budget for the kit: set to $885 by Amish on 2026-09-26, and on 2026-10-01 made a value-engineering target (R14).
-- [ ] Which H2Guard output breaks the 9 A supply line, and at what voltage the tank solenoid runs (H2Guard uses a 24 V valve; R8).
+- [ ] Which H2Guard output breaks the 9 A supply line, and at what voltage the tank solenoid runs (R8)? Decided 2026-10-02 to propose to H2Guard: a 24 V normally closed tank solenoid powered directly from H2Guard, and H2Guard's alarm contact in series with the 310 kPa cut relay; awaiting H2Guard.
 
 Concept media: [blueprint sheet](../media/concept-blueprint.pdf), [interactive 3D model](../media/viewer.html).

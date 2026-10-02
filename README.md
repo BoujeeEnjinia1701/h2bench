@@ -60,7 +60,7 @@ A teaching bench that splits water with a small electrolyzer, stores a few liter
 
 In one lesson a 70 W PEM electrolyzer fills a 2 L tank from 70 to 300 kPa gauge in 17.7 min; a 12 W class fuel cell then runs a lamp at 10.8 W for 29.0 min. Students log every stage at 1 Hz and find a round trip of about 25 % (HHV basis), each stage measurable to within ±2 %. These are paper figures from the TRL 3 sizing note HBN-CAL-001, not measurements.
 
-At TRL 3 the design meets ten of its sixteen requirements on paper. Value-engineering target: USD 885. Estimated cost of the constructable design: USD 999 (USD 114 over the target). Hydrogen purity at the fuel cell is not met, and the H2Guard interlock, electrolyzer back-pressure and mass are at risk; see [docs/REVIEW.md](docs/REVIEW.md).
+At TRL 3 the design meets ten of its sixteen requirements on paper. Value-engineering target: USD 885. Estimated cost of the constructable design: USD 999 (USD 114 over the target). Hydrogen purity at the fuel cell is not met, and the H2Guard interlock, electrolyzer back-pressure and mass are at risk; on 2026-10-02 Amish decided to add a catalytic deoxidizer for purity and a 10 mm deck, with the bench supply beside the bench, for mass ([design decisions register](docs/06-design-decisions.md)); see [docs/REVIEW.md](docs/REVIEW.md).
 
 Full design precis: [docs/02-concept.md](docs/02-concept.md)
 

@@ -289,3 +289,59 @@ This is an appearance model only: no tolerances, no fabrication detail, no PCB l
 - Kit 1.5.0 synced: STANDARDS v1.5 (sections 12 to 15: product renders, storefront images and image quality, public release, authorship and signing), `.kit/cards.py`, `.kit/image_qc.py`, `.kit/release_gate.py`, issue templates, and the `/render-product` and `/release` commands. `CLAUDE.md` now matches `.kit/CLAUDE.md`.
 - Every `media/render-*.png` recaptioned from its original render with the new layout: the title, concept label and repository sit in a band above the render and the view note in a band below it, each line wrapped to the image width, so no text overlaps other text or the render or runs off the image. `media/card.png` and `media/social-preview.png` regenerated with the same rules.
 - `python .kit/image_qc.py` and `python .kit/release_gate.py` pass. trl stays 3.
+
+## Session 2026-10-02: open decisions decided
+
+Amish, 2026-10-02: "i approve your recommendations for all 555 open decisions." This approves the recommendation written for every open decision in the design decisions register (HBN-DEC-001). trl stays 3; nothing was built, bought or tested, and TRL 4 remains on hold.
+
+### Decisions recorded (8)
+
+| Register item | Decision |
+| --- | --- |
+| 1 | HBN-DDR-003 accepted as made: P1 to P13 and their knock-on changes |
+| 2 | Bench supply ships in the kit but sits beside the bench; 10 mm deck; about 24.2 kg with an aluminium tank |
+| 3 | Separator drained by hand by the teacher at 20 kPa gauge, under the hood, with H2Guard running |
+| 4 | Catalytic deoxidizer fitted between separator and drier now; removed only on supplier evidence of oxygen within 99.995 % |
+| 5 | Proposal to H2Guard: 24 V normally closed solenoid powered from H2Guard; alarm contact in series with the 310 kPa cut relay; 60 m³/h hood extraction stated separately; vocational technician training as shared first user |
+| 6 | Tank: certified aluminium cylinder (6061-T6 class), about 2 L, stamped 1 MPa or more, threaded neck; stainless only at about 1.0 kg or less |
+| 7 | First worksheets for post-16 vocational hydrogen or renewable energy technician courses |
+| 8 | Instructor-run class demonstration first; group practicals after a recorded run of attended fills with H2Guard tested before each |
+
+All 8 moved to Decisions made in HBN-DEC-001, dated 2026-10-02; the Open decisions section now reads "None."
+
+### Documents changed
+
+- `docs/06-design-decisions.md` (HBN-DEC-001 v0.2): items 1 to 8 moved to Decisions made; Open decisions reads "None"; two earlier rows now point to the decisions; the bench-supply saving in Value engineering reworded, since it would reverse D10
+- `docs/decisions/0003-design-for-construction.md` (HBN-DDR-003 v0.2): status accepted (kept Draft); A1 and A2 marked accepted; consequence added
+- `docs/03-requirements.md` (HBN-REQ-001 v0.7): R13 restated for the bench as moved (supply beside it); R9 and R8 status note the decided deoxidizer and the H2Guard proposal; statuses unchanged until the model follows
+- `docs/04-calcs/01-sizing.md` (HBN-CAL-001 v0.5): decisions noted under R8, R9 and R13; figures unchanged
+- `docs/02-concept.md` (HBN-PRC-001 v0.7): open questions answered (deoxidizer, tank, worksheets, H2Guard proposal); safety notes for the separator drain and demonstration first
+- `docs/01-problem.md` (HBN-PRB-001 v0.7): curriculum and first use decided
+- `docs/05-build-plan.md` (HBN-BLD-001 v0.2): section 2 says HBN-DDR-003 is accepted; separator drain rule added to the bought parts
+- `bom/bom-notes.md`: tank material, deoxidizer, 10 mm deck and the 24 V solenoid proposal noted, not yet in BOM lines or prices
+- `README.md`: purity and mass decisions noted
+- `docs/decisions/0001-trl2-review-decisions.md` (HBN-DDR-001 v0.3): item 12 ("Proposed, awaiting Amish") recorded as decided
+- `docs/decisions/0002-recommendations-accepted.md` (HBN-DDR-002 v0.3): items O1 to O4 (awaiting Amish) recorded as decided
+- PDFs regenerated with `python3 .kit/render.py`; superseded versions removed.
+
+### Follow-up actions to carry approved decisions into the design
+
+The model, BOM quantities and prices, calculations and pictures were not changed in this session. These actions carry the approved decisions into them:
+
+1. Decision 2 (model, drawings, build plan pictures): Change the deck from 12 to 10 mm in `cad/src/model.py`, re-run the constructability checks, and regenerate HBN-DWG-001, the deck making sketch and the step pictures; show the bench supply beside the bench, not on the deck.
+2. Decision 2 (BOM, calculations): Reprice the deck (BOM line 2) and recompute mass in `docs/04-calcs/sizing.py` (expected about 24.2 kg for the bench without its supply), then set R13's status from the result.
+3. Decision 4 (model, BOM, calculations, build plan pictures): Add the catalytic deoxidizer between the separator and the drier: model, line routing and constructability checks, a BOM line with price, mass in the calculation, and the build plan step and pictures for section 3.10.
+4. Decision 4 (documents): Ask the stack supplier for oxygen in the hydrogen at the bench's lowest operating current; add oxygen crossover as a tank safety item to HBN-CAL-001 section 8.
+5. Decision 5 (cross-repo, BOM, build plan pictures): Send the interface proposal to H2Guard; once agreed, change the tank solenoid to 24 V normally closed (BOM line 11 and price), and redraw the interlock wiring diagram with the alarm contact in series with the 310 kPa cut relay.
+6. Decision 6 (BOM, model): Name the certified aluminium cylinder in BOM line 9 (replacing "aluminium or stainless") and confirm its diameter, base and neck thread against the cradle pocket and manifold adapter.
+7. Decision 7 and 8 (documents): Write the first worksheets for post-16 vocational technician courses as an instructor-run demonstration, with the record of attended fills that must precede group practicals.
+
+### Points found in the review
+
+Raised when the recommendations were written (2026-10-01) and kept here so they are not lost:
+
+- Value engineering: the savings list proposes letting the school supply the bench power supply (USD 85), which would reverse your decision to put the supply in the kit (HBN-DDR-002, D10). The 'without the bench supply' cost (USD 934, USD 49 over) does not compare like with like, because the USD 885 target was set with the supply included.
+- Item 4 (purity) is framed only as fuel cell ageing; oxygen crossover into the stored hydrogen is also a safety question for the tank and is not discussed in HBN-CAL-001 section 8.
+- Item 5: the 60 m³/h hood extraction and H2Guard's 150 m³/h room exhaust are different quantities, so the register presents them as a mismatch when they may both be right.
+- Item 5 lists 'first user' as open with H2Guard, but H2Bench's first user is already decided (HBN-DDR-001, item 8); only H2Guard's side is open.
+- The mass calculation (HBN-CAL-001 section 9) prices the tank shell as aluminium (0.80 kg at 3 mm wall) while the tank material is still open (item 6) and BOM line 9 says 'aluminium or stainless'; a stainless tank at the same wall would add about 1.6 kg.

@@ -3,9 +3,9 @@ doc_id: HBN-CAL-001
 title: H2Bench sizing calculations
 project: H2Bench
 doc_type: Calculation note
-version: "0.4"
+version: "0.5"
 status: Draft
-date: '2026-10-01'
+date: '2026-10-02'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -25,6 +25,10 @@ revisions:
   date: '2026-10-01'
   author: Amish Chadha
   change: Constructable design (HBN-DDR-003); mass from the model's parts, cost against the value-engineering target, guard clearance corrected
+- version: "0.5"
+  date: '2026-10-02'
+  author: Amish Chadha
+  change: "Decisions of 2026-10-02 noted under R8, R9 and R13; figures unchanged until the model and sizing.py are updated"
 ---
 
 # H2Bench sizing calculations
@@ -118,13 +122,13 @@ The thermistor is bonded to the tank wall, so the gas temperature matters. Durin
 
 **Venting.** Venting the tank and lines from 300 to 20 kPa gauge releases 5.94 L. A needle valve set for 3.0 min (an effective orifice of about 0.16 mm) gives a peak of 3.50 L/min, or 0.35 % by volume at the duct (8.7 % of LFL), just under H2Guard's 0.4 % warning. At a constant flow, a vent shorter than 89 s would reach the warning. The end-of-day vent after a discharge (70 to 20 kPa gauge) is only 1.06 L. The 3.0 min vent meets the 5 min shutdown part of R16; setup time needs a walk-through with hardware, so **R16 is not verifiable at TRL 3**.
 
-**Interlock (R8).** From H2Guard's TRL 2 figures, the trip reaches a closed valve and a dead supply in about 1.1 s (comparator and relay 0.1 s, solenoid 1.0 s), inside 2 s; the electrolyzer makes only 4.7 mL of hydrogen in that time. But H2Guard is itself at TRL 2, its valve is a 24 V part while H2Bench's tank solenoid is 12 V, and whether its relay can break the 9 A DC supply line is not specified. **At risk.**
+**Interlock (R8).** From H2Guard's TRL 2 figures, the trip reaches a closed valve and a dead supply in about 1.1 s (comparator and relay 0.1 s, solenoid 1.0 s), inside 2 s; the electrolyzer makes only 4.7 mL of hydrogen in that time. But H2Guard is itself at TRL 2, its valve is a 24 V part while H2Bench's tank solenoid is 12 V, and whether its relay can break the 9 A DC supply line is not specified. **At risk.** On 2026-10-02 Amish decided to propose to H2Guard a 24 V normally closed tank solenoid powered directly from H2Guard, its alarm contact in series with the 310 kPa cut relay, and 60 m³/h stated as the hood extraction rate, separate from H2Guard's 150 m³/h room exhaust.
 
 **Guard (R15).** The four guard rods stand at the corners of a 156 mm square, so each clears the tank shell by 50 mm (v0.3 gave 18 mm, measured as if the rods stood on the axes); the top plate stops the tank lifting and the cradle pocket stops it tipping. The relief and vent lines run to the outlet hanger under the canopy in the model. Met by design review.
 
 ## 8. Water, drier and purity (R9, R11)
 
-Gas leaving the separator at 25 °C carries 0.79 to 1.85 % water vapour by mole, depending on tank pressure: about 0.045 g of water per fill. 50 g of silica gel at 10 % uptake lasts about **110 fills** before its color changes. The drier removes water, but PEM stacks also pass some oxygen across the membrane, and there is no deoxidizer. The fuel cell listing asks for 99.995 % or better. **R9 is not met** until the stack supplier states the oxygen content or the fuel cell supplier accepts the gas. Water quality (R11) is met by the mixed-bed resin and conductivity check.
+Gas leaving the separator at 25 °C carries 0.79 to 1.85 % water vapour by mole, depending on tank pressure: about 0.045 g of water per fill. 50 g of silica gel at 10 % uptake lasts about **110 fills** before its color changes. The drier removes water, but PEM stacks also pass some oxygen across the membrane, and there is no deoxidizer. The fuel cell listing asks for 99.995 % or better. **R9 is not met** as modelled. On 2026-10-02 Amish decided to fit a catalytic deoxidizer between the separator and the drier, and to remove it only if the stack supplier's data show oxygen within the 99.995 % limit at the bench's lowest operating current; oxygen in the stored hydrogen is also a tank safety question, not only one of fuel cell ageing. The deoxidizer is not yet in the model, the BOM or this note's mass and cost. Water quality (R11) is met by the mixed-bed resin and conductivity check.
 
 ## 9. Envelope and mass (R13)
 
@@ -151,7 +155,7 @@ The model's envelope above the lab table is **900 x 450 x 755 mm**, inside 1,000
 | 16 and 17 Tubing (gas and water lines), wiring, fasteners and T-nuts | 1.50 |
 | Total | **28.0** (25.0 without the supply) |
 
-The envelope is unchanged by the construction changes; the mass rises from 25.3 kg (v0.3) to 28.0 kg, mainly for the two rear posts, the top frame and their brackets (about 2.4 kg together), which carry the canopy and the H2Guard fan. **R13 is at risk**, now by 3.0 kg. Carrying the bench supply separately brings it to 25.0 kg, on the limit; adding a 10 mm deck (saving 0.77 kg) brings it to 24.2 kg. The choice is open (HBN-DDR-003 A1, design decisions register).
+The envelope is unchanged by the construction changes; the mass rises from 25.3 kg (v0.3) to 28.0 kg, mainly for the two rear posts, the top frame and their brackets (about 2.4 kg together), which carry the canopy and the H2Guard fan. **R13 is at risk**, now by 3.0 kg. On 2026-10-02 Amish decided that the bench supply ships in the kit but sits beside the bench and that the deck becomes 10 mm, which gives about 24.2 kg with an aluminium tank (HBN-DDR-003, A1); this note and the model are still to be updated for it. Carrying the bench supply separately brings it to 25.0 kg, on the limit; adding a 10 mm deck (saving 0.77 kg) brings it to 24.2 kg. The choice is open (HBN-DDR-003 A1, design decisions register).
 
 ## 10. Cost (R14)
 

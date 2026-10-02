@@ -3,9 +3,9 @@ doc_id: HBN-DDR-002
 title: H2Bench recommendations accepted
 project: H2Bench
 doc_type: Design decision record
-version: "0.2"
+version: "0.3"
 status: Draft
-date: '2026-09-26'
+date: '2026-10-02'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -17,12 +17,16 @@ revisions:
   date: '2026-09-26'
   author: Amish Chadha
   change: Budget approved by Amish ($885)
+- version: "0.3"
+  date: '2026-10-02'
+  author: Amish Chadha
+  change: "O1 to O4 decided by Amish on 2026-10-02 (HBN-DEC-001)"
 ---
 
 # 0002: Recommendations accepted
 
 - **Date:** 2026-09-25
-- **Status:** accepted. Every item in Table 1 is "Decided by Amish, 2026-09-25: go with recommendation"; items without a recommendation (Table 2) remain open.
+- **Status:** accepted. Every item in Table 1 is "Decided by Amish, 2026-09-25: go with recommendation"; items without a recommendation (Table 2) remained open; O1 to O4 were decided by Amish on 2026-10-02 (HBN-DEC-001).
 
 ## Context
 
@@ -58,14 +62,14 @@ No pitch or problem rewording was recommended, so the pitch and problem lines in
 
 ### Items still open
 
-*Table 2. Items still open.*
+*Table 2. Items open on 2026-09-25, with their later decisions.*
 
 | # | Item | Status |
 | --- | --- | --- |
-| O1 | Curriculum and age group for the first worksheets. No recommendation was made | Proposed, awaiting Amish |
-| O2 | Class demonstration or group practical first. No recommendation was made | Proposed, awaiting Amish |
-| O3 | Aluminium or stainless tank. No recommendation was made | Proposed, awaiting Amish |
-| O4 | Mass (R13, 25.3 kg against 25 kg): accept, carry the supply separately, or use a 10 mm deck (saves 0.77 kg). No recommendation was made | Proposed, awaiting Amish |
+| O1 | Curriculum and age group for the first worksheets. No recommendation was made | Decided by Amish, 2026-10-02: post-16 vocational learners on hydrogen or renewable energy technician courses (HBN-DEC-001) |
+| O2 | Class demonstration or group practical first. No recommendation was made | Decided by Amish, 2026-10-02: instructor-run class demonstration first; group practicals after a recorded run of attended fills (HBN-DEC-001) |
+| O3 | Aluminium or stainless tank. No recommendation was made | Decided by Amish, 2026-10-02: certified aluminium cylinder, about 2 L, stamped 1 MPa or more (HBN-DEC-001) |
+| O4 | Mass (R13, 25.3 kg against 25 kg): accept, carry the supply separately, or use a 10 mm deck (saves 0.77 kg). No recommendation was made | Superseded by HBN-DDR-003 A1; decided by Amish, 2026-10-02: bench supply beside the bench and a 10 mm deck (HBN-DEC-001) |
 | O5 | Cost (R14, $885 against $850): where to find $35. No recommendation was made | Decided by Amish, 2026-09-26: budget set to $885 (see below) |
 
 ## Consequences

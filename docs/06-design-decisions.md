@@ -3,9 +3,9 @@ doc_id: HBN-DEC-001
 title: H2Bench design decisions register
 project: H2Bench
 doc_type: Design decisions register
-version: "0.1"
+version: "0.2"
 status: Draft
-date: '2026-10-01'
+date: '2026-10-02'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -13,6 +13,10 @@ revisions:
   date: '2026-10-01'
   author: Amish Chadha
   change: Register opened with the open decisions from REVIEW.md, HBN-DDR-001 to 003 and the build plan work
+- version: "0.2"
+  date: '2026-10-02'
+  author: Amish Chadha
+  change: "Amish approved the recommendations for open decisions 1 to 8 (2026-10-02); moved to decisions made (HBN-DDR-003 accepted)"
 ---
 
 # H2Bench design decisions register
@@ -21,18 +25,7 @@ Every design decision still to be made, and every decision made, in one place. E
 
 ## Open decisions
 
-*Table 1. Decisions still to be made.*
-
-| # | Decision needed | Options | Recommendation | Affects in the build | Source |
-| --- | --- | --- | --- | --- | --- |
-| 1 | Design for construction: accept the changes that make the bench buildable (frame joints, four posts and a top frame, mounts, water lines, guard of threaded rods) | Accept as made; ask for changes | Accept | The whole build plan | HBN-DDR-003, Table 1 |
-| 2 | Mass (R13, 25 kg or less): the constructable bench is 28.0 kg with the bench supply. Replaces HBN-DDR-002 O4 | (a) carry the supply separately (25.0 kg); (b) also a 10 mm deck (24.2 kg); (c) raise R13 to 30 kg; (d) a lighter top frame of 15 x 15 mm extrusion (saves about 0.6 kg) | (a) and (b) together | Deck thickness (build plan section 3.2); what ships with the bench | HBN-DDR-003, A1 |
-| 3 | Separator water returned by hand (drain valve opened at 20 kPa gauge, water poured back) instead of a plumbed return | (a) by hand; (b) plumbed return with a needle valve and float trap | (a) for the prototype | Separator fittings (section 3.10) | HBN-DDR-003, A2 |
-| 4 | Hydrogen purity at the fuel cell (R9, not met): oxygen crossover from the stack is unknown and there is no deoxidizer | (a) ask the stack supplier for the oxygen content and the fuel cell supplier to accept it; (b) add a catalytic deoxidizer before the drier; (c) run with the purge set high and accept faster fuel cell ageing | (a) first, (b) if the figures do not close | A deoxidizer would add one line part between separator and drier | HBN-CAL-001 section 8, HBN-REQ-001 R9 |
-| 5 | H2Guard interface (R8, at risk): valve voltage (H2Guard 24 V, the H2Bench tank solenoid 12 V), which H2Guard output breaks the 9 A supply line, hood extraction (60 m³/h here, 150 m³/h room exhaust in H2Guard), first user | Settle with the H2Guard project; or fit a 24 V solenoid here | Settle with H2Guard (decided as an action in HBN-DDR-002 D15; the choices themselves are still open) | Solenoid coil voltage; interlock wiring (build plan wiring diagram) | HBN-DDR-002 D15, REVIEW.md |
-| 6 | Tank material | Aluminium; stainless steel | No recommendation made | Tank part and mass | HBN-DDR-002 O3 |
-| 7 | Curriculum and age group for the first worksheets | Open | No recommendation made | Not part of the build | HBN-DDR-002 O1 |
-| 8 | Class demonstration or group practical first | Open | No recommendation made | Not part of the build | HBN-DDR-002 O2 |
+None. All open decisions were decided on 2026-10-02.
 
 ## To confirm when parts are bought
 
@@ -63,7 +56,7 @@ Main cost drivers:
 
 Savings worth trying:
 
-- Let the school supply the bench power supply and use an RCD-protected socket: USD 85.
+- Letting the school supply the bench power supply (USD 85) would reverse HBN-DDR-002, D10; on 2026-10-02 the supply was kept in the kit, beside the bench, so this is not a saving to take. The "without the bench power supply" figures above do not compare like with like, because the USD 885 target was set with the supply included.
 - Ask stack makers for an education bundle of electrolyzer and fuel cell: the two stacks are the largest single cost.
 - Build the top frame and posts from plain 20 x 20 mm aluminium square tube with screwed corner plates instead of slotted extrusion and brackets: perhaps USD 20 to 30, at some cost to adjustability.
 - Buy fittings, tubing and fasteners as one kit from a single gas-equipment supplier rather than line by line.
@@ -75,10 +68,18 @@ Savings worth trying:
 | Date | Decision | Decided by | Record |
 | --- | --- | --- | --- |
 | 2026-10-01 | `budget_usd` is a value-engineering target, not a limit; cost is reported as over or under it | Amish: "the budgets are a hypothethical control target to ensure we are thinking along a value engineering lens. its ok to ensure wording reflects that the hypothesis budget was x - the real cost being accrued is y" | STANDARDS section 18; this register |
-| 2026-09-30 | Make the design buildable while drawing the build plan; keep open decisions out of the build plan, in this register | Amish: "If you are realising that the design cannot be built as per concept - fix the design assumptions to match and be physically feasible as you draw the illustrations." | HBN-DDR-003 (open for review, item 1 above) |
+| 2026-09-30 | Make the design buildable while drawing the build plan; keep open decisions out of the build plan, in this register | Amish: "If you are realising that the design cannot be built as per concept - fix the design assumptions to match and be physically feasible as you draw the illustrations." | HBN-DDR-003 (accepted on 2026-10-02, below) |
 | 2026-09-26 | Budget of USD 885 to cover the priced BOM (now the value-engineering target) | Amish: "i approve all the budget items." | HBN-DDR-002, budget section |
 | 2026-09-25 | Relief valve at 325 kPa gauge; pressure switch cuts the supply at 310 kPa gauge; vent needle valve 3 min or more; plug-in 30 mA RCD | Amish: "i accept all your recommendations, go with them across all repos." | HBN-DDR-002 D11 to D14 |
 | 2026-09-25 | Budget raised to about USD 850 with the bench supply in the kit; H2Guard costed in its own project and shipped with the bench | Amish, same instruction | HBN-DDR-002 D6, D9, D10 |
 | 2026-09-25 | Rigid 2 L tank at up to 300 kPa gauge (gasbag with a pump as the fallback if R10 fails); PEM with deionized water; generic 12 W class fuel cell; hydrogen measured by pressure, volume and temperature; bench supply in constant-current mode | Amish, same instruction | HBN-DDR-001 items 1 to 5, HBN-DDR-002 D1 to D5 |
 | 2026-09-25 | Tank kept above about 20 kPa gauge, new tank purged by three pressure cycles; canopy hood with a single high point; vocational technician training as the first users | Amish, same instruction | HBN-DDR-001 items 7, 8, 11; HBN-DDR-002 D7, D8 |
-| 2026-09-25 | Settle the interlock interface with the H2Guard project | Amish, same instruction | HBN-DDR-002 D15 (the choices are open item 5 above) |
+| 2026-09-25 | Settle the interlock interface with the H2Guard project | Amish, same instruction | HBN-DDR-002 D15 (the choices to propose were decided on 2026-10-02, below) |
+| 2026-10-02 | Design for construction accepted as made: the changes P1 to P13 (frame joints, four posts and a top frame, mounts, water lines, guard of threaded rods) and their knock-on changes | Amish: "i approve your recommendations for all 555 open decisions." | HBN-DDR-003, Table 1 |
+| 2026-10-02 | Mass (R13): options (a) and (b) together. The bench supply still ships in the kit (HBN-DDR-002, D10) but sits beside the bench, and the deck becomes 10 mm, giving 24.2 kg, which holds as long as the tank is aluminium | Amish: "i approve your recommendations for all 555 open decisions." | HBN-DDR-003, A1 |
+| 2026-10-02 | Separator water: option (a) for the prototype. The teacher drains the separator by hand at the 20 kPa gauge holding pressure, under the hood, with H2Guard running | Amish: "i approve your recommendations for all 555 open decisions." | HBN-DDR-003, A2 |
+| 2026-10-02 | Hydrogen purity (R9): fit a catalytic deoxidizer between separator and drier now; remove it only if the stack supplier's data show oxygen in the hydrogen within the fuel cell's 99.995 % limit at the bench's lowest operating current | Amish: "i approve your recommendations for all 555 open decisions." | HBN-CAL-001 section 8, HBN-REQ-001 R9 |
+| 2026-10-02 | H2Guard interface (R8): propose to H2Guard a 24 V normally closed tank solenoid powered directly from H2Guard so its alarm removes valve power; H2Guard's alarm contact in series with the 310 kPa cut relay so either one breaks the 9 A supply line; 60 m³/h stated as the hood extraction rate, separate from H2Guard's 150 m³/h room exhaust; and vocational technician training as the shared first user | Amish: "i approve your recommendations for all 555 open decisions." | HBN-DDR-002 D15, REVIEW.md |
+| 2026-10-02 | Tank: a certified aluminium cylinder (6061-T6 class) of about 2 L with a stamped working pressure of 1 MPa or more and a threaded neck; stainless only if a rated stainless cylinder of about 1.0 kg or less is found | Amish: "i approve your recommendations for all 555 open decisions." | HBN-DDR-002 O3 |
+| 2026-10-02 | First worksheets: for post-16 vocational learners on hydrogen or renewable energy technician courses, aligned to the electrochemistry, gas safety and efficiency units of the first partner college's course | Amish: "i approve your recommendations for all 555 open decisions." | HBN-DDR-002 O1 |
+| 2026-10-02 | First use: an instructor-run class demonstration; group practicals only after the bench has a recorded run of attended fills with H2Guard tested before each | Amish: "i approve your recommendations for all 555 open decisions." | HBN-DDR-002 O2 |

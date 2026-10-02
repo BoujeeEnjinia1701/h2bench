@@ -3,9 +3,9 @@ doc_id: HBN-DDR-003
 title: H2Bench design for construction
 project: H2Bench
 doc_type: Design decision record
-version: "0.1"
+version: "0.2"
 status: Draft
-date: '2026-10-01'
+date: '2026-10-02'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -13,12 +13,16 @@ revisions:
   date: '2026-10-01'
   author: Amish Chadha
   change: Changes that make the concept physically buildable, with the reason for each; made under Amish's 2026-09-30 instruction to make the design physically buildable; open for his review
+- version: "0.2"
+  date: '2026-10-02'
+  author: Amish Chadha
+  change: "Accepted by Amish (2026-10-02), with the recommendations for A1 and A2; status kept Draft"
 ---
 
 # 0003: Design for construction
 
 - **Date:** 2026-10-01
-- **Status:** Draft. The changes in Table 1 were made under Amish's 2026-09-30 instruction to make the design physically buildable; open for his review. The items in Table 3 change what the bench weighs or how it is operated and are **Proposed, awaiting Amish**; they are also listed in the design decisions register (`docs/06-design-decisions.md`).
+- **Status:** accepted. Amish, 2026-10-02: "i approve your recommendations for all 555 open decisions." This covers every change in Tables 1 and 2 and the recommendations for A1 and A2 in Table 3, which are now decided as recommended and recorded in the design decisions register (`docs/06-design-decisions.md`).
 
 ## Context
 
@@ -59,16 +63,17 @@ The changes keep what H2Bench does: the same 900 x 450 x 755 mm envelope, the sa
 | Documents | HBN-CAL-001 v0.4, HBN-REQ-001 v0.6, HBN-PRC-001 v0.6: mass, cost, guard clearance and the constructable parts. No requirement changed status; cost (R14) is now reported against the value-engineering target rather than as met. | Follows the model. |
 | Energy, gas and pressure | Unchanged: the tank volume, pressures, stack and fuel cell are the same, so every figure of HBN-CAL-001 sections 2 to 8 and 11 stands. | |
 
-*Table 3. Proposed, awaiting Amish.*
+*Table 3. Items proposed to Amish; accepted as recommended on 2026-10-02.*
 
 | # | Question | Options | Recommendation |
 | --- | --- | --- | --- |
-| A1 | Mass (R13, 25 kg or less) is now 28.0 kg with the bench supply. This replaces open item O4 of HBN-DDR-002. | (a) carry the bench supply separately (25.0 kg, exactly on the limit); (b) also use a 10 mm deck (24.2 kg); (c) raise R13 to 30 kg, since the bench is assembled on its table and moved in two parts; (d) look for lighter hood parts (a lighter canopy frame of 15 x 15 mm extrusion saves about 0.6 kg). | (a) and (b) together, which meets 25 kg with 0.8 kg to spare and changes nothing a student sees. |
-| A2 | The separator's water now returns to the reservoir by hand: the teacher opens the drain valve at the 20 kPa gauge holding pressure, catches the water and pours it back. The concept had a plumbed return. | (a) by hand, as modelled; (b) a plumbed return with a needle valve and a float trap. | (a) for the prototype: a few grams of water per fill, and nothing at tank pressure can drain on its own. |
+| A1 | Mass (R13, 25 kg or less) is now 28.0 kg with the bench supply. This replaces open item O4 of HBN-DDR-002. | (a) carry the bench supply separately (25.0 kg, exactly on the limit); (b) also use a 10 mm deck (24.2 kg); (c) raise R13 to 30 kg, since the bench is assembled on its table and moved in two parts; (d) look for lighter hood parts (a lighter canopy frame of 15 x 15 mm extrusion saves about 0.6 kg). | (a) and (b) together, which meets 25 kg with 0.8 kg to spare and changes nothing a student sees. Accepted 2026-10-02: the supply still ships in the kit but sits beside the bench; the 24.2 kg holds as long as the tank is aluminium. |
+| A2 | The separator's water now returns to the reservoir by hand: the teacher opens the drain valve at the 20 kPa gauge holding pressure, catches the water and pours it back. The concept had a plumbed return. | (a) by hand, as modelled; (b) a plumbed return with a needle valve and a float trap. | (a) for the prototype: a few grams of water per fill, and nothing at tank pressure can drain on its own. Accepted 2026-10-02: drained by the teacher at 20 kPa gauge, under the hood, with H2Guard running. |
 
 ## Consequences
 
 - `design_state: constructable` in `project.yaml`. The build plan HBN-BLD-001 shows every component and step in pictures generated from the model (`cad/src/build_plan_media.py`).
+- With A1 accepted on 2026-10-02, the 10 mm deck and the supply beside the bench are to be carried into the model; until then R13 stays at risk as modelled (28.0 kg). With A2 accepted, draining the separator by hand at 20 kPa gauge, under the hood with H2Guard running, is an operating rule.
 - Requirement status: 10 met, 1 not met (R9 purity), 3 at risk (R8, R10, R13), 1 not verifiable at TRL 3 (R16); cost (R14) is reported against the value-engineering target, USD 114 over it (it was counted as met at USD 885 before the construction changes).
 - The photoreal renders (`media/render-*.png`), `media/card.png`, `media/social-preview.png` and the appearance model `cad/src/product_model.py` still show the concept: no rear posts, no top frame, the tank higher and the old mounts. They need updating on Amish's Mac, where Blender is.
 - The stack's end-plate mounting holes, the tank neck thread, the fuel cell's mounting holes, the meters' bezel sizes and the reservoir's outlet are confirmed when the parts are bought (register, "To confirm when parts are bought").

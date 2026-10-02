@@ -3,9 +3,9 @@ doc_id: HBN-DDR-001
 title: H2Bench TRL 2 review decisions
 project: H2Bench
 doc_type: Design decision record
-version: "0.2"
+version: "0.3"
 status: Draft
-date: '2026-09-25'
+date: '2026-10-02'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -17,12 +17,16 @@ revisions:
   date: '2026-09-25'
   author: Amish Chadha
   change: Recommendations accepted by Amish (DDR-002)
+- version: "0.3"
+  date: '2026-10-02'
+  author: Amish Chadha
+  change: "Item 12 decided by Amish on 2026-10-02 (HBN-DEC-001)"
 ---
 
 # 0001: TRL 2 review decisions
 
 - **Date:** 2026-09-25
-- **Status:** accepted for items 1 to 11, 13 and 14 (Amish, 2026-09-25: "i accept all your recommendations, go with them across all repos"; see HBN-DDR-002). Item 12 carried no recommendation and remains proposed, awaiting Amish.
+- **Status:** accepted for items 1 to 11, 13 and 14 (Amish, 2026-09-25: "i accept all your recommendations, go with them across all repos"; see HBN-DDR-002). Item 12 carried no recommendation on 2026-09-25; recommendations were written later and Amish approved them on 2026-10-02 ("i approve your recommendations for all 555 open decisions."; HBN-DEC-001).
 
 ## Context
 
@@ -58,7 +62,7 @@ No pitch or problem rewording was recommended at TRL 2, so `project.yaml` and `R
 | 9 | Budget. The TRL 2 review recommended raising `budget_usd` from $450 to about $850 (bench power supply included, H2Guard costed separately). `budget_usd` stays at $450 in `project.yaml`. HBN-CAL-001 prices the kit at $865 in full, $800 without the bench supply and $780 without the supply and the plug-in RCD | Decided by Amish, 2026-09-25: go with recommendation: `budget_usd` raised from $450 to $850 (HBN-DDR-002 D9) |
 | 10 | Whether the bench power supply is part of the kit or supplied by the school (BOM line 4) | Decided by Amish, 2026-09-25: go with recommendation: the supply is in the kit, as recommendation (a) of item 9 stated (HBN-DDR-002 D10) |
 | 11 | Canopy hood with a single high point for sensing and extraction (HBN-PRC-001 choice 8). It was not in the TRL 2 review list | Decided by Amish, 2026-09-25: go with recommendation: the canopy hood proposed as the working design is kept (HBN-DDR-002 D8) |
-| 12 | Curriculum to align the first worksheets with; class demonstration or group practical first; aluminium or stainless tank | Proposed, awaiting Amish. No recommendation was made |
+| 12 | Curriculum to align the first worksheets with; class demonstration or group practical first; aluminium or stainless tank | No recommendation was made on 2026-09-25. Decided by Amish, 2026-10-02: worksheets for post-16 vocational hydrogen or renewable energy technician courses; an instructor-run class demonstration first; a certified aluminium cylinder (HBN-DEC-001) |
 | 13 | Engineering proposals from HBN-CAL-001: relief set at 325 kPa gauge (329 kPa gauge or less keeps R5 at full relief lift); a 310 kPa gauge high-pressure cut of the supply so the relief valve is only a backup; vent needle valve set for 3 min or more; plug-in 30 mA RCD as BOM line 18 | Decided by Amish, 2026-09-25: go with recommendation: relief 325 kPa gauge, 310 kPa gauge supply cut, needle valve 3 min or more, RCD line (HBN-DDR-002 D11 to D14) |
 | 14 | H2Guard interface: H2Guard's valve is 24 V, normally closed; H2Bench's tank solenoid is 12 V. H2Guard's first-user recommendation (university teaching lab) differs from item 8 here | Decided by Amish, 2026-09-25: go with recommendation: settle the interface with H2Guard; listed under cross-repo actions in `docs/REVIEW.md`; H2Guard not edited |
 
