@@ -23,7 +23,7 @@ PARAMS = {
     # Bench (HBN-REQ-001 R13)
     "bench_l": 900.0, "bench_d": 450.0,
     "frame_h": 20.0,            # 20 x 20 mm aluminium extrusion, 6 mm slot
-    "deck_t": 12.0,             # HDPE deck
+    "deck_t": 10.0,             # HDPE deck (10 mm, decided 2026-10-02)
     "lip_h": 10.0,              # drip lip: 10 x 10 x 1.5 mm aluminium angle on the deck edge
     "lip_t": 1.5,
     "panel_t": 3.0, "panel_y": 202.0,   # instrument panel front face... back face on the rear posts
@@ -36,7 +36,7 @@ PARAMS = {
     # Gas train centreline
     "gas_y": -40.0, "tube_od": 6.0,
     # 4 Bench power supply (L x D x H)
-    "psu": (150.0, 210.0, 140.0), "psu_x0": -440.0, "psu_y0": -20.0,
+    "psu": (150.0, 210.0, 140.0), "psu_x0": -630.0, "psu_y0": -105.0,   # beside the bench on the lab table (2026-10-02)
     # 5 Reservoir (on a folded stand) and deionizer cartridge, held to a short post
     "res_d": 110.0, "res_h": 170.0, "res_x": -370.0, "res_y": -140.0, "res_stand_h": 60.0,
     "di_d": 50.0, "di_h": 150.0, "di_x": -268.0, "di_y": -150.0,
@@ -45,6 +45,9 @@ PARAMS = {
     "ely_x0": -215.0, "ely_lift": 20.0,
     # 7 Separator and drier on a folded column bracket
     "sep_d": 60.0, "sep_h": 160.0, "sep_x": -28.0, "drier_d": 40.0, "drier_h": 130.0, "drier_x": 30.0,
+    # 19 Catalytic deoxidizer between separator and drier (decided 2026-10-02): a vertical cartridge
+    #    standing on the column bracket's foot, clipped to its plate, two ports on top
+    "deox_d": 32.0, "deox_h": 120.0, "deox_x": 1.0,
     # 8 Check valve and flame arrestor, on a saddle block
     "arr_x": (55.0, 105.0), "arr_d": 28.0, "arr_z": 60.0,
     # 9 Buffer tank: internal volume is the design input, cylinder length follows from it
@@ -299,10 +302,10 @@ def build_components(p=PARAMS):
               + _ring(*dxy, TOP + ct, TOP + ct + 2, dr, p["collar_flange_d"] / 2))
     add("collar", "Duct collar, flanged", collar, "#93C5FD", 3, "hood")
 
-    # 4 Bench DC power supply (bought; stands on its own feet)
+    # 4 Bench DC power supply (bought; stands on its own feet on the lab table beside the bench)
     pl, pd, ph = p["psu"]
     x0, y0 = p["psu_x0"], p["psu_y0"]
-    psu = b(x0, x0 + pl, y0, y0 + pd, DT, DT + ph) + b(x0 + 10, x0 + pl - 10, y0 - 4, y0, DT + 30, DT + ph - 20)
+    psu = b(x0, x0 + pl, y0, y0 + pd, 0, ph) + b(x0 + 10, x0 + pl - 10, y0 - 4, y0, 30, ph - 20)
     add("psu", "Bench DC power supply", psu, "#374151", 4, "psu")
 
     # 5 Reservoir on a folded 2 mm aluminium stand; deionizer cartridge; both banded to a short post
@@ -369,10 +372,22 @@ def build_components(p=PARAMS):
     cz = DT + 110
     for xx in (sx_, dx7):
         cbr = cbr - yc(xx, cb_y - 1, cb_y + 4, cz + 5, 2.0) - vc(xx, cb_y + 14, DT - 1, DT + 4, 2.75)
+    cbr = cbr - yc(p["deox_x"], cb_y - 1, cb_y + 4, DT + 3 + 70 + 5, 2.0)      # clip hole for the deoxidizer (2026-10-02)
     add("col_bracket", "Column bracket", cbr, "#A8A29E", 7, "gas", True)
     clips = (_ring(sx_, GY, cz, cz + 10, sr, sr + 1.5) + b(sx_ - 6, sx_ + 6, GY + sr + 0.5, cb_y, cz, cz + 10)
              + _ring(dx7, GY, cz, cz + 10, dr7, dr7 + 1.5) + b(dx7 - 6, dx7 + 6, GY + dr7 + 0.5, cb_y, cz, cz + 10))
     add("col_clips", "Pipe clips (2)", clips, "#111827", 7, "gas")
+
+    # 19 Catalytic deoxidizer: stands on the column bracket's foot, its back 5 mm from the plate, one clip
+    #    round it to the plate; inlet and outlet ports on top
+    dxo, dro, dho = p["deox_x"], p["deox_d"] / 2, p["deox_h"]
+    dyo = cb_y + 3 + 5 + dro
+    zd0, zd1 = DT + 3, DT + 3 + dho
+    deox = (vc(dxo, dyo, zd0, zd1, dro) + vc(dxo - 8, dyo, zd1, zd1 + 12, 4) + vc(dxo + 8, dyo, zd1, zd1 + 12, 4))
+    add("deox", "Catalytic deoxidizer", deox, "#7C3AED", 19, "gas")
+    zc = zd0 + 70
+    add("deox_clip", "Deoxidizer clip", _ring(dxo, dyo, zc, zc + 10, dro, dro + 1.5)
+        + b(dxo - 6, dxo + 6, cb_y + 3, dyo - dro - 0.5, zc, zc + 10), "#111827", 19, "gas")
 
     # 8 Check valve and flame arrestor on an HDPE saddle with a band clip
     ax0, ax1 = p["arr_x"]
@@ -480,7 +495,8 @@ def build_components(p=PARAMS):
     dri_top = DT + p["drier_h"] + 12
     gas = [
         [(ex1 + 12, GY, ez_h2), (sx_ - sr + 1, GY, ez_h2)],
-        [(sx_, GY, sep_top), (sx_, GY, sep_top + 12), (dx7, GY, sep_top + 12), (dx7, GY, dri_top)],
+        [(sx_, GY, sep_top), (sx_, GY, sep_top + 12), (sx_, dyo, sep_top + 12), (dxo - 8, dyo, sep_top + 12), (dxo - 8, dyo, zd1 + 12)],
+        [(dxo + 8, dyo, zd1 + 12), (dxo + 8, dyo, DT + 160), (dxo + 8, GY, DT + 160), (dx7, GY, DT + 160), (dx7, GY, dri_top)],
         [(ax1, GY, az), (108, GY, az), (108, GY, mz + 30), (TX - 30, GY, mz + 30)],
         [(TX + 30, GY, mz + 30), (rgx, GY, mz + 30), (rgx, GY, DT + 115)],
         [(rgx + 25, GY, fz0 + 5), (fx0, GY, fz0 + 5)],
@@ -514,6 +530,7 @@ GROUPS = [
     ("Electrolyzer membranes", ["ely_meas"], "#111827", None, (-40, -260, 220)),
     ("Gas and water separator, drier", ["sep", "drier", "col_bracket", "col_clips"], "#6B7280", 7, (0, -380, 100)),
     ("Check valve and flame arrestor", ["arrestor", "arr_saddle", "arr_clip"], "#B45309", 8, (0, -300, 330)),
+    ("Catalytic deoxidizer", ["deox", "deox_clip"], "#7C3AED", 19, (0, 260, 140)),
     ("Hydrogen buffer tank, 2 L, with guard", ["tank", "cradle", "guard_rods", "guard_nuts", "guard_plate"], "#E5E7EB", 9, (0, -120, 60)),
     ("Tank manifold: sensors, relief, gauge", ["manifold"], "#C2410C", 10, (0, -330, 330)),
     ("Regulator and solenoid valve", ["reg"], "#D4A017", 11, (60, -440, 0)),
@@ -557,10 +574,11 @@ MUST_TOUCH = [
     ("posts", "end_l"), ("posts", "rail_back"), ("post_brackets", "posts"), ("post_brackets", "end_r"),
     ("post_brackets", "rail_back"), ("panel", "posts"), ("panel", "deck"), ("top_rails", "posts"),
     ("top_brackets", "top_rails"), ("top_brackets", "posts"), ("canopy", "top_rails"), ("collar", "canopy"),
-    ("hanger", "canopy"), ("psu", "deck"), ("res_stand", "deck"), ("reservoir", "res_stand"), ("di", "deck"),
+    ("hanger", "canopy"), ("res_stand", "deck"), ("reservoir", "res_stand"), ("di", "deck"),
     ("water_post", "deck"), ("water_bands", "reservoir"), ("water_bands", "di"), ("water_bands", "water_post"),
     ("ely_feet", "ely"), ("ely_feet", "deck"), ("ely_cells", "ely"), ("sep", "deck"), ("drier", "deck"),
     ("col_bracket", "deck"), ("col_clips", "sep"), ("col_clips", "drier"), ("col_clips", "col_bracket"),
+    ("deox", "col_bracket"), ("deox_clip", "deox"), ("deox_clip", "col_bracket"), ("gas_lines", "deox"),
     ("arr_saddle", "deck"), ("arr_clip", "arrestor"), ("arr_clip", "arr_saddle"), ("drier", "arrestor"),
     ("cradle", "deck"), ("tank", "cradle"), ("guard_rods", "guard_nuts"), ("guard_nuts", "deck"),
     ("guard_nuts", "guard_plate"), ("manifold", "tank"), ("reg", "deck"), ("fc_bridge", "deck"), ("fc", "fc_bridge"),
@@ -575,7 +593,7 @@ ALLOWED = {frozenset(x) for x in [
     ("gas_lines", "ely"), ("gas_lines", "sep"), ("gas_lines", "drier"), ("gas_lines", "arrestor"),
     ("gas_lines", "manifold"), ("gas_lines", "reg"), ("gas_lines", "fc"),
     ("water_lines", "reservoir"), ("water_lines", "di"), ("water_lines", "ely"),
-    ("guard_rods", "deck"), ("guard_rods", "guard_nuts"), ("manifold", "tank"), ("drier", "arrestor"),
+    ("guard_rods", "deck"), ("guard_rods", "guard_nuts"), ("manifold", "tank"), ("drier", "arrestor"), ("gas_lines", "deox"),
 ]}
 # Minimum gaps between parts that must not touch (mm)
 MIN_GAP = [
@@ -583,6 +601,7 @@ MIN_GAP = [
     ("tank", "guard_rods", 15.0), ("tank", "guard_plate", 3.0), ("manifold", "guard_plate", 3.0),
     ("ely_feet", "sep", 5.0), ("ely", "sep", 5.0), ("ely_feet", "psu", 20.0), ("water_lines", "psu", 10.0),
     ("water_lines", "ely_feet", 3.0), ("res_stand", "posts", 0.0), ("panel", "top_brackets", 0.0),
+    ("deox", "sep", 10.0), ("deox", "drier", 10.0), ("gas_lines", "col_bracket", 5.0), ("psu", "posts", 20.0),
     ("fc", "load", 20.0), ("water_lines", "gas_lines", 20.0), ("h2guard", "top_rails", 20.0),
 ]
 
@@ -614,8 +633,12 @@ def check(p=PARAMS, verbose=True):
     for a, b2, g in MIN_GAP:
         dd = comp[a].shape.distance_to(comp[b2].shape)
         (ok if dd >= g - 1e-6 else bad).append(f"gap {a} / {b2}: {dd:.1f} mm (needs {g:.0f})")
-    # every part rests on or fastens to another part (no floating parts)
+    # every part rests on or fastens to another part (no floating parts); the bench supply stands on the lab table
     for k in keys:
+        if k == "psu":
+            z0 = comp[k].shape.bounding_box().min.Z
+            (ok if abs(z0) < 0.05 else bad).append(f"supported psu: stands on the lab table (z {z0:.2f} mm)")
+            continue
         others = [comp[j].shape for j in keys if j != k]
         dmin = min(comp[k].shape.distance_to(o) for o in others)
         (ok if dmin < 0.05 else bad).append(f"supported {k}: nearest part {dmin:.2f} mm")

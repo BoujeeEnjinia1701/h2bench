@@ -345,3 +345,45 @@ Raised when the recommendations were written (2026-10-01) and kept here so they 
 - Item 5: the 60 m³/h hood extraction and H2Guard's 150 m³/h room exhaust are different quantities, so the register presents them as a mismatch when they may both be right.
 - Item 5 lists 'first user' as open with H2Guard, but H2Bench's first user is already decided (HBN-DDR-001, item 8); only H2Guard's side is open.
 - The mass calculation (HBN-CAL-001 section 9) prices the tank shell as aluminium (0.80 kg at 3 mm wall) while the tank material is still open (item 6) and BOM line 9 says 'aluminium or stainless'; a stainless tank at the same wall would add about 1.6 kg.
+
+## Session 2026-10-02: approved follow-ups carried out
+
+Amish approved all follow-up actions from the open-decision sign-off (2026-10-02). trl stays 3; nothing was built, bought or tested.
+
+### Follow-ups
+
+| No. | Follow-up | Status |
+| --- | --- | --- |
+| 1 | 10 mm deck in the model, constructability checks re-run, HBN-DWG-001, deck making sketch and step pictures redrawn; supply shown beside the bench | Done. 144 checks pass. HBN-DWG-001 is Rev P4 |
+| 2 | Deck repriced, mass recomputed, R13 set from the result | Done. Deck USD 3 less; 24.4 kg for the bench as moved (27.4 kg with the supply); R13 met |
+| 3 | Catalytic deoxidizer between separator and drier: model, routing, checks, BOM line, mass, build plan step and pictures | Done. BOM line 19, USD 60 (estimate, no quote); 0.16 kg; build plan section 3.9 joint 7, step 8, step 12 and the piping picture |
+| 4a | Add oxygen crossover as a tank safety item to HBN-CAL-001 section 8 | Done (HBN-CAL-001 v0.6, sections 8 and 13) |
+| 4b | Ask the stack supplier for oxygen in the hydrogen at the lowest operating current | Not done: outreach by Amish. R9 stays at risk until the figure arrives |
+| 5 | Send the interface proposal to H2Guard; change the solenoid to 24 V normally closed; redraw the interlock wiring | Not done: outreach by Amish, and the solenoid change waits for H2Guard to agree. BOM line 11 stays 12 V. The wiring picture already shows the alarm contact in series with the 310 kPa cut relay |
+| 6 | Name the certified aluminium cylinder in BOM line 9 and confirm diameter, base and neck against the cradle and manifold adapter | Done for diameter and base (106 to 111 mm base for the 112 mm pocket, 10 mm deep). Neck thread cannot be confirmed until a supplier is chosen; no catalogue part is named |
+| 7 and 8 | First worksheets for post-16 vocational technician courses, with the record of attended fills | Not done: teaching and trial material that follows the TRL 4 build and a partner college |
+
+### Requirement and figure changes
+
+- R9: not met to at risk (deoxidizer fitted; residual oxygen 10 to 200 ppm at an assumed 99 % conversion against 50 ppm; no supplier data).
+- R13: at risk to met (24.4 kg for the bench as moved; 900 x 450 x 753 mm).
+- R14: USD 1056 against the USD 885 value-engineering target (USD 171 over); USD 991 without the supply, USD 971 without supply and RCD. `budget_usd` unchanged.
+- Eleven requirements met, three at risk (R8, R9, R10), R16 not verifiable at TRL 3.
+
+### Documents changed
+
+- `cad/src/model.py`, `cad/step/`, `cad/stl/`: 10 mm deck, supply beside the bench, deoxidizer and its clip; 144 checks.
+- `bom/bom.csv` (lines 1, 9 and 19), `bom/bom-notes.md`.
+- `docs/04-calcs/sizing.py`, `results.csv`, `01-sizing.md` (HBN-CAL-001 v0.6).
+- `docs/03-requirements.md` (HBN-REQ-001 v0.8), `docs/02-concept.md` (HBN-PRC-001 v0.8), `docs/06-design-decisions.md` (HBN-DEC-001 v0.3), `docs/decisions/0003-design-for-construction.md` (HBN-DDR-003 v0.3), `docs/05-build-plan.md` (HBN-BLD-001 v0.3), `README.md`.
+- Pictures: `cad/drawings/HBN-DWG-001` (Rev P4), the making sketches, all build plan joint, step, overview, piping and wiring pictures, and the concept media (hero, blueprint, cutaway, exploded, flow, model.glb).
+- `cad/src/product_model.py` follows the model (deck, supply beside the bench, deoxidizer). Render scenes for the hero, front and exploded views exported to `/home/claude/renders/h2bench`; photoreal renders, card and social preview are made on Amish's Mac.
+
+### Cross-repo actions
+
+- H2Guard: receive the interface proposal (24 V normally closed solenoid powered from H2Guard, alarm contact in series with the 310 kPa cut relay, 60 m³/h hood extraction stated apart from the 150 m³/h room exhaust, vocational technician training as shared first user).
+- Stack supplier (outside the portfolio): oxygen in the hydrogen at the lowest operating current.
+
+## 2026-10-02: photoreal renders redone on the constructable design
+
+Rendered with Blender Cycles on Amish's Mac from the updated appearance model; captioned with `.kit/photo_caption.py`; `media/card.png` and `media/social-preview.png` regenerated with `.kit/cards.py`. Views: hero, exploded, front. image_qc passes. Appearance deviations are those logged above as proposed, awaiting Amish.

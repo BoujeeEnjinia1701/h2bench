@@ -87,7 +87,7 @@ EXTRUSION_M = {"frame": sum(bar_len_m(k) for k in ("rail_front", "rail_back", "e
                "posts": bar_len_m("posts"), "top": bar_len_m("top_rails"), "water_post": bar_len_m("water_post")}
 MASS = [
     ("1 Frame (%.2f m of 20 x 20 extrusion) and 8 brackets" % EXTRUSION_M["frame"], EXTRUSION_M["frame"] * EXTRUSION_KG_M + 8 * BRACKET_KG),
-    ("1 Deck, 12 mm HDPE, notched (model volume)", vol("deck") * RHO["hdpe"]),
+    ("1 Deck, 10 mm HDPE, notched (model volume)", vol("deck") * RHO["hdpe"]),
     ("1 Drip lip, 10 x 10 x 1.5 aluminium angle", vol("lip") * RHO["al"]),
     ("2 Back panel, 3 mm ACM at 3.8 kg/m2", 0.9 * 0.55 * 3.8),
     ("3 Posts and top frame (%.2f m of extrusion) and 14 brackets" % (EXTRUSION_M["posts"] + EXTRUSION_M["top"]),
@@ -100,6 +100,7 @@ MASS = [
     ("6 Electrolyzer feet", vol("ely_feet") * RHO["al"]),
     ("7 Separator and drier", 0.4),
     ("7 Column bracket and pipe clips", vol("col_bracket") * RHO["al"] + 0.03),
+    ("19 Catalytic deoxidizer, 32 x 120 mm cartridge with catalyst, and clip (assumed)", 0.16),
     ("8 Check valve and flame arrestor, saddle and clip", 0.3 + vol("arr_saddle") * RHO["hdpe"] + 0.01),
     ("9 Tank shell (aluminium, from the model) ", None),   # filled below
     ("9 Cradle, guard rods, nuts and top plate", vol("cradle") * RHO["hdpe"] + vol("guard_rods") * RHO["steel"] * 0.85
@@ -346,7 +347,20 @@ vap_g = dn_fill * y_avg / (1 - y_avg) * 18.015
 fills = GEL_G * GEL_CAP / vap_g
 say(f"water vapour after the separator at 25 C: {y_hi * 100:.2f} to {y_lo * 100:.2f} % mol; {vap_g:.3f} g per fill")
 say(f"drier: {GEL_G:.0f} g silica gel at {GEL_CAP * 100:.0f} % uptake lasts {fills:.0f} fills")
-res("R9", "Water removed by the drier; oxygen crossover in the stack not known; no deoxidizer", "99.995 % or better (fuel cell listing)", "Not met")
+# catalytic deoxidizer between separator and drier (decided 2026-10-02): 2 H2 + O2 -> 2 H2O over a palladium catalyst
+O2_X = (0.1, 0.5, 2.0)           # % mol of oxygen in the hydrogen at low current: assumed range, no supplier data yet
+CONV = 0.99                      # assumed conversion of the oxygen in the cartridge; to be confirmed on the supplier's data
+LIMIT_PPM = 50.0                 # 99.995 % or better means 50 ppm of all impurities together
+for x in O2_X:
+    o2_ppm = x * 1e4
+    ndot_o2 = ndot_ely * x / 100
+    heat_w = ndot_o2 * 2 * 241.83e3
+    water_fill = ndot_o2 * 2 * 18.015 * t_fill
+    say(f"oxygen crossover {x:.1f} % in the hydrogen: the deoxidizer reacts {ndot_o2 * VM * 1000 * 60:.2f} mL/min of O2, heat {heat_w:.2f} W, "
+        f"water formed {water_fill * 1000:.0f} mg per fill (the drier takes {GEL_G * GEL_CAP:.0f} g); residual at {CONV * 100:.0f} % conversion {o2_ppm * (1 - CONV):.0f} ppm against the {LIMIT_PPM:.0f} ppm limit for all impurities")
+say("oxygen in stored hydrogen is also a tank safety item: hydrogen with about 4 % or more oxygen (handbook lower limit, to confirm) can burn inside the tank; the cap here is the deoxidizer, and the stack supplier's oxygen figure at the lowest current sets whether it can ever be removed")
+res("R9", f"Water removed by the drier; deoxidizer fitted between separator and drier (decided 2026-10-02); residual oxygen {O2_X[0] * 1e4 * (1 - CONV):.0f} to {O2_X[2] * 1e4 * (1 - CONV):.0f} ppm at an assumed 99 % conversion and 0.1 to 2 % crossover, against 50 ppm for all impurities; no supplier data",
+    "99.995 % or better (fuel cell listing)", "At risk")
 res("R11", "Mixed-bed resin with conductivity check to 1 uS/cm; water use 3.4 g per fill", "1 uS/cm or less at the stack inlet", "Met")
 
 # ---------------------------------------------------------------- 9. Envelope and mass
@@ -357,13 +371,13 @@ tank_shell_area = (2 * math.pi * P["tank_od"] / 2 * (tank_cyl_len() + t_w) + 2 *
 tank_shell_kg = tank_shell_area * t_w * 2.7e-6
 mass = [(n, tank_shell_kg if m is None else m) for n, m in MASS]
 m_total = sum(m for _, m in mass)
-m_no_psu = m_total - 3.0
+m_no_psu = m_total - 3.0     # the bench as moved: the supply ships in the kit but sits beside the bench (2026-10-02)
 for n, m in mass:
     say(f"  {n.strip()}: {m:.2f} kg")
-say(f"a 10 mm deck instead of 12 mm saves {0.9 * 0.45 * 0.002 * 950:.2f} kg")
+say(f"deck now 10 mm (decided 2026-10-02): saves {0.9 * 0.45 * 0.002 * 950:.2f} kg against 12 mm; the supply stands on the lab table beside the bench")
 say(f"envelope {l:.0f} x {d:.0f} x {h:.0f} mm; mass {m_total:.1f} kg ({m_no_psu:.1f} kg without the supply)")
-res("R13", f"{l:.0f} x {d:.0f} mm, {h:.0f} mm tall; {m_total:.1f} kg with the supply ({m_no_psu:.1f} kg without)",
-    "1000 x 500 mm, 800 mm, 25 kg or less", "At risk" if m_total > MASS_LIMIT else "Met")
+res("R13", f"{l:.0f} x {d:.0f} mm, {h:.0f} mm tall; {m_no_psu:.1f} kg for the bench as moved, with the supply beside it ({m_total:.1f} kg with the 3.0 kg supply)",
+    "1000 x 500 mm, 800 mm, 25 kg or less (bench as moved, supply beside it)", "At risk" if m_no_psu > MASS_LIMIT else "Met")
 
 # ---------------------------------------------------------------- 10. Cost
 say("\n== 10. Cost ==")
@@ -378,7 +392,7 @@ def vs_target(c):
 
 
 say(f"value-engineering target ${BUDGET:.0f} (budget_usd); full kit {vs_target(total)}; without supply {vs_target(no_psu)}; minimum kit {vs_target(minimum)}")
-say(f"lines repriced for construction (HBN-DDR-003): 1, 3, 5, 6, 7, 8, 9, 12, 16, 17")
+say(f"lines repriced for construction (HBN-DDR-003): 1, 3, 5, 6, 7, 8, 9, 12, 16, 17; 2026-10-02: line 1 (10 mm deck) and new line 19 (deoxidizer)")
 say(f"two stacks ${cost['6'] + cost['12']:.0f} ({(cost['6'] + cost['12']) / total * 100:.0f} % of total)")
 res("R14", f"${total:.0f} full; ${no_psu:.0f} without supply; ${minimum:.0f} minimum (H2Guard excluded)",
     f"${BUDGET:.0f} value-engineering target (budget_usd, supply included)",

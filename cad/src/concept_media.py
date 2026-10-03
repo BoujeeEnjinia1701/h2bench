@@ -37,12 +37,12 @@ context = [Part("Lab table (existing)", table, "#C8CDD3"), person]
 
 render_all(
     parts, project="H2Bench", title="Hydrogen teaching bench concept", dwg_no="HBN-DWG-010",
-    date="2026-10-01",
+    date="2026-10-02",
     key_figures=["Electrolyzer 70 W, 4-cell PEM, 256 mL/min H2",
                  "2.0 L tank, 7.9 L H2 at 300 kPa gauge; relief 325",
                  "Fill 17.7 min; fuel cell 10.8 W net for 29.0 min",
                  "Round trip 25.1 %, HHV basis (HBN-CAL-001)",
-                 "Bench 900 x 450 mm, 755 mm tall, about 28 kg",
+                 "Bench 900 x 450 mm, 753 mm tall, about 24 kg",
                  "Runs only with the H2Guard interlock active"],
     scale_figure=False, context=context, cut=False,
     flow={"title": "energy per lesson cycle, HHV basis (estimates, HBN-CAL-001)", "unit": "Wh",

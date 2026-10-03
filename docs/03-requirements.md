@@ -3,7 +3,7 @@ doc_id: HBN-REQ-001
 title: H2Bench requirements
 project: H2Bench
 doc_type: Requirements
-version: "0.7"
+version: "0.8"
 status: Draft
 date: '2026-10-02'
 author: Amish Chadha
@@ -37,11 +37,15 @@ revisions:
   date: '2026-10-02'
   author: Amish Chadha
   change: "Decisions of 2026-10-02: R13 counts the bench without its supply (10 mm deck decided); R9 deoxidizer decided; R8 interface proposal to H2Guard"
+- version: "0.8"
+  date: '2026-10-02'
+  author: Amish Chadha
+  change: "Decisions carried into the model (2026-10-02): R13 met at 24.4 kg; R9 at risk with the deoxidizer fitted; R14 USD 171 over the target"
 ---
 
 # H2Bench requirements
 
-These requirements were checked by calculation at TRL 3 in HBN-CAL-001 v0.3 (`docs/04-calcs/01-sizing.md`). Version 0.4 applies the decisions Amish accepted on 2026-09-25 (HBN-DDR-002): R14's limit is now the $850 `budget_usd` (was $450), with the bench power supply in the kit and H2Guard costed in its own project; R6 records the 325 kPa gauge relief and the 310 kPa gauge supply cut; and R10's target is restated from 300 kPa to 332 kPa, the relief setting plus the check valve, because a 300 kPa rating did not cover a relief event. Version 0.5 raises R14's limit to $885, the budget Amish approved on 2026-09-26 to cover the priced BOM (HBN-DDR-002). Version 0.6 follows the constructable design of HBN-DDR-003 and reports R14 against `budget_usd` as a value-engineering target, not a limit (Amish, 2026-10-01). Ten requirements are met on paper, R14 is USD 114 over its value-engineering target, **one is not met (R9)**, three are at risk (R8, R10 and R13) and one (R16) cannot be verified until hardware exists. "Met" means met by calculation or design review, not by test.
+These requirements were checked by calculation at TRL 3 in HBN-CAL-001 v0.3 (`docs/04-calcs/01-sizing.md`). Version 0.4 applies the decisions Amish accepted on 2026-09-25 (HBN-DDR-002): R14's limit is now the $850 `budget_usd` (was $450), with the bench power supply in the kit and H2Guard costed in its own project; R6 records the 325 kPa gauge relief and the 310 kPa gauge supply cut; and R10's target is restated from 300 kPa to 332 kPa, the relief setting plus the check valve, because a 300 kPa rating did not cover a relief event. Version 0.5 raises R14's limit to $885, the budget Amish approved on 2026-09-26 to cover the priced BOM (HBN-DDR-002). Version 0.6 follows the constructable design of HBN-DDR-003 and reports R14 against `budget_usd` as a value-engineering target, not a limit (Amish, 2026-10-01). Eleven requirements are met on paper, R14 is USD 171 over its value-engineering target, three are at risk (R8, R9 and R10) and one (R16) cannot be verified until hardware exists. Version 0.8 carries the decisions of 2026-10-02 into the model: R13 becomes met (24.4 kg for the bench as moved) and R9 moves from not met to at risk (deoxidizer fitted, no supplier data). "Met" means met by calculation or design review, not by test.
 
 Table 1. Requirements and status at TRL 3.
 
@@ -55,12 +59,12 @@ Table 1. Requirements and status at TRL 3.
 | R6 | Limit storage pressure | Working pressure 300 kPa gauge or less; electrolyzer supply cut at 310 kPa gauge; relief at 350 kPa gauge or less; vessel rated 1 MPa or more | Met by design: cut 310 kPa gauge, relief 325 kPa gauge; hoop stress 18 MPa at 1 MPa | Component ratings |
 | R7 | No flammable mixture in the room from a total release | Full inventory mixed into a 30 m³ room below 25 % of the lower flammable limit | Met: 0.030 % by volume, 0.75 % of LFL | Calculation |
 | R8 | Interlock shuts down on a leak | H2Guard alarm cuts electrolyzer power and closes the tank solenoid within 2 s; fan runs | **At risk:** 1.1 s from H2Guard's TRL 2 figures, but H2Guard is at TRL 2 and its valve is 24 V against H2Bench's 12 V solenoid. Decided 2026-10-02 to propose to H2Guard a 24 V normally closed tank solenoid powered from H2Guard and its alarm contact in series with the 310 kPa cut relay | H2Guard design review |
-| R9 | Hydrogen quality at the fuel cell | Purity as the stack requires (the 12 W class specifies 99.995 % or better) | **Not met** as modelled: water is removed by the drier, but oxygen crossover is unknown and there is no deoxidizer yet. On 2026-10-02 a catalytic deoxidizer between separator and drier was decided, to be removed only if the stack supplier's data show oxygen within the 99.995 % limit at the lowest operating current; not yet in the model or BOM | Supplier data, later gas test |
+| R9 | Hydrogen quality at the fuel cell | Purity as the stack requires (the 12 W class specifies 99.995 % or better) | **At risk:** water is removed by the drier and a catalytic deoxidizer (BOM line 19) now sits between separator and drier. At an assumed 99 % conversion the residual oxygen is 10 to 200 ppm for 0.1 to 2 % crossover, against 50 ppm for all impurities, and there is no supplier data. The deoxidizer is removable only if the stack supplier's data show oxygen within the 99.995 % limit at the lowest operating current | Supplier data, later gas test |
 | R10 | Electrolyzer tolerates tank back-pressure | H2 side rated to 332 kPa or more over the O2 side (relief setting plus check valve; was 300 kPa) | **At risk:** the stack must hold 307 kPa while filling, 317 kPa at the supply cut and 332 kPa at the relief setting; no rating in hand | Supplier data |
 | R11 | Water quality | Conductivity 1 µS/cm or less at the stack inlet, shown to students | Met by design (mixed-bed resin and conductivity check) | Datasheet |
 | R12 | Log data students can analyze | Voltage, current, power, tank pressure and temperature at 1 Hz, saved as CSV | Met by design: 2,804 rows, about 224 kB per cycle | Firmware sketch review |
-| R13 | Fit an existing lab bench | Footprint 1,000 x 500 mm or less; height 800 mm or less; mass 25 kg or less for the bench as moved (the bench supply ships in the kit but sits beside the bench, HBN-DDR-003 A1, 2026-10-02) | **At risk** as modelled: 900 x 450 x 755 mm, 28.0 kg (25.0 kg without the bench supply); with the 10 mm deck decided on 2026-10-02 and an aluminium tank, about 24.2 kg once the model is updated | Parametric model and mass estimate |
-| R14 | Low cost and buildable | Parts cost reported against the USD 885 value-engineering target (`budget_usd`, was $450, then $850), including the bench power supply and excluding H2Guard, which is costed in its own project and shipped with the bench; hand tools only; no welding | USD 999, USD 114 over the value-engineering target (USD 934 without the bench supply); hand tools only, no welding (HBN-DDR-003) | Priced BOM |
+| R13 | Fit an existing lab bench | Footprint 1,000 x 500 mm or less; height 800 mm or less; mass 25 kg or less for the bench as moved (the bench supply ships in the kit but sits beside the bench, HBN-DDR-003 A1, 2026-10-02) | **Met:** 900 x 450 x 753 mm, 24.4 kg for the bench as moved with an aluminium tank (the supply stands beside it; 27.4 kg with the supply); the 10 mm deck of 2026-10-02 is in the model | Parametric model and mass estimate |
+| R14 | Low cost and buildable | Parts cost reported against the USD 885 value-engineering target (`budget_usd`, was $450, then $850), including the bench power supply and excluding H2Guard, which is costed in its own project and shipped with the bench; hand tools only; no welding | USD 1056, USD 171 over the value-engineering target (USD 991 without the bench supply); hand tools only, no welding (HBN-DDR-003) | Priced BOM |
 | R15 | Guard people from pressure parts | Tank inside a guard; relief and vent piped to the hood; no pressurized fitting that can be opened without a tool | Met by design: 50 mm guard clearance; relief and vent lines to the outlet hanger under the canopy | Design review |
 | R16 | Set up and shut down quickly | Setup 15 min or less; tank vented and bench safe in 5 min or less | Not verifiable at TRL 3: the vent takes 3.0 min at the needle valve setting; setup needs a walk-through with hardware | Walk-through when hardware exists |
 

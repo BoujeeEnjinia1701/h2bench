@@ -7,11 +7,11 @@ R5,8.5 L at 300 kPa g; 9.0 L at relief set; 9.9 L at full relief lift and 15 C,1
 R6,"300 kPa g working, relief 325 kPa g; hoop stress 18 MPa at 1 MPa",300 / 350 kPa g or less; vessel 1 MPa or more,Met
 R7,0.030 % vol (0.8 % LFL); 0.033 % worst case,Below 25 % LFL in 30 m3,Met
 R8,"1.1 s from trip to valve closed, from H2Guard TRL 2 figures; H2Guard valve is 24 V, H2Bench solenoid 12 V",Trip cuts supply and closes solenoid within 2 s; fan runs,At risk
-R9,Water removed by the drier; oxygen crossover in the stack not known; no deoxidizer,99.995 % or better (fuel cell listing),Not met
+R9,"Water removed by the drier; deoxidizer fitted between separator and drier (decided 2026-10-02); residual oxygen 10 to 200 ppm at an assumed 99 % conversion and 0.1 to 2 % crossover, against 50 ppm for all impurities; no supplier data",99.995 % or better (fuel cell listing),At risk
 R10,"Stack H2 side must hold 307 kPa in filling, 317 kPa at the supply cut and 332 kPa at relief set; no rating in hand",332 kPa or more over the O2 side,At risk
 R11,Mixed-bed resin with conductivity check to 1 uS/cm; water use 3.4 g per fill,1 uS/cm or less at the stack inlet,Met
 R12,"2804 rows per cycle, about 224 kB","V, I, P, p, T at 1 Hz to CSV",Met
-R13,"900 x 450 mm, 755 mm tall; 28.0 kg with the supply (25.0 kg without)","1000 x 500 mm, 800 mm, 25 kg or less",At risk
-R14,$999 full; $934 without supply; $914 minimum (H2Guard excluded),"$885 value-engineering target (budget_usd, supply included)",Over the value-engineering target by $114
+R13,"900 x 450 mm, 753 mm tall; 24.4 kg for the bench as moved, with the supply beside it (27.4 kg with the 3.0 kg supply)","1000 x 500 mm, 800 mm, 25 kg or less (bench as moved, supply beside it)",Met
+R14,$1056 full; $991 without supply; $971 minimum (H2Guard excluded),"$885 value-engineering target (budget_usd, supply included)",Over the value-engineering target by $171
 R15,Guard clearance 50 mm; relief and vent piped to the canopy in the model,"Guard, piped relief, no tool-free fitting",Met
 R16,Vent 3.0 min at the needle valve setting; setup time needs a walk-through with hardware,Setup 15 min or less; safe in 5 min or less,Not verifiable at TRL 3

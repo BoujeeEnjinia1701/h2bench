@@ -47,7 +47,7 @@ RENDER_VIEWS = [
     {"name": "exploded", "groups": ["shell", "internal", "accessory"], "explode": True, "el": 28, "az": -55,
      "note": "Exploded view from the front right and above (about 28 deg elevation): H2Guard, canopy and "
              "posts, back panel and meters, power supply, reservoir and deionizer, electrolyzer, "
-             "separator and drier, arrestor, tank with guard and manifold, regulator, fuel cell, load "
+             "separator, deoxidizer and drier, arrestor, tank with guard and manifold, regulator, fuel cell, load "
              "and lamp, gas lines, deck and frame"},
     {"name": "front", "groups": ["shell", "internal", "context"], "explode": False, "el": 12, "az": -78,
      "note": "View from the front (student side), slightly right and above (about 12 deg elevation): "
@@ -329,12 +329,12 @@ def product_parts(P=PARAMS):
     E4 = (-260, 0, 120)
     pl, pd, ph = P["psu"]
     x0, y0 = P["psu_x0"], P["psu_y0"]
-    case = _b(x0, x0 + pl, y0, y0 + pd, deck_top, deck_top + ph)
+    case = _b(x0, x0 + pl, y0, y0 + pd, 0, 0 + ph)
     case = _fillet_try(case, _edges_par(case, Axis.Y), [6.0, 4.0, 2.0])
     for k in range(7):                             # top vent slots
-        case -= _b(x0 + 30, x0 + pl - 30, y0 + 90 + 12 * k, y0 + 95 + 12 * k, deck_top + ph - 1.2, deck_top + ph + 1)
+        case -= _b(x0 + 30, x0 + pl - 30, y0 + 90 + 12 * k, y0 + 95 + 12 * k, 0 + ph - 1.2, 0 + ph + 1)
     add("Power supply case", case, C_SHELL2, "painted", 4, "shell", E4)
-    fz0, fz1 = deck_top + 30, deck_top + ph - 20
+    fz0, fz1 = 0 + 30, 0 + ph - 20
     fx0, fx1 = x0 + 10, x0 + pl - 10
     fp = _b(fx0, fx1, y0 - 4, y0, fz0, fz1)
     fp = _fillet_try(fp, _edges_par(fp, Axis.Y), [4.0, 2.0])
@@ -396,7 +396,7 @@ def product_parts(P=PARAMS):
     # ------------------------------------------------------------ 6 PEM electrolyzer
     E6 = (-40, -260, 220)
     ex0, n, pitch, pp, et = P["ely_x0"], P["ely_cells"], P["ely_pitch"], P["ely_plate"], P["ely_end_t"]
-    ez0 = P["ely_z0"]
+    ez0 = deck_top + P["ely_lift"]
     ex1 = ex0 + 2 * et + n * pitch
     ezc = ez0 + (pp + 20) / 2
     hy = (pp + 20) / 2
@@ -454,6 +454,24 @@ def product_parts(P=PARAMS):
             caps7.append(cc)
     add("Separator and drier end caps", _union(caps7), C_DARK, "plastic", 7, "shell", E7)
 
+    # 19 catalytic deoxidizer between separator and drier, on the column bracket (model.py geometry, 2026-10-02)
+    E19 = (0, 260, 140)
+    cb_y = GY + sr + 5
+    cbx0, cbx1 = sx_ - 20, dx7 + 22
+    cbr = _b(cbx0, cbx1, cb_y, cb_y + 3, deck_top, deck_top + 150) + _b(cbx0, cbx1, cb_y, cb_y + 23, deck_top, deck_top + 3)
+    add("Column bracket (folded aluminium)", cbr, C_ALU, "metal", 7, "shell", E7)
+    dxo, dro, dho = P["deox_x"], P["deox_d"] / 2, P["deox_h"]
+    dyo = cb_y + 3 + 5 + dro
+    zd0, zd1 = deck_top + 3, deck_top + 3 + dho
+    body = _zcyl(dxo, dyo, zd0, zd1, dro)
+    body = _fillet_try(body, body.edges(), [3.0, 2.0])
+    add("Deoxidizer cartridge", body, C_STEEL, "metal", 19, "shell", E19)
+    cap19 = _zcyl(dxo, dyo, zd1, zd1 + 6, dro - 3) + _zcyl(dxo - 8, dyo, zd1 + 6, zd1 + 12, 4.0) + _zcyl(dxo + 8, dyo, zd1 + 6, zd1 + 12, 4.0)
+    add("Deoxidizer head and ports", cap19, C_BRASS, "metal", 19, "shell", E19)
+    zc = zd0 + 70
+    clip19 = _zcyl(dxo, dyo, zc, zc + 10, dro + 1.5) - _zcyl(dxo, dyo, zc - 1, zc + 11, dro) + _b(dxo - 6, dxo + 6, cb_y + 3, dyo - dro - 0.5, zc, zc + 10)
+    add("Deoxidizer clip", clip19, C_DARK, "metal", 19, "shell", E19)
+
     # ------------------------------------------------------------ 8 check valve and flame arrestor
     E8 = (0, -300, 330)
     gz = deck_top + 150.0
@@ -473,7 +491,7 @@ def product_parts(P=PARAMS):
 
     # ------------------------------------------------------------ 9 buffer tank and guard
     E9 = (0, -120, 60)
-    TX, TR, tw, tz0 = P["tank_x"], P["tank_od"] / 2, P["tank_wall"], P["tank_z0"]
+    TX, TR, tw, tz0 = P["tank_x"], P["tank_od"] / 2, P["tank_wall"], deck_top + P["cradle"][1] - P["cradle_pocket"][1]
     lc = tank_cyl_len(P)
     tz1 = tz0 + tw + lc
     tank_top = tz1 + TR
@@ -695,7 +713,7 @@ def product_parts(P=PARAMS):
     add("Gas lines, 6 mm (PTFE)", base["Gas lines, 6 mm"], C_TUBE, "plastic", 16, "internal", (0, -200, 180))
 
     # ------------------------------------------------------------ context: existing lab table top
-    top_ = _b(-L / 2 - 60, L / 2 + 60, -D / 2 - 80, D / 2 + 30, -28, 0)
+    top_ = _b(P["psu_x0"] - 50, L / 2 + 60, -D / 2 - 80, D / 2 + 30, -28, 0)   # long enough for the supply beside the bench
     top_ = _fillet_try(top_, _edges_par(top_, Axis.Z), [10.0, 6.0])
     top_ = _fillet_try(top_, _top(top_), [3.0, 2.0])
     add("Lab table top (existing)", top_, C_TABLE, "painted", None, "context", (0, 0, 0))

@@ -3,7 +3,7 @@ doc_id: HBN-DDR-003
 title: H2Bench design for construction
 project: H2Bench
 doc_type: Design decision record
-version: "0.2"
+version: "0.3"
 status: Draft
 date: '2026-10-02'
 author: Amish Chadha
@@ -17,6 +17,10 @@ revisions:
   date: '2026-10-02'
   author: Amish Chadha
   change: "Accepted by Amish (2026-10-02), with the recommendations for A1 and A2; status kept Draft"
+- version: "0.3"
+  date: '2026-10-02'
+  author: Amish Chadha
+  change: "Decisions A1 and the deoxidizer carried into the model: 144 checks, 24.4 kg, USD 1056"
 ---
 
 # 0003: Design for construction
@@ -30,7 +34,7 @@ On 2026-09-30 Amish asked for every repo to have an illustrated build plan and w
 
 Checking the concept model with build123d found: the tie rods of the electrolyzer cut 2 mm into its cell plates; the gas lines were seven separate pieces that did not join up; the front posts stood on the 6 mm drip lip; the canopy, the back panel and every component on the deck touched their neighbours but had nothing holding them. The rest of Table 1 comes from asking, for each part, how it is made and how it fastens to the next.
 
-The changes keep what H2Bench does: the same 900 x 450 x 755 mm envelope, the same electrolyzer, 2 L tank, pressures, fuel cell, meters, hood and H2Guard positions, and the same gas path from stack to fuel cell. No energy, gas, pressure or venting figure in HBN-CAL-001 changes. Every change is in `cad/src/model.py`, which now builds each part separately and runs 135 constructability checks (`python cad/src/model.py --check`): no part overlaps another except where intended (a line pushed into its fitting, a rod through its nuts, the manifold in the tank neck), 70 pairs that must bear on or fasten to each other touch, 16 clearances hold, and every part is supported. All 135 pass.
+The changes keep what H2Bench does: the same 900 x 450 mm footprint (753 mm tall since the 10 mm deck of 2026-10-02), the same electrolyzer, 2 L tank, pressures, fuel cell, meters, hood and H2Guard positions, and the same gas path from stack to fuel cell. No energy, gas, pressure or venting figure in HBN-CAL-001 changes. Every change is in `cad/src/model.py`, which now builds each part separately and runs 144 constructability checks (`python cad/src/model.py --check`; 135 before the deoxidizer and 10 mm deck of 2026-10-02): no part overlaps another except where intended (a line pushed into its fitting, a rod through its nuts, the manifold in the tank neck), the pairs that must bear on or fasten to each other touch, the clearances hold, and every part is supported. All 144 pass.
 
 ## Decision
 
@@ -73,7 +77,7 @@ The changes keep what H2Bench does: the same 900 x 450 x 755 mm envelope, the sa
 ## Consequences
 
 - `design_state: constructable` in `project.yaml`. The build plan HBN-BLD-001 shows every component and step in pictures generated from the model (`cad/src/build_plan_media.py`).
-- With A1 accepted on 2026-10-02, the 10 mm deck and the supply beside the bench are to be carried into the model; until then R13 stays at risk as modelled (28.0 kg). With A2 accepted, draining the separator by hand at 20 kPa gauge, under the hood with H2Guard running, is an operating rule.
-- Requirement status: 10 met, 1 not met (R9 purity), 3 at risk (R8, R10, R13), 1 not verifiable at TRL 3 (R16); cost (R14) is reported against the value-engineering target, USD 114 over it (it was counted as met at USD 885 before the construction changes).
+- With A1 accepted on 2026-10-02, the 10 mm deck and the supply beside the bench are carried into the model: 24.4 kg for the bench as moved (27.4 kg with the supply), so R13 is met. With A2 accepted, draining the separator by hand at 20 kPa gauge, under the hood with H2Guard running, is an operating rule.
+- Requirement status after the 2026-10-02 decisions were carried into the model: 11 met, 3 at risk (R8, R9, R10), 1 not verifiable at TRL 3 (R16); cost (R14) is reported against the value-engineering target, USD 171 over it (USD 114 over at the 2026-10-01 construction changes, plus the USD 60 deoxidizer, less USD 3 for the deck).
 - The photoreal renders (`media/render-*.png`), `media/card.png`, `media/social-preview.png` and the appearance model `cad/src/product_model.py` still show the concept: no rear posts, no top frame, the tank higher and the old mounts. They need updating on Amish's Mac, where Blender is.
 - The stack's end-plate mounting holes, the tank neck thread, the fuel cell's mounting holes, the meters' bezel sizes and the reservoir's outlet are confirmed when the parts are bought (register, "To confirm when parts are bought").

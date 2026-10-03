@@ -3,7 +3,7 @@ doc_id: HBN-PRC-001
 title: H2Bench design precis
 project: H2Bench
 doc_type: Design precis
-version: "0.7"
+version: "0.8"
 status: Draft
 date: '2026-10-02'
 author: Amish Chadha
@@ -37,6 +37,10 @@ revisions:
   date: '2026-10-02'
   author: Amish Chadha
   change: "Decisions of 2026-10-02: deoxidizer, tank material, worksheets and first use, H2Guard interface proposal; separator drain and demonstration-first safety rules"
+- version: "0.8"
+  date: '2026-10-02'
+  author: Amish Chadha
+  change: "Decisions carried into the design (2026-10-02): deoxidizer (line 19), 10 mm deck, supply beside the bench; figures from HBN-CAL-001 v0.6"
 ---
 
 # H2Bench design precis
@@ -53,7 +57,7 @@ H2Bench is a teaching bench that turns about 21 Wh of electricity into about 4.5
 
 A lesson runs in two halves.
 
-1. **Fill (about 18 min).** The bench power supply (4) drives the PEM electrolyzer stack (6) in constant-current mode at about 9 A and 7.8 V. Deionized water from the reservoir (5) is split: oxygen vents into the hood, and hydrogen passes through the separator and drier (7), the check valve and flame arrestor (8), and into the buffer tank (9). The electrolyzer pushes the tank from 70 to 300 kPa gauge on its own; there is no compressor. If the fill is not stopped at 300 kPa gauge, a pressure switch on the manifold opens at 310 kPa gauge and a relay breaks the supply line, so the relief valve (325 kPa gauge) is only a backup. The cut is hardwired and does not depend on the logger firmware. Students log current, voltage, tank pressure and temperature, and compute the hydrogen made from the gas law and from Faraday's law. The difference is the Faraday efficiency.
+1. **Fill (about 18 min).** The bench power supply (4) drives the PEM electrolyzer stack (6) in constant-current mode at about 9 A and 7.8 V. Deionized water from the reservoir (5) is split: oxygen vents into the hood, and hydrogen passes through the separator (7), the catalytic deoxidizer (19) and the drier (7), the check valve and flame arrestor (8), and into the buffer tank (9). The electrolyzer pushes the tank from 70 to 300 kPa gauge on its own; there is no compressor. If the fill is not stopped at 300 kPa gauge, a pressure switch on the manifold opens at 310 kPa gauge and a relay breaks the supply line, so the relief valve (325 kPa gauge) is only a backup. The cut is hardwired and does not depend on the logger firmware. Students log current, voltage, tank pressure and temperature, and compute the hydrogen made from the gas law and from Faraday's law. The difference is the Faraday efficiency.
 2. **Discharge (about 29 min).** The solenoid valve and regulator (11) feed the fuel cell (12) at about 50 kPa gauge. The fuel cell runs the electronic load and lamp (13) at about 1.5 A. Students log power out and tank pressure fall, and plot the fuel cell's polarization curve by stepping the load.
 
 The meters and logger (14) record every quantity at 1 Hz to a CSV file. The H2Guard sensor at the high point of the canopy hood (15) watches for hydrogen; on alarm it cuts the power supply output, closes the tank solenoid and runs the extraction fan at full speed.
@@ -83,6 +87,7 @@ Table 1. Main components. Numbers match `bom/bom.csv` and Figure 3.
 | 13 | Electronic load and lamp | Steps the load for polarization curves; shows the output | 0 to 3 A |
 | 14 | Meters, logger and display | Three power monitors, pressure and temperature, CSV at 1 Hz; relay that breaks the electrolyzer supply when the line 10 switch opens | ±1 % power; relay 10 A DC or more |
 | 15 | H2Guard sensor, controller and fan | Detection, extraction and interlock (H2Guard project) | See H2Guard |
+| 19 | Catalytic deoxidizer | Reacts oxygen carried across the stack membrane back into water before the drier | Palladium cartridge, 32 x 120 mm; assumed 99 % conversion |
 
 ![Exploded view](../media/exploded.png)
 
@@ -90,9 +95,9 @@ Table 1. Main components. Numbers match `bom/bom.csv` and Figure 3.
 
 ![Cutaway](../media/cutaway.png)
 
-*Figure 4. Section on the gas train centreline, looking from the front. Left to right: power supply (4), electrolyzer (6) with its four membrane electrode assemblies between titanium plates, separator and drier (7), check valve and flame arrestor (8), buffer tank (9) shown hollow inside its rod guard with the manifold (10) and the relief line rising to the canopy, regulator and solenoid (11) and fuel cell (12).*
+*Figure 4. Section on the gas train centreline, looking from the front. Left to right: power supply (4), electrolyzer (6) with its four membrane electrode assemblies between titanium plates, separator, deoxidizer and drier (7 and 19), check valve and flame arrestor (8), buffer tank (9) shown hollow inside its rod guard with the manifold (10) and the relief line rising to the canopy, regulator and solenoid (11) and fuel cell (12).*
 
-The general arrangement, with the main dimensions and interfaces, is drawing HBN-DWG-001 Rev P3 ([`cad/drawings/HBN-DWG-001.pdf`](../cad/drawings/HBN-DWG-001.pdf)); STEP and STL exports are in `cad/step/` and `cad/stl/`.
+The general arrangement, with the main dimensions and interfaces, is drawing HBN-DWG-001 Rev P4 ([`cad/drawings/HBN-DWG-001.pdf`](../cad/drawings/HBN-DWG-001.pdf)); STEP and STL exports are in `cad/step/` and `cad/stl/`.
 
 ## First-order numbers
 
@@ -120,10 +125,10 @@ Table 2. Energy and gas per lesson cycle (HBN-CAL-001).
 | Stored pressure energy | 646 J (710 J at the relief setting) | Isentropic expansion of 2 L to 101 kPa absolute |
 | Stored chemical energy | About 94 kJ (HHV), 80 kJ (LHV) | 0.33 mol |
 | Hydrogen measurement | ±1.5 % per fill; each stage efficiency within ±1.8 % | 0.25 % FS transducer on 600 kPa, ±1 K, tank volume calibrated by water fill to ±1 % |
-| Envelope and mass | 900 x 450 x 755 mm; 28.0 kg (25.0 kg without the supply) | `cad/src/model.py`; mass estimate in HBN-CAL-001 |
-| Parts cost | USD 999, or USD 934 without the bench supply; USD 114 over the USD 885 value-engineering target | `bom/bom.csv`; H2Guard excluded |
+| Envelope and mass | 900 x 450 x 753 mm; 24.4 kg for the bench as moved, supply beside it (27.4 kg with the supply) | `cad/src/model.py`; mass estimate in HBN-CAL-001 |
+| Parts cost | USD 1056, or USD 991 without the bench supply; USD 171 over the USD 885 value-engineering target | `bom/bom.csv`; H2Guard excluded |
 
-The numbers show that one 90 min lesson holds a full cycle with 13 min to spare (R2), the round trip lands where published studies say it should, and students can measure each stage to better than ±2 %, so the bench teaches the right lesson. They also show one requirement not met, hydrogen purity at the fuel cell (R9), and three at risk: the H2Guard interlock (R8), electrolyzer back-pressure (R10) and mass (R13). The 325 kPa gauge relief brings the inventory (R5) to met.
+The numbers show that one 90 min lesson holds a full cycle with 13 min to spare (R2), the round trip lands where published studies say it should, and students can measure each stage to better than ±2 %, so the bench teaches the right lesson. They also show three requirements at risk: the H2Guard interlock (R8), electrolyzer back-pressure (R10) and hydrogen purity at the fuel cell (R9, now with a deoxidizer fitted but no supplier data). Mass (R13) is met at 24.4 kg once the deck is 10 mm and the supply stands beside the bench. The 325 kPa gauge relief brings the inventory (R5) to met.
 
 ## Key design choices
 

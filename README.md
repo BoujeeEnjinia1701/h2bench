@@ -2,7 +2,7 @@
 
 ![TRL 3](https://img.shields.io/badge/TRL-3%20of%209-0F766E) ![Hardware: CERN-OHL-S-2.0](https://img.shields.io/badge/hardware-CERN--OHL--S--2.0-111827) ![Software: MIT](https://img.shields.io/badge/software-MIT-111827) [![DOI](https://zenodo.org/badge/1388476714.svg)](https://zenodo.org/badge/latestdoi/1388476714) [![REUSE compliant](https://github.com/BoujeeEnjinia1701/h2bench/actions/workflows/reuse.yml/badge.svg)](https://github.com/BoujeeEnjinia1701/h2bench/actions/workflows/reuse.yml) [![Archived in Software Heritage](https://archive.softwareheritage.org/badge/origin/https://github.com/BoujeeEnjinia1701/h2bench/)](https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/BoujeeEnjinia1701/h2bench)
 
-**Area:** Hydrogen · **TRL:** 3 of 9 (proof of concept on paper) · **Value-engineering target:** USD 885 (estimated cost USD 999) · **Difficulty:** 4 of 5
+**Area:** Hydrogen · **TRL:** 3 of 9 (proof of concept on paper) · **Value-engineering target:** USD 885 (estimated cost USD 1056) · **Difficulty:** 4 of 5
 
 A teaching bench that splits water with a small electrolyzer, stores a few liters of hydrogen at low pressure and runs a fuel cell, with meters so students can measure efficiency at each step. Protected by H2Guard.
 
@@ -60,7 +60,7 @@ A teaching bench that splits water with a small electrolyzer, stores a few liter
 
 In one lesson a 70 W PEM electrolyzer fills a 2 L tank from 70 to 300 kPa gauge in 17.7 min; a 12 W class fuel cell then runs a lamp at 10.8 W for 29.0 min. Students log every stage at 1 Hz and find a round trip of about 25 % (HHV basis), each stage measurable to within ±2 %. These are paper figures from the TRL 3 sizing note HBN-CAL-001, not measurements.
 
-At TRL 3 the design meets ten of its sixteen requirements on paper. Value-engineering target: USD 885. Estimated cost of the constructable design: USD 999 (USD 114 over the target). Hydrogen purity at the fuel cell is not met, and the H2Guard interlock, electrolyzer back-pressure and mass are at risk; on 2026-10-02 Amish decided to add a catalytic deoxidizer for purity and a 10 mm deck, with the bench supply beside the bench, for mass ([design decisions register](docs/06-design-decisions.md)); see [docs/REVIEW.md](docs/REVIEW.md).
+At TRL 3 the design meets eleven of its sixteen requirements on paper. Value-engineering target: USD 885. Estimated cost of the constructable design: USD 1056 (USD 171 over the target). The H2Guard interlock, electrolyzer back-pressure and hydrogen purity at the fuel cell are at risk. The model now carries the decisions of 2026-10-02: a catalytic deoxidizer between the separator and the drier, a 10 mm deck, and the bench supply beside the bench, which brings the bench to 24.4 kg (R13 met) ([design decisions register](docs/06-design-decisions.md)); see [docs/REVIEW.md](docs/REVIEW.md).
 
 Full design precis: [docs/02-concept.md](docs/02-concept.md)
 
@@ -74,7 +74,7 @@ Full design precis: [docs/02-concept.md](docs/02-concept.md)
 - H2Guard detector and interlock, sensing at the high point of a canopy hood
 - Bench frame and canopy hood
 
-The priced bill of materials is in [bom/bom.csv](bom/bom.csv). Value-engineering target: USD 885, with the bench supply in the kit. Estimated cost of the constructable design: USD 999 (USD 114 over the target); USD 934 without the bench power supply; H2Guard excluded. See [docs/REVIEW.md](docs/REVIEW.md).
+The priced bill of materials is in [bom/bom.csv](bom/bom.csv). Value-engineering target: USD 885, with the bench supply in the kit. Estimated cost of the constructable design: USD 1056 (USD 171 over the target); USD 991 without the bench power supply; H2Guard excluded. See [docs/REVIEW.md](docs/REVIEW.md).
 
 ## Building the prototype
 

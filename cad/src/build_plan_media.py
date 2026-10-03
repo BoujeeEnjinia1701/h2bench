@@ -24,7 +24,7 @@ from model import PARAMS as P, build_components, derived  # noqa: E402
 
 OUT = ROOT / "docs" / "05-build-plan"
 DWG = ROOT / "cad" / "drawings"
-DATE = "2026-10-01"
+DATE = "2026-10-02"
 D = derived(P)
 C = build_components(P)
 GY, DT, TOP = P["gas_y"], D["deck_top"], D["top"]
@@ -66,6 +66,7 @@ ORDER = [
     ("ely", "Electrolyzer stack", ["ely", "ely_cells", "ely_meas"], "#0F766E"),
     ("colbr", "Column bracket", ["col_bracket"], "#78716C"),
     ("columns", "Separator, drier, pipe clips", ["sep", "drier", "col_clips"], "#6B7280"),
+    ("deox", "Catalytic deoxidizer and clip", ["deox", "deox_clip"], "#7C3AED"),
     ("arr", "Arrestor saddle, arrestor, clip", ["arr_saddle", "arrestor", "arr_clip"], "#C2410C"),
     ("cradle", "Tank cradle", ["cradle"], "#E7E5E4"),
     ("rods", "Guard rods and lower nuts", ["guard_rods", "guard_nuts"], "#57534E"),
@@ -92,7 +93,7 @@ def overview():
     off = {"frame": (0, 0, -520), "deck": (0, 0, -380), "lip": (0, -120, -300),
            "posts": (0, 380, 120), "panel": (0, 560, 120), "top": (0, 380, 300), "canopy": (0, 380, 460),
            "stand": (-60, -260, -120), "water": (-60, -260, 40), "feet": (0, -60, -120), "ely": (0, -60, 0),
-           "colbr": (0, 110, -90), "columns": (0, -230, 40), "arr": (40, -300, -60), "cradle": (0, -60, -160),
+           "colbr": (0, 110, -90), "columns": (0, -230, 40), "deox": (0, 40, 190), "arr": (40, -300, -60), "cradle": (0, -60, -160),
            "rods": (70, 40, -30), "tank": (150, -260, 250), "manifold": (150, -260, 470), "gplate": (70, 40, 170),
            "reg": (60, -220, -60), "fc": (120, -120, 60), "load": (140, -160, -160), "lines": (0, -380, 470),
            "psu": (-220, 40, 120), "meters": (0, 520, 150), "h2g": (0, 380, 700)}
@@ -134,7 +135,7 @@ def sheet(n):
             "Check: diagonals equal within 2 mm; frame flat on the bench.",
         ], [part("Posts", ["posts", "post_brackets"])], inset_view=(30, -55))
     if n == 102:
-        return _sheet("HBN-DWG-102", ["deck"], "Deck", "H2Bench deck: making sketch", "HDPE sheet 12 mm, natural or white", [
+        return _sheet("HBN-DWG-102", ["deck"], "Deck", "H2Bench deck: making sketch", "HDPE sheet 10 mm, natural or white", [
             "Cut the sheet to 900 x 450 mm; round the corners lightly.",
             "Front notches, one at each end: 20 mm in from the end edge and",
             "  60 mm long, from 85 to 145 mm back from the front edge.",
@@ -259,11 +260,14 @@ def sheet(n):
             "  20 and 78 mm from the left edge, for 5 mm deck screws.",
             "Drill two 4 mm clip holes 115 mm above the deck, at 20 and",
             "  78 mm from the left edge (the separator and drier centres).",
+            "Drill a third 4 mm clip hole 78 mm above the deck, 49 mm from",
+            "  the left edge, for the deoxidizer clip.",
             "Fit: stands 5 mm behind the separator; the foot points back.",
-            "The separator clip (60 mm) and drier clip (40 mm) screw to it.",
+            "The separator and drier clips screw to it; the deoxidizer",
+            "  stands on the foot and is clipped to it.",
             "Check: upright square to the deck; the clips line up with",
             "  the column centres.",
-        ], g("columns", "arr"), inset_view=(25, 125))
+        ], g("columns", "deox", "arr"), inset_view=(25, 125))
     if n == 110:
         return _sheet("HBN-DWG-110", ["arr_saddle"], "Arrestor saddle", "H2Bench arrestor saddle: making sketch",
                       "HDPE block 16 x 32 x 24 mm", [
@@ -396,11 +400,11 @@ def joint(n):
                       elev=18, azim=-70)
     if n == 7:
         sx_, dx7 = P["sep_x"], P["drier_x"]
-        bx = (sx_ - 45, dx7 + 30, GY - 40, GY + 60, DT + 80, DT + 121)
+        bx = (sx_ - 45, dx7 + 30, GY - 40, GY + 85, DT + 60, DT + 121)
         return _joint(n, [("Separator", ["sep"], None), ("Drier", ["drier"], None), ("Column bracket", ["col_bracket"], None),
-                          ("Pipe clips", ["col_clips"], "#111827")], bx,
-                      "Joint 7: separator and drier clipped to the column bracket",
-                      "Seen from above the front, columns cut just above the clips. Each clip wraps its column and screws to the bracket",
+                          ("Pipe clips", ["col_clips", "deox_clip"], "#111827"), ("Catalytic deoxidizer", ["deox"], "#7C3AED")], bx,
+                      "Joint 7: separator, drier and deoxidizer clipped to the column bracket",
+                      "Seen from above the front, columns cut above the clips; the deoxidizer stands on the foot behind",
                       elev=55, azim=-70)
     if n == 8:
         ax0, ax1 = P["arr_x"]
@@ -455,9 +459,9 @@ STEPS = [
      "Stand and post screwed to the deck; reservoir on the stand; band clips round both vessels to the post", dict(elev=22, azim=-40)),
     (7, "feet", [("feet", (0, -120, 0)), ("ely", (0, -120, 180))], "electrolyzer on its feet",
      "Feet bolted to the end plates first (two M6 each), then the stack set down and the feet screwed to the deck", dict(elev=22, azim=-40)),
-    (8, "colbr", [("colbr", (0, 120, 0)), ("columns", (0, -140, 120)), ("arr", (0, -140, 60))],
-     "column bracket, separator, drier and arrestor",
-     "Bracket and saddle screwed down; columns clipped to the bracket; arrestor screwed onto the drier outlet", dict(elev=22, azim=-40)),
+    (8, "colbr", [("colbr", (0, 120, 0)), ("columns", (0, -140, 120)), ("deox", (0, 40, 220)), ("arr", (0, -140, 60))],
+     "column bracket, separator, deoxidizer, drier and arrestor",
+     "Bracket and saddle down; separator, drier and deoxidizer clipped on; arrestor on the drier outlet", dict(elev=22, azim=-40)),
     (9, "cradle", [("cradle", (0, -120, 0)), ("rods", (0, 0, 160)), ("tank", (0, 0, 300))], "cradle, guard rods and tank",
      "Cradle screwed down; rods through the deck with a nut each side; tank lowered into the pocket", dict(elev=22, azim=-40)),
     (10, "manifold", [("manifold", (0, 0, 180)), ("gplate", (0, 0, 320))], "tank manifold and guard top plate",
@@ -466,8 +470,8 @@ STEPS = [
      "Regulator and bridge screwed down; stack screwed to the bridge; load case screwed to the deck", dict(elev=25, azim=-25)),
     (12, "lines", [("lines", (0, -120, 120))], "gas and water lines",
      "Cut each line square, deburr, compression fittings; relief and vent lines clipped to the hanger. Hold point: leak check", dict(elev=22, azim=-50)),
-    (13, "psu", [("psu", (-160, 0, 0)), ("meters", (0, -160, 0))], "power supply, meters and wiring",
-     "Meters into the panel cut-outs; supply on its feet; wire as the wiring diagram. Hold point: wiring checks", dict(elev=22, azim=-50)),
+    (13, "psu", [("psu", (-120, 0, 0)), ("meters", (0, -160, 0))], "power supply, meters and wiring",
+     "Meters into the panel cut-outs; supply stood on the lab table beside the bench; wire as the wiring diagram. Hold point: wiring checks", dict(elev=22, azim=-50)),
     (14, "h2g", [("h2g", (0, 0, 200))], "H2Guard sensor, fan and controller",
      "Sensor under the canopy beside the duct, fan on the collar, controller on the canopy; interlock wired to the supply cut", dict(elev=25, azim=-55)),
 ]
@@ -522,9 +526,10 @@ def piping():
     _blk(ax, 3, 40, 14, 12, "Reservoir", "on its stand,\nvented lid", W)
     _blk(ax, 3, 18, 14, 12, "Deionizer", "mixed-bed\ncartridge", W)
     _blk(ax, 24, 30, 15, 16, "Electrolyzer", "water and oxygen\nside on the left\nend plate; hydrogen\nout on the right", H2)
-    _blk(ax, 45, 34, 11, 12, "Separator", "drain valve\nat the foot", H2)
-    _blk(ax, 61, 34, 10, 12, "Drier", "silica gel", H2)
-    _blk(ax, 61, 13, 12, 13, "Check valve,\narrestor", "\n\n7 kPa check", H2)
+    _blk(ax, 44, 34, 9.5, 12, "Separator", "drain valve\nat the foot", H2)
+    _blk(ax, 55, 34, 9.5, 12, "Deoxidizer", "catalyst\ncartridge", "#7C3AED")
+    _blk(ax, 66, 34, 8.5, 12, "Drier", "silica gel", H2)
+    _blk(ax, 64, 13, 11, 13, "Check valve,\narrestor", "\n\n7 kPa check", H2)
     _blk(ax, 78, 30, 14, 16, "Tank, 2 L", "manifold: pressure,\ntemperature, gauge,\nrelief, vent, cut\nswitch", H2)
     _blk(ax, 97, 34, 10, 12, "Solenoid,\nregulator", "", H2)
     _blk(ax, 107, 15, 11, 11, "Fuel cell", "about 50 kPa", H2)
@@ -535,15 +540,16 @@ def piping():
     _wire(ax, [(24, 43), (20, 43), (20, 48), (17, 48)], O2); _lab(ax, 18, 50.6, "oxygen and water back\nto the reservoir top", O2)
     ax.text(10, 54, "oxygen leaves through the vented lid\ninto the hood", fontsize=7, color=O2, ha="center")
     # hydrogen
-    _wire(ax, [(39, 40), (45, 40)], H2); _lab(ax, 42, 42, "H2", H2, "center")
-    _wire(ax, [(56, 44), (61, 44)], H2)
-    _wire(ax, [(66, 34), (66, 26)], H2); _lab(ax, 66.6, 30, "drier out", H2)
-    _wire(ax, [(73, 20), (76, 20), (76, 36), (78, 36)], H2)
+    _wire(ax, [(39, 40), (44, 40)], H2); _lab(ax, 41.5, 42, "H2", H2, "center")
+    _wire(ax, [(53.5, 44), (55, 44)], H2)
+    _wire(ax, [(64.5, 44), (66, 44)], H2)
+    _wire(ax, [(70.2, 34), (70.2, 26)], H2); _lab(ax, 70.8, 30, "drier out", H2)
+    _wire(ax, [(75, 20), (76.5, 20), (76.5, 36), (78, 36)], H2)
     _wire(ax, [(92, 40), (97, 40)], H2); ax.text(94.5, 41.2, "0 to\n300", fontsize=6.6, color=H2, ha="center", va="bottom")
     _wire(ax, [(102, 34), (102, 22), (107, 22)], H2); _lab(ax, 102.6, 28, "about 50", H2)
     _wire(ax, [(82, 46), (82, 55)], V, ls="--"); _lab(ax, 82.6, 50.5, "relief, 325", V)
     _wire(ax, [(88, 46), (88, 55)], V, ls="--"); _lab(ax, 88.6, 50.5, "vent valve", V)
-    _wire(ax, [(50.5, 34), (50.5, 28)], W, lw=1.2, ls=":"); _lab(ax, 51, 26.5, "drained by hand\nat 20 kPa", W)
+    _wire(ax, [(48.7, 34), (48.7, 28)], W, lw=1.2, ls=":"); _lab(ax, 49.2, 26.5, "drained by hand\nat 20 kPa", W)
     ax.text(3, 8.6, "Never open a fitting under pressure. The relief and vent lines end 7 mm below the canopy, so gas they release rises to the H2Guard sensor and the duct.",
             fontsize=7.6, color="#B45309", fontweight="bold")
     ax.text(3, 5.4, "Blue: water. Red: oxygen with water. Teal: hydrogen. Grey dashed: relief and vent into the hood.", fontsize=7.2, color="#4B5563")

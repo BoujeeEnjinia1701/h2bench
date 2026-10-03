@@ -3,7 +3,7 @@ doc_id: HBN-DEC-001
 title: H2Bench design decisions register
 project: H2Bench
 doc_type: Design decisions register
-version: "0.2"
+version: "0.3"
 status: Draft
 date: '2026-10-02'
 author: Amish Chadha
@@ -17,6 +17,10 @@ revisions:
   date: '2026-10-02'
   author: Amish Chadha
   change: "Amish approved the recommendations for open decisions 1 to 8 (2026-10-02); moved to decisions made (HBN-DDR-003 accepted)"
+- version: "0.3"
+  date: '2026-10-02'
+  author: Amish Chadha
+  change: "Cost and mass restated after the 2026-10-02 decisions were carried into the model (USD 1056, 24.4 kg)"
 ---
 
 # H2Bench design decisions register
@@ -46,7 +50,7 @@ None. All open decisions were decided on 2026-10-02.
 
 ## Value engineering
 
-Value-engineering target: USD 885 (a hypothetical control target, not a limit; `budget_usd` in `project.yaml`). Estimated cost of the constructable design: USD 999 (USD 114 over the target). Without the bench power supply it is USD 934 (USD 49 over), and USD 914 where the bench socket is already RCD protected (USD 29 over). H2Guard is costed in its own project.
+Value-engineering target: USD 885 (a hypothetical control target, not a limit; `budget_usd` in `project.yaml`). Estimated cost of the constructable design: USD 1056 (USD 171 over the target; the deoxidizer adds USD 60 and the 10 mm deck saves USD 3). Without the bench power supply it is USD 991 (USD 106 over), and USD 971 where the bench socket is also already RCD protected (USD 86 over). H2Guard is costed in its own project.
 
 Main cost drivers:
 
@@ -76,7 +80,7 @@ Savings worth trying:
 | 2026-09-25 | Tank kept above about 20 kPa gauge, new tank purged by three pressure cycles; canopy hood with a single high point; vocational technician training as the first users | Amish, same instruction | HBN-DDR-001 items 7, 8, 11; HBN-DDR-002 D7, D8 |
 | 2026-09-25 | Settle the interlock interface with the H2Guard project | Amish, same instruction | HBN-DDR-002 D15 (the choices to propose were decided on 2026-10-02, below) |
 | 2026-10-02 | Design for construction accepted as made: the changes P1 to P13 (frame joints, four posts and a top frame, mounts, water lines, guard of threaded rods) and their knock-on changes | Amish: "i approve your recommendations for all 555 open decisions." | HBN-DDR-003, Table 1 |
-| 2026-10-02 | Mass (R13): options (a) and (b) together. The bench supply still ships in the kit (HBN-DDR-002, D10) but sits beside the bench, and the deck becomes 10 mm, giving 24.2 kg, which holds as long as the tank is aluminium | Amish: "i approve your recommendations for all 555 open decisions." | HBN-DDR-003, A1 |
+| 2026-10-02 | Mass (R13): options (a) and (b) together. The bench supply still ships in the kit (HBN-DDR-002, D10) but sits beside the bench, and the deck becomes 10 mm, giving 24.4 kg in the model, which holds as long as the tank is aluminium | Amish: "i approve your recommendations for all 555 open decisions." | HBN-DDR-003, A1 |
 | 2026-10-02 | Separator water: option (a) for the prototype. The teacher drains the separator by hand at the 20 kPa gauge holding pressure, under the hood, with H2Guard running | Amish: "i approve your recommendations for all 555 open decisions." | HBN-DDR-003, A2 |
 | 2026-10-02 | Hydrogen purity (R9): fit a catalytic deoxidizer between separator and drier now; remove it only if the stack supplier's data show oxygen in the hydrogen within the fuel cell's 99.995 % limit at the bench's lowest operating current | Amish: "i approve your recommendations for all 555 open decisions." | HBN-CAL-001 section 8, HBN-REQ-001 R9 |
 | 2026-10-02 | H2Guard interface (R8): propose to H2Guard a 24 V normally closed tank solenoid powered directly from H2Guard so its alarm removes valve power; H2Guard's alarm contact in series with the 310 kPa cut relay so either one breaks the 9 A supply line; 60 m³/h stated as the hood extraction rate, separate from H2Guard's 150 m³/h room exhaust; and vocational technician training as the shared first user | Amish: "i approve your recommendations for all 555 open decisions." | HBN-DDR-002 D15, REVIEW.md |

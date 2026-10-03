@@ -3,7 +3,7 @@ doc_id: HBN-BLD-001
 title: H2Bench prototype build plan
 project: H2Bench
 doc_type: Build plan
-version: "0.2"
+version: "0.3"
 status: Draft
 date: '2026-10-02'
 author: Amish Chadha
@@ -17,6 +17,10 @@ revisions:
     date: '2026-10-02'
     author: Amish Chadha
     change: "HBN-DDR-003 accepted (2026-10-02); separator drain rule"
+  - version: "0.3"
+    date: '2026-10-02'
+    author: Amish Chadha
+    change: "10 mm deck, supply beside the bench, catalytic deoxidizer between separator and drier, aluminium tank named, pictures redrawn (HBN-DEC-001, items 2, 4 and 6)"
 ---
 
 # H2Bench prototype build plan
@@ -29,7 +33,7 @@ revisions:
 
 *Figure 1. Every component pulled apart and numbered in build order.*
 
-The prototype is one H2Bench: a 900 x 450 mm aluminium-framed deck that sits on an existing lab table, with a clear canopy hood 570 mm above it on four posts and a printed instrument panel across the back. On the deck, from left to right in the order the energy flows, stand a bench power supply, a water reservoir and deionizer, a small electrolyzer stack, a separator and drier, a check valve and flame arrestor, a 2 L hydrogen tank in a rod guard with its manifold, a regulator, a fuel cell and a lamp load. The H2Guard detector, fan and controller sit at the high point of the hood. Figure 1 shows the 26 components in the order you make or fit them. The frame, deck, lip, posts, top frame, panel, canopy and eight small mounts are made in a workshop; the rest are bought and fitted. The work is sawing and drilling aluminium extrusion, folding thin aluminium sheet, cutting HDPE and polycarbonate sheet, fitting compression fittings to 6 mm tubing and wiring bought modules. The parts cost about USD 999 from the bill of materials.
+The prototype is one H2Bench: a 900 x 450 mm aluminium-framed deck that sits on an existing lab table, with a clear canopy hood 570 mm above it on four posts and a printed instrument panel across the back. The bench power supply stands on the lab table beside the left end of the bench. On the deck, from left to right in the order the energy flows, stand a water reservoir and deionizer, a small electrolyzer stack, a separator, a catalytic deoxidizer and a drier, a check valve and flame arrestor, a 2 L hydrogen tank in a rod guard with its manifold, a regulator, a fuel cell and a lamp load. The H2Guard detector, fan and controller sit at the high point of the hood. Figure 1 shows the 27 components in the order you make or fit them. The frame, deck, lip, posts, top frame, panel, canopy and eight small mounts are made in a workshop; the rest are bought and fitted. The work is sawing and drilling aluminium extrusion, folding thin aluminium sheet, cutting HDPE and polycarbonate sheet, fitting compression fittings to 6 mm tubing and wiring bought modules. The parts cost about USD 1,056 from the bill of materials.
 
 > **Safety:** This bench makes, stores and uses hydrogen, which burns in air from about 4 to 74 % and ignites very easily, and holds it at up to 300 kPa gauge. Nothing in sections 3 and 4 uses hydrogen: the build is dry until the safety stops of section 6. Never connect the electrolyzer, pressurize the tank or open the hydrogen line until those stops say so, and never run the bench without H2Guard active. The bench supply is mains powered: use it only on an earthed socket with a 30 mA RCD. Cut aluminium and polycarbonate edges are sharp; deburr everything.
 
@@ -48,14 +52,15 @@ The concept showed what the bench does; some of its parts could not be made or f
 | Relief and vent lines | Relief line pressed against the canopy, unsupported; no vent line | Both lines clipped to a hanger, ending 7 mm below the canopy (Figure 12) | The gas must get out into the hood |
 | Water side | Not drawn | Reservoir on a 60 mm stand, three water lines to and from the stack (Figures 14, 25) | The stack is fed by gravity |
 | Electrolyzer | Tie rods through its cell plates; feet that could not be screwed down | Rods clear of the plates; two angle feet bolted to the end plates (Figure 16) | Every screw can be reached |
-| Separator and drier | Loose, 3 mm apart in line with no room for fittings | On a column bracket with pipe clips; gas loops over from one top to the other (Figure 18) | Room for every fitting |
+| Separator, deoxidizer and drier | Loose, 3 mm apart in line with no room for fittings; no deoxidizer | On a column bracket with pipe clips; the deoxidizer stands on the bracket foot between them; gas loops over from the separator top, through the deoxidizer, to the drier top (Figure 18) | Room for every fitting; removes the oxygen that crosses the stack membrane |
+| Deck and power supply | 12 mm deck; supply on the deck at the left | 10 mm deck; supply stands on the lab table beside the left end of the bench | Lighter bench; the deck stays clear of the mains lead |
 | Arrestor | 150 mm up on a post block | 60 mm up in an HDPE saddle straight off the drier outlet (Figure 20) | Short, supported run clear of the tank |
 | Tank guard | Rods standing loose; a top ring that would need welding | Threaded rods in tee nuts, a bolted top plate, the tank in a pocketed cradle (Figure 22) | No welding; the tank cannot tip or lift |
 | Fuel cell stand | A solid block in the fan's air path | A folded bridge, open front and back (Figure 24) | Air flows through the stack |
 
 ## 3. Making the components
 
-Make and check each component before the assembly step that needs it. Sizes are in millimetres. "Left" and "right" are as seen standing at the front of the bench (the student side); "front" is the student side and "back" the instrument panel. Heights are above the lab table unless a step says otherwise; the deck top is 32 mm above the table. Workshop tolerance is 0.5 mm unless a step says otherwise; drawings do not carry tolerances before TRL 4.
+Make and check each component before the assembly step that needs it. Sizes are in millimetres. "Left" and "right" are as seen standing at the front of the bench (the student side); "front" is the student side and "back" the instrument panel. Heights are above the lab table unless a step says otherwise; the deck top is 30 mm above the table. Workshop tolerance is 0.5 mm unless a step says otherwise; drawings do not carry tolerances before TRL 4.
 
 All extrusion, brackets and T-nuts are one 20-series system (20 x 20 mm profile, 6 mm slot). Mounts are fixed to the deck with 5 mm stainless self-tapping screws in 4 mm pilot holes, 10 mm deep, marked through the mount's own holes with the mount in place (Table 2).
 
@@ -67,13 +72,13 @@ All extrusion, brackets and T-nuts are one 20-series system (20 x 20 mm profile,
 | Water post (centre) | 146 | 80 |
 | Electrolyzer end plates | 235 to 365, feet 215 to 385 | centred 185 |
 | Separator and drier (centres) | 422 and 480 | 185 |
+| Deoxidizer (centre, on the bracket foot) | 451 | 244 |
 | Column bracket (face) | 402 to 502 | 220 |
 | Arrestor saddle (centre) | 530 | 185 |
 | Tank cradle and guard (centre) | 625 | 185 |
 | Regulator (centre) | 730 | 185 |
 | Fuel cell bridge | 790 to 875 | centred 185 |
 | Load and lamp | 750 to 890 | 10 to 65 |
-| Bench supply (on its feet) | 10 to 160 | 201 to 415 |
 
 ### 3.1 Frame
 
@@ -106,7 +111,7 @@ The deck lies on the top faces. The front posts stand on the end rails and the r
 
 *Figure 4. Deck making sketch (HBN-DWG-102), with the drip lip and the holes that must be made before the deck goes on.*
 
-**What it is and what it is made from.** The wet tray everything stands on. HDPE sheet 12 mm, 900 x 450; aluminium angle 10 x 10 x 1.5 mm for the lip; a 200 mm length of the frame extrusion for the water post.
+**What it is and what it is made from.** The wet tray everything stands on. HDPE sheet 10 mm, 900 x 450; aluminium angle 10 x 10 x 1.5 mm for the lip; a 200 mm length of the frame extrusion for the water post.
 
 **How to make it.**
 
@@ -275,17 +280,17 @@ The stack's base sits 20 above the deck.
 
 1. Cut a blank 100 wide x 170 long and fold the bottom 23 back 90 degrees to make a foot; the face is 150 tall.
 2. Drill two 5.5 mm holes in the foot, 14 behind the face, at 20 and 78 from the left edge.
-3. Drill two 4 mm clip holes 115 above the deck at 20 and 78 from the left edge, in line with the separator and drier centres.
+3. Drill two 4 mm clip holes 115 above the deck at 20 and 78 from the left edge, in line with the separator and drier centres, and a third 78 above the deck, 49 from the left edge, for the deoxidizer clip.
 
 **How it fits the parts next to it.**
 
-![Figure 18. Joint 7: separator and drier on the column bracket](05-build-plan/joint-07.png)
+![Figure 18. Joint 7: separator, drier and deoxidizer on the column bracket](05-build-plan/joint-07.png)
 
-*Figure 18. A 60 mm pipe clip round the separator and a 40 mm clip round the drier, each screwed through the bracket.*
+*Figure 18. A 60 mm pipe clip round the separator, a 40 mm clip round the drier and a band clip round the deoxidizer, each screwed through the bracket.*
 
-The bracket stands 5 behind the separator, its foot pointing back.
+The bracket stands 5 behind the separator, its foot pointing back. The catalytic deoxidizer, a cartridge about 32 across and 120 tall with both gas ports on top, stands on the foot between the separator and the drier, 5 behind the plate, and a band clip round it screws to the plate at the third hole. The gas leaves the top of the separator, goes back and over to the deoxidizer's first port, and from its second port goes forward to the top of the drier.
 
-**Check before moving on.** The face is square to the deck and the clips line up with the column centres.
+**Check before moving on.** The face is square to the deck and the clips line up with the column centres; the deoxidizer stands upright on the foot with its clip snug and both ports on top.
 
 ### 3.10 Arrestor saddle
 
@@ -376,8 +381,9 @@ Buy to specification, not brand. Line numbers are those of the bill of materials
 - **Reservoir and deionizer (line 5).** 500 mL HDPE reservoir about 110 across and 170 tall with a low side outlet and a vented lid; mixed-bed resin cartridge with color change, about 50 across and 150 tall, with 6 mm fittings; conductivity check to 1 µS/cm.
 - **Electrolyzer (line 6).** 4-cell PEM stack, about 7.8 V at 9 A, end plates about 110 square, hydrogen side rated to 332 kPa or more over the oxygen side, two mounting holes in each end plate, water in and oxygen out on one end plate.
 - **Separator and drier (line 7).** Separator column about 60 across and 160 tall with a drain valve at its foot, drained by hand only at the 20 kPa gauge holding pressure, under the hood, with H2Guard running; 50 g indicating silica gel drier about 40 across and 130 tall; both rated 1 MPa or more.
+- **Catalytic deoxidizer (line 19).** Palladium-catalyst cartridge about 32 across and 120 tall with two 6 mm compression ports on top, rated 1 MPa or more, and one band clip. It warms slightly while it works and is never covered. Keep it in the line unless the stack supplier's data show the oxygen in the hydrogen is within the fuel cell's 99.995 % purity limit at the lowest operating current.
 - **Check valve and flame arrestor (line 8).** Stainless check valve, 7 kPa cracking, and a sintered flame arrestor rated for hydrogen, joined in line, about 28 across and 50 long.
-- **Tank (line 9).** 2 L aluminium or stainless vessel, 110 across or less, flat base, working pressure 1 MPa or more.
+- **Tank (line 9).** 2 L certified aluminium cylinder (6061-T6 class), stamped for 1 MPa working pressure or more, flat base 106 to 111 across so it sits in the 112 pocket of the cradle, threaded neck that takes the manifold adapter. Match the neck thread to the adapter before you buy.
 - **Tank manifold (line 10).** Neck adapter carrying a 0 to 600 kPa absolute transducer, a 10 kΩ thermistor bonded to the shell, a relief valve set to 325 kPa gauge, a 0 to 600 kPa gauge, a needle valve set so venting 300 to 20 kPa gauge takes 3 min or more, and a pressure switch set to open at 310 kPa gauge.
 - **Regulator and solenoid (line 11).** Regulator 0 to 100 kPa out, set near 50 kPa gauge; 12 V normally closed solenoid on the tank outlet.
 - **Fuel cell (line 12).** Air-cooled PEM stack, 12 W class, 13 cells, about 75 x 47 x 70, with fan and purge valve.
@@ -440,11 +446,11 @@ Screw the stand down (Table 2). Stand the reservoir on it and the cartridge on t
 
 Bolt the feet to the end plates first, two M6 each. Set the stack down with its hydrogen outlet to the right and its water ports to the back, and screw the feet to the deck.
 
-### Step 8: column bracket, separator, drier and arrestor
+### Step 8: column bracket, separator, deoxidizer, drier and arrestor
 
 ![Step 8](05-build-plan/step-08.png)
 
-Screw the column bracket and the arrestor saddle down. Clip the separator and drier to the bracket. Screw the check valve and arrestor onto the drier's outlet, arrow toward the tank, and close the band clip over it.
+Screw the column bracket and the arrestor saddle down. Clip the separator and drier to the bracket. Stand the deoxidizer on the bracket foot between them and clip it to the plate. Screw the check valve and arrestor onto the drier's outlet, arrow toward the tank, and close the band clip over it.
 
 ### Step 9: cradle, guard rods and tank
 
@@ -468,13 +474,13 @@ Screw the regulator and the fuel cell bridge down, then the fuel cell to the bri
 
 ![Step 12](05-build-plan/step-12.png)
 
-Fit every line as Figure 25 shows: cut each tube square, deburr it, fit the inserts and compression nuts, and keep every gas line at least 5 clear of the tank. Clip the relief and vent lines to the hanger, ends 7 below the canopy. Label each line with its flow direction. **Hold point:** the leak checks of safety stop S3.
+Fit every line as Figure 25 shows: cut each tube square, deburr it, fit the inserts and compression nuts, and keep every gas line at least 5 clear of the tank. The line from the separator top runs back to the deoxidizer's first port, and a second line runs from its other port forward to the drier top, over the bracket plate and at least 5 above it. Clip the relief and vent lines to the hanger, ends 7 below the canopy. Label each line with its flow direction. **Hold point:** the leak checks of safety stop S3.
 
 ### Step 13: power supply, meters and wiring
 
 ![Step 13](05-build-plan/step-13.png)
 
-Fit the meters and display into the panel openings and the logger behind the panel. Stand the supply on the deck at the left, mains lead routed off the deck. Wire as Figure 26 with the supply switched off and unplugged. **Hold point:** the wiring checks of safety stop S2.
+Fit the meters and display into the panel openings and the logger behind the panel. Stand the supply on the lab table beside the left end of the bench, at least 20 from the bench, with the mains lead routed clear of the bench and any water. Wire as Figure 26 with the supply switched off and unplugged. **Hold point:** the wiring checks of safety stop S2.
 
 ### Step 14: H2Guard sensor, fan and controller
 
@@ -513,7 +519,7 @@ Stop at each point. Carry on only when everything listed is true.
 - **S3. Before any gas pressure.** Every fitting is tight and labelled. Leak test with nitrogen, not air or hydrogen: 50 kPa gauge first, then 300 kPa gauge, soapy water on every fitting, 30 min hold. Check the cut switch at 310 kPa gauge with nitrogen. Vent the nitrogen through the needle valve, never by opening a fitting.
 - **S4. Before any hydrogen is made.** H2Guard is fitted and tested: its alarm, its cut of the electrolyzer supply and its close of the tank solenoid all work within 2 s, and the fan extracts through the duct to outdoors. The relief valve has been bench tested. A trained supervisor is present.
 - **S5. First fill.** Purge the tank of nitrogen and air by three fill and vent cycles to 300 kPa gauge, venting slowly through the needle valve each time (3 min or more). Attended the whole time, hood fan running. Stop at any H2Guard warning, any smell of burning, or any pressure above 300 kPa gauge that the cut does not stop. Keep the tank above 20 kPa gauge from then on so air cannot enter.
-- **S6. Before the fuel cell runs.** The fuel cell supplier has accepted the gas the bench makes, or the deoxidizer is fitted (see the register). The regulator is set to about 50 kPa gauge with the solenoid closed and the fuel cell disconnected.
+- **S6. Before the fuel cell runs.** The deoxidizer is fitted between the separator and the drier, and the fuel cell supplier has accepted the gas the bench makes. The regulator is set to about 50 kPa gauge with the solenoid closed and the fuel cell disconnected.
 - **S7. Before students use the bench.** All first checks of section 5 are recorded; the supervisor knows the vent, purge and shutdown sequence; the room meets the site's hydrogen risk assessment.
 
 ## 7. Tools, skills and workspace
